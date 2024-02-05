@@ -5,6 +5,8 @@ public class Circle extends ColorShape {
     private double radius;
     public Circle(Point center, double radius, char color) {
         super(color);
+        this.center = new Point(center);
+        this.radius = radius;
     }
 
     public boolean isInside(Point p) {

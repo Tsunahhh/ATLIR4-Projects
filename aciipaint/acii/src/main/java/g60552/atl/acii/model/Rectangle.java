@@ -6,6 +6,9 @@ public class Rectangle extends ColorShape {
     private double heigth;
     public Rectangle(Point upperLeft, double width, double height, char color) {
         super(color);
+        this.upperLeft = new Point(upperLeft);
+        this.width = width;
+        this.heigth = height;
     }
 
     public boolean isInside(Point p) {
