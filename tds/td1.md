@@ -105,4 +105,77 @@ TestDefensiveCopy
 Circle : [(0.0, 0.0), 5.0] \
 Circle : [(0.0, 0.0), 5.0]
 
+### 5. Après avoir effectué ces modifications au programme :
+#### Combien d’instances de la classe Point et Circle sont créées dans ce programme ?
+> 3 instances de points sont créés \
+center, p et p2 auront des instances différentes
+#### Quelles sont les instances référencées par la variable p et p2 dans le main ?
+> Ce sont deux instances complètement différentes.
+p instancié dans le main et p2 instancié dans la méthode de Circle
 
+#### Quelle instance référence l’attribut center de l’instance c créée dans le main ?
+> Une nouvelle instance crée dans le constructeur de Circle à partir des attributs de p donnée par ses getteurs.
+
+## Questions 6 - invariants de class
+> Ce sont les conditions de la classes qui doivent être respectées pour que l'objet puisse être créé
+### 1. Qu’affiche ce programme ?
+> Rectangle : [(0.0, 0.0), (5.0, 3.0)]\
+perimeter: 16.0\
+Rectangle : [(2.0, 5.0), (7.0, 8.0)]\
+perimeter: 16.0
+### 2. Donnez le diagramme d’objets (instances) de ce programme en indiquant les instances que les variables bl, ur et r référencent.
+![](/tds/td1q6-2.png)
+
+### 3. L’implémentation n’effectue pas de copie défensive des points passés en paramètres au constructeur. Ajoutez la ligne suivante à la ligne 36 de la méthode main :
+```java
+bl.move(10,10);
+```
+#### L’invariant est-il toujours respecté ?
+> oui, il est respecté
+#### Qu’affiche maintenant le programme ?
+> Rectangle : [(0.0, 0.0), (5.0, 3.0)] \
+perimeter: 16.0 \
+Rectangle : [(10.0, 10.0), (15.0, 13.0)] \
+perimeter: 16.0
+#### En particulier, que vaut le périmètre du rectangle ?
+> Il vaut toujours 16
+#### Pourquoi cette valeur s’affiche-t-elle ?
+> Car les deux points ont décalé de 10 et 10, le périmètre reste alors inchangé
+### 4. Modifiez la classe Rectangle en lui ajoutant les copies défensives là où elles sont nécessaires. Qu’affiche maintenant le programme (modifié au point précédent) ?
+> rien n'a changé dans l'affichage !
+
+> Rectangle : [(0.0, 0.0), (5.0, 3.0)] \
+perimeter: 16.0 \
+Rectangle : [(10.0, 10.0), (15.0, 13.0)] \
+perimeter: 16.0
+
+## Bonus: Faire la classe ImmutableCircle
+```java
+package g60552.OObases;
+
+public final class ImmutableCircle {
+    private final double radius;
+    private final ImmutablePoint center;
+
+    ImmutableCircle(ImmutablePoint center, double radius) {
+        if (radius <= 0) {
+            throw new IllegalArgumentException("radius must be positive" +
+                    ", received: " + radius);
+        }
+        this.center = new ImmutablePoint(center.getX(), center.getY());
+        this.radius = radius;
+    }
+
+    public ImmutableCircle move(int dx, int dy) {
+        return new ImmutableCircle(center.move(dx, dy), radius);
+    }
+
+    public double area() {
+        return Math.PI * radius * radius;
+    }
+
+    public ImmutablePoint getCenter() {
+        return new ImmutablePoint(center.getX(), center.getY());
+    }
+}
+```
