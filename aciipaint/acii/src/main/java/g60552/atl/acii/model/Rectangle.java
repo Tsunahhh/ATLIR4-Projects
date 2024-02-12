@@ -13,8 +13,8 @@ public class Rectangle extends ColorShape {
 
     public boolean isInside(Point p) {
         boolean res = false;
-        if (p.getX() >= upperLeft.getX() && p.getX() <= upperLeft.getX() + width) {
-            if (p.getY() >= upperLeft.getY() && p.getY() <= upperLeft.getY() + heigth) {
+        if (p.getX() >= upperLeft.getX() && p.getX() < upperLeft.getX() + width) {
+            if (p.getY() >= upperLeft.getY() && p.getY() < upperLeft.getY() + heigth) {
                 res = true;
             }
         }

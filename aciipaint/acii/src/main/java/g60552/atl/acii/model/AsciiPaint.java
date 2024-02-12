@@ -22,14 +22,14 @@ public class AsciiPaint {
     @Override
     public String toString() {
         Shape s;
-        String res = "";
+        StringBuilder res = new StringBuilder();
         for (int i = 0; i < drawing.getHeight(); i++) {
             for (int j = 0; j < drawing.getWidth(); j++) {
                 s = drawing.getShapeAt(new Point(j, i));
-                res += (s != null) ? s.getColor() : " ";
+                res.append((s != null) ? s.getColor() : " ");
             }
-            res += "\n";
+            res.append("\n");
         }
-        return res;
+        return res.toString();
     }
 }
