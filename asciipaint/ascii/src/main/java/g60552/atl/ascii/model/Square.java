@@ -1,4 +1,4 @@
-package g60552.atl.acii.model;
+package g60552.atl.ascii.model;
 
 public class Square extends Rectangle {
 

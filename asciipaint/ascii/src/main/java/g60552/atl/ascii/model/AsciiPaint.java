@@ -1,4 +1,6 @@
-package g60552.atl.acii.model;
+package g60552.atl.ascii.model;
+
+import java.util.List;
 
 public class AsciiPaint {
     Drawing drawing;
@@ -19,8 +21,14 @@ public class AsciiPaint {
         drawing.addShape(new Square(new Point(x, y), side, color));
     }
 
-    @Override
-    public String toString() {
+    public void move(int index, int x, int y) {
+        this.drawing.move(index, x, y);
+    }
+    public void setColor(int index, char color) {
+        this.drawing.setColors(index, color);
+    }
+
+    public String asAscii() {
         Shape s;
         StringBuilder res = new StringBuilder();
         for (int i = 0; i < drawing.getHeight(); i++) {
@@ -29,6 +37,16 @@ public class AsciiPaint {
                 res.append((s != null) ? s.getColor() : " ");
             }
             res.append("\n");
+        }
+        return res.toString();
+    }
+
+    public String asList() {
+        StringBuilder res = new StringBuilder();
+        List<Shape> l = this.drawing.getShapes();
+        for (int i = 0; i < l.size(); i++) {
+            ColorShape cs = (ColorShape) l.get(i);
+            res.append(i).append(" - ").append(cs.getColor()).append("\n");
         }
         return res.toString();
     }

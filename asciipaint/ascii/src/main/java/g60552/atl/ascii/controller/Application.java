@@ -1,7 +1,7 @@
-package g60552.atl.acii.controller;
+package g60552.atl.ascii.controller;
 
-import g60552.atl.acii.model.AsciiPaint;
-import g60552.atl.acii.view.View;
+import g60552.atl.ascii.model.AsciiPaint;
+import g60552.atl.ascii.view.View;
 import java.util.Scanner;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -33,18 +33,21 @@ public class Application {
     }
     public void start() {
         Matcher match;
-        Pattern rectgl = Pattern.compile("^add rectangle\\s+(\\d+)\\s+(\\d+)\\s+(\\d+(?:\\.\\d+)?)\\s+(\\d+(?:\\.\\d+)?)\\s+([a-zA-Z])$");
-        Pattern sqre = Pattern.compile("^add square\\s+(\\d+)\\s+(\\d+)\\s+(\\d+(?:\\.\\d+)?)\\s+([a-zA-Z])$");
-        Pattern crcle = Pattern.compile("^add circle\\s+(\\d+)\\s+(\\d+)\\s+(\\d+(?:\\.\\d+)?)\\s+([a-zA-Z])$");
+        Pattern cmdRec = Pattern.compile("^add rectangle\\s+(\\d+)\\s+(\\d+)\\s+(\\d+(?:\\.\\d+)?)\\s+(\\d+(?:\\.\\d+)?)\\s+([a-zA-Z])$");
+        Pattern cmdSqr = Pattern.compile("^add square\\s+(\\d+)\\s+(\\d+)\\s+(\\d+(?:\\.\\d+)?)\\s+([a-zA-Z])$");
+        Pattern cmdCirc = Pattern.compile("^add circle\\s+(\\d+)\\s+(\\d+)\\s+(\\d+(?:\\.\\d+)?)\\s+([a-zA-Z])$");
+        Pattern cmdMov = Pattern.compile("^move\\s+(\\d+)\\s+(\\d+)\\s+(\\d+)$");
+        Pattern cmdCol = Pattern.compile("^color\\s+(\\d+)\\s+([a-zA-Z])$");
+        String cmdList = "list";
+        String cmdShow = "show";
         String action = "";
 
         settings();
-
+        View.show(paint);
         while (!action.equals("exit")) {
-            View.printPaint(paint);
-            action = in.nextLine();
-
-            match = rectgl.matcher(action);
+            System.out.print(">: "); action = in.nextLine();
+            if (action.equals("show")) View.show(paint);
+            match = cmdRec.matcher(action);
             if (match.find()) {
                 int x = Integer.parseInt(match.group(1));
                 int y = Integer.parseInt(match.group(2));
@@ -53,7 +56,7 @@ public class Application {
                 char color = match.group(5).charAt(0);
                 paint.newRectangle(x, y, width, height, color);
             }
-            match = sqre.matcher(action);
+            match = cmdSqr.matcher(action);
             if (match.find()) {
                 int x = Integer.parseInt(match.group(1));
                 int y = Integer.parseInt(match.group(2));
@@ -61,13 +64,20 @@ public class Application {
                 char color = match.group(4).charAt(0);
                 paint.newSquare(x, y, side, color);
             }
-            match = crcle.matcher(action);
+            match = cmdCirc.matcher(action);
             if (match.find()) {
                 int x = Integer.parseInt(match.group(1));
                 int y = Integer.parseInt(match.group(2));
                 double radius = Double.parseDouble(match.group(3));
                 char color = match.group(4).charAt(0);
                 paint.newCircle(x, y, radius, color);
+            }
+            match = cmdMov.matcher(action);
+            if (match.find()) {
+                int eList = Integer.parseInt(match.group(1));
+                int x = Integer.parseInt(match.group(2));
+                int y = Integer.parseInt(match.group(3));
+
             }
         }
     }
@@ -77,7 +87,7 @@ public class Application {
         paint.newCircle(25, 25, 13, 'L');
         paint.newCircle(16, 16, 13, 'T');
         paint.newRectangle(18, 18, 10, 15, 'R');
-        View.printPaint(paint);
+        View.show(paint);
     }
     public static void main(String[] args) {
         Application app = new Application();

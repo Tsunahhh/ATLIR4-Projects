@@ -1,4 +1,4 @@
-package g60552.atl.acii.model;
+package g60552.atl.ascii.model;
 
 public abstract class ColorShape implements Shape  {
     private char color;
@@ -10,12 +10,6 @@ public abstract class ColorShape implements Shape  {
     public void setColor(char color) {
         this.color = color;
     }
-
-    @Override
-    abstract public boolean isInside(Point p);
-
-    @Override
-    abstract public void move(double dx, double dy);
 
     @Override
     public char getColor() {

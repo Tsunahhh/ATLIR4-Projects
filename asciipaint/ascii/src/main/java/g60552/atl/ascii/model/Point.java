@@ -1,4 +1,4 @@
-package g60552.atl.acii.model;
+package g60552.atl.ascii.model;
 
 import static java.lang.Math.pow;
 import static java.lang.Math.sqrt;
