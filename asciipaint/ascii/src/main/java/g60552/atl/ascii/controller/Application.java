@@ -31,54 +31,69 @@ public class Application {
             paint = new AsciiPaint();
         }
     }
+
+    private void addShape(Matcher m) { // add shape x y size c
+        int x = Integer.parseInt(m.group(2));
+        int y = Integer.parseInt(m.group(3));
+        char color;
+        System.out.println(m.group(1));
+        switch (m.group(1)) {
+            case "rectangle":
+                double width = Double.parseDouble(m.group(4));
+                double height = Double.parseDouble(m.group(5));
+                color = m.group(6).charAt(0);
+                paint.newRectangle(x, y, width, height, color);
+                break;
+            case "square":
+                double side = Double.parseDouble(m.group(4));
+                color = m.group(5).charAt(0);
+                paint.newSquare(x, y, side, color);
+                break;
+            case "circle":
+                double radius = Double.parseDouble(m.group(4));
+                color = m.group(5).charAt(0);
+                paint.newCircle(x, y, radius, color);
+                break;
+        }
+    }
+
+    private void move(Matcher m) {
+        int idx = Integer.parseInt(m.group(1));
+        int x = Integer.parseInt(m.group(2));
+        int y = Integer.parseInt(m.group(3));
+        this.paint.move(idx, x, y);
+    }
+    private void setCol(Matcher m) {
+        int idx = Integer.parseInt(m.group(1));
+        char c = m.group(2).charAt(0);
+        this.paint.setColor(idx, c);
+    }
+
     public void start() {
         Matcher match;
-        Pattern cmdRec = Pattern.compile("^add rectangle\\s+(\\d+)\\s+(\\d+)\\s+(\\d+(?:\\.\\d+)?)\\s+(\\d+(?:\\.\\d+)?)\\s+([a-zA-Z])$");
-        Pattern cmdSqr = Pattern.compile("^add square\\s+(\\d+)\\s+(\\d+)\\s+(\\d+(?:\\.\\d+)?)\\s+([a-zA-Z])$");
-        Pattern cmdCirc = Pattern.compile("^add circle\\s+(\\d+)\\s+(\\d+)\\s+(\\d+(?:\\.\\d+)?)\\s+([a-zA-Z])$");
+        Pattern cmdRec = Pattern.compile("^add\\s+(rectangle)\\s+(\\d+)\\s+(\\d+)\\s+(\\d+(?:\\.\\d+)?)\\s+(\\d+(?:\\.\\d+)?)\\s+([a-zA-Z])$");
+        Pattern cmdSqr = Pattern.compile("^add\\s+(square)\\s+(\\d+)\\s+(\\d+)\\s+(\\d+(?:\\.\\d+)?)\\s+([a-zA-Z])$");
+        Pattern cmdCirc = Pattern.compile("^add\\s+(circle)\\s+(\\d+)\\s+(\\d+)\\s+(\\d+(?:\\.\\d+)?)\\s+([a-zA-Z])$");
         Pattern cmdMov = Pattern.compile("^move\\s+(\\d+)\\s+(\\d+)\\s+(\\d+)$");
         Pattern cmdCol = Pattern.compile("^color\\s+(\\d+)\\s+([a-zA-Z])$");
-        String cmdList = "list";
-        String cmdShow = "show";
         String action = "";
-
         settings();
         View.show(paint);
         while (!action.equals("exit")) {
             System.out.print(">: "); action = in.nextLine();
             if (action.equals("show")) View.show(paint);
+            if (action.equals("list")) View.list(paint);
+            if (action.equals("help")) View.help();
             match = cmdRec.matcher(action);
-            if (match.find()) {
-                int x = Integer.parseInt(match.group(1));
-                int y = Integer.parseInt(match.group(2));
-                double width = Double.parseDouble(match.group(3));
-                double height = Double.parseDouble(match.group(4));
-                char color = match.group(5).charAt(0);
-                paint.newRectangle(x, y, width, height, color);
-            }
+            if (match.find()) this.addShape(match);
             match = cmdSqr.matcher(action);
-            if (match.find()) {
-                int x = Integer.parseInt(match.group(1));
-                int y = Integer.parseInt(match.group(2));
-                double side = Double.parseDouble(match.group(3));
-                char color = match.group(4).charAt(0);
-                paint.newSquare(x, y, side, color);
-            }
+            if (match.find()) this.addShape(match);
             match = cmdCirc.matcher(action);
-            if (match.find()) {
-                int x = Integer.parseInt(match.group(1));
-                int y = Integer.parseInt(match.group(2));
-                double radius = Double.parseDouble(match.group(3));
-                char color = match.group(4).charAt(0);
-                paint.newCircle(x, y, radius, color);
-            }
+            if (match.find()) this.addShape(match);
             match = cmdMov.matcher(action);
-            if (match.find()) {
-                int eList = Integer.parseInt(match.group(1));
-                int x = Integer.parseInt(match.group(2));
-                int y = Integer.parseInt(match.group(3));
-
-            }
+            if (match.find()) this.move(match);
+            match = cmdCol.matcher(action);
+            if (match.find()) this.setCol(match);
         }
     }
     private void test1() {
@@ -92,6 +107,5 @@ public class Application {
     public static void main(String[] args) {
         Application app = new Application();
         app.start();
-
     }
 }

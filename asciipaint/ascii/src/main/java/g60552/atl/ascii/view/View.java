@@ -13,4 +13,17 @@ public class View {
     public static void list(AsciiPaint ap) {
         System.out.println(ap.asList());
     }
+    public static void help() {
+        System.out.println("""
+                ### Ascii Menu
+                    add rectangle posX posY height width color
+                    add circle posX posY radius color
+                    add square posX posY size color
+                    move index posX posY
+                    color index newColor
+                    list
+                    show
+                    help
+                """);
+    }
 }
