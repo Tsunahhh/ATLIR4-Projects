@@ -87,7 +87,7 @@ public class AsciiPaint {
         for (int i = 0; i < drawing.getHeight(); i++) {
             for (int j = 0; j < drawing.getWidth(); j++) {
                 s = drawing.getShapeAt(new Point(j, i));
-                res.append((s != null) ? s.getColor() : " ");
+                res.append((s != null) ? s.getColor() + " " : "  ");
             }
             res.append("\n");
         }

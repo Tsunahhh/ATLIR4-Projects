@@ -47,11 +47,10 @@ public class Application {
      * Command to add a shape on the paint
      * @param m matched command
      */
-    private void addShape(Matcher m) { // add shape x y size c
+    private void addShape(Matcher m) {
         int x = Integer.parseInt(m.group(2));
         int y = Integer.parseInt(m.group(3));
         char color;
-        System.out.println(m.group(1));
         switch (m.group(1)) {
             case "rectangle":
                 double width = Double.parseDouble(m.group(4));
@@ -107,7 +106,8 @@ public class Application {
         settings();
         View.show(paint);
         while (!action.equals("exit")) {
-            System.out.print(">: "); action = in.nextLine();
+            System.out.print(">: ");
+            action = in.next();
             if (action.equals("show")) View.show(paint);
             if (action.equals("list")) View.list(paint);
             if (action.equals("help")) View.help();
