@@ -107,7 +107,7 @@ public class Application {
         View.show(paint);
         while (!action.equals("exit")) {
             System.out.print(">: ");
-            action = in.next();
+            action = in.nextLine();
             if (action.equals("show")) View.show(paint);
             if (action.equals("list")) View.list(paint);
             if (action.equals("help")) View.help();
