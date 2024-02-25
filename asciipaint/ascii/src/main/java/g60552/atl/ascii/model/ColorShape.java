@@ -8,7 +8,7 @@ public abstract class ColorShape implements Shape  {
 
     /**
      * Create a ColorShape with a color.
-     * @param color
+     * @param color color of the shape
      */
     public ColorShape(char color) {
         this.color = color;

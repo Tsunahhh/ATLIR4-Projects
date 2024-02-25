@@ -17,6 +17,11 @@ public class Rectangle extends ColorShape {
      */
     public Rectangle(Point upperLeft, double width, double height, char color) {
         super(color);
+
+        if (width < 1 || height < 1) {
+            throw new IllegalArgumentException("size of shape is too low");
+        }
+
         this.upperLeft = new Point(upperLeft);
         this.width = width;
         this.heigth = height;

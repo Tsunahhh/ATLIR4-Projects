@@ -7,7 +7,7 @@ public interface Shape {
 
     /**
      * Verify if point is inside of shape.
-     * @param p Point
+     * @param p a point
      * @return true if inside or false
      */
     boolean isInside(Point p);
@@ -21,7 +21,7 @@ public interface Shape {
 
     /**
      * Get the color of the shape
-     * @return
+     * @return the color
      */
     char getColor();
 }

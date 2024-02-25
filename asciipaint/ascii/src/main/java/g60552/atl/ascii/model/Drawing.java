@@ -1,5 +1,6 @@
 package g60552.atl.ascii.model;
 
+import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -21,9 +22,13 @@ public class Drawing {
     /**
      * Create the table with the parameters size
      * @param width width
-     * @param height width
+     * @param height height
      */
     public Drawing(int width, int height) {
+        if (width < 1 || height < 1) {
+            throw new IllegalArgumentException("width or height can't be null or negative !");
+        }
+
         shapes = new LinkedList<>();
         this.height = height;
         this.width = width;
@@ -39,16 +44,21 @@ public class Drawing {
 
     /**
      * Get a Shape from a position on the draw
-     * @param p Point
-     * @return the Shape if found one or null
+     * @param p a point
+     * @return the shape if found one or null
      */
     public Shape getShapeAt(Point p) {
-        for (Shape s: shapes) {
+        Iterator<Shape> it = shapes.iterator();
+        boolean found = false;
+        Shape s = null;
+
+        while (it.hasNext() && !found) {
+            s = it.next();
             if(s.isInside(p)) {
-                return s;
+                found = true;
             }
         }
-        return null;
+        return (found) ? s : null;
     }
 
     /**
@@ -63,7 +73,7 @@ public class Drawing {
 
     /**
      * Get a copy of the list of shape
-     * @return
+     * @return copy of list
      */
     public List<Shape> getShapes() {
         return new LinkedList<>(shapes);

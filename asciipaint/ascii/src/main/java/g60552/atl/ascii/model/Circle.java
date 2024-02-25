@@ -15,6 +15,11 @@ public class Circle extends ColorShape {
      */
     public Circle(Point center, double radius, char color) {
         super(color);
+
+        if (radius < 0) {
+            throw new IllegalArgumentException("a circle can't have negative radius !");
+        }
+
         this.center = new Point(center);
         this.radius = radius;
     }

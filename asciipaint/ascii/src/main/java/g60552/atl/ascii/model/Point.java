@@ -4,14 +4,14 @@ import static java.lang.Math.pow;
 import static java.lang.Math.sqrt;
 
 /**
- * Class represent a Point with operations
+ * Class represent a point with operations
  */
 public class Point {
     private double x;
     private double y;
 
     /**
-     * Create a Point from positions
+     * Create a point from positions
      * @param x position
      * @param y position
      */
@@ -22,15 +22,15 @@ public class Point {
     }
 
     /**
-     * Create a new Point from another Point
-     * @param p a Point
+     * Create a new point from another point
+     * @param p a point
      */
     public Point(Point p) {
         this(p.x, p.y);
     }
 
     /**
-     * Move the Point with sum
+     * Move the point with sum
      * @param dx position x to sum
      * @param dy position y to sum
      */
@@ -40,7 +40,7 @@ public class Point {
     }
 
     /**
-     * Get the distance from another Point
+     * Get the distance from another point
      * @param other other Point
      * @return the distance
      */

@@ -77,34 +77,43 @@ public class AsciiPaint {
         this.drawing.setColors(index, color);
     }
 
+
     /**
-     * Create the paint table.
-     * @return a String to print after
+     * Get the height of the paint drawing.
+     * @return height
      */
-    public String asAscii() {
-        Shape s;
-        StringBuilder res = new StringBuilder();
-        for (int i = 0; i < drawing.getHeight(); i++) {
-            for (int j = 0; j < drawing.getWidth(); j++) {
-                s = drawing.getShapeAt(new Point(j, i));
-                res.append((s != null) ? s.getColor() + " " : "  ");
-            }
-            res.append("\n");
-        }
-        return res.toString();
+    public int getHeight() {
+        return this.drawing.getHeight();
     }
 
     /**
-     * Return the list of shape like index - color
-     * @return String represent the list
+     * Get the width of the paint drawing.
+     * @return
      */
-    public String asList() {
-        StringBuilder res = new StringBuilder();
-        List<Shape> l = this.drawing.getShapes();
-        for (int i = 0; i < l.size(); i++) {
-            ColorShape cs = (ColorShape) l.get(i);
-            res.append(i).append(" - ").append(cs.getColor()).append("\n");
+    public int getWidth() {
+        return this.drawing.getWidth();
+    }
+
+    /**
+     * Get the color from a position on the table drawing.
+     * @param x x-position
+     * @param y y-position
+     * @return the color
+     */
+    public char getColorPos(int x, int y) {
+        char c = ' ';
+        Shape s = this.drawing.getShapeAt(new Point(x, y));
+        if (s != null) {
+            c = s.getColor();
         }
-        return res.toString();
+        return c;
+    }
+
+    /**
+     * Get the list of shapes.
+     * @return list of shapes
+     */
+    public List<Shape> getShapesList() {
+        return this.drawing.getShapes();
     }
 }

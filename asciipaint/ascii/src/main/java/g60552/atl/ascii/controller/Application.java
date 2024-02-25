@@ -1,7 +1,7 @@
 package g60552.atl.ascii.controller;
 
 import g60552.atl.ascii.model.AsciiPaint;
-import g60552.atl.ascii.view.View;
+import g60552.atl.ascii.view.AsciiView;
 import java.util.Scanner;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -33,7 +33,7 @@ public class Application {
     private  void settings() {
         int heigth, width;
         String ifSettings;
-        System.out.println("### Settings <yes,no> ?"); ifSettings = in.next();
+        System.out.print("### Settings <yes,no> ? "); ifSettings = in.next();
         if (ifSettings.equals("yes")) {
             System.out.print("Height: "); heigth = robustInteger("Need an Integer for height !");
             System.out.print("Width: "); width = robustInteger("Need an Integer for width !");
@@ -104,13 +104,14 @@ public class Application {
         Pattern cmdCol = Pattern.compile("^color\\s+(\\d+)\\s+([a-zA-Z])$");
         String action = "";
         settings();
-        View.show(paint);
+        AsciiView asciiView = new AsciiView(this.paint);
+        asciiView.show();
         while (!action.equals("exit")) {
             System.out.print(">: ");
             action = in.nextLine();
-            if (action.equals("show")) View.show(paint);
-            if (action.equals("list")) View.list(paint);
-            if (action.equals("help")) View.help();
+            if (action.equals("show")) asciiView.show();
+            if (action.equals("list")) asciiView.list();
+            if (action.equals("help")) asciiView.help();
             match = cmdRec.matcher(action);
             if (match.find()) this.addShape(match);
             match = cmdSqr.matcher(action);
@@ -123,14 +124,11 @@ public class Application {
             if (match.find()) this.setCol(match);
         }
     }
-    private void test1() {
-        paint = new AsciiPaint();
-        paint.newSquare(4, 5, 6.6, 'c');
-        paint.newCircle(25, 25, 13, 'L');
-        paint.newCircle(16, 16, 13, 'T');
-        paint.newRectangle(18, 18, 10, 15, 'R');
-        View.show(paint);
-    }
+
+    /**
+     * main
+     * @param args arguments
+     */
     public static void main(String[] args) {
         Application app = new Application();
         app.start();
