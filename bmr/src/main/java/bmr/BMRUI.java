@@ -51,7 +51,7 @@ public class BMRUI extends VBox{
                 case "sedentaire" -> cal = calc.cal(Activity.NEVER);
                 case "peu" -> cal = calc.cal(Activity.LOW);
                 case "moyen" -> cal = calc.cal(Activity.MID);
-                case "beaucoup" -> cal = calc.cal((Activity.HIGHT));
+                case "beaucoup" -> cal = calc.cal((Activity.HIGH));
                 case "extreme" -> cal = calc.cal(Activity.EXTREME);
             }
             bmrOutput.setBMR(calc.bmr());
