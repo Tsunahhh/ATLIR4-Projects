@@ -1,8 +1,12 @@
 package bmr.model;
 
-import bmr.model.Activity;
+import util.Observable;
+import util.Observer;
 
-public class Person {
+import java.util.ArrayList;
+import java.util.List;
+
+public class Person implements Observable {
     private double weight;
     private double height;
     private int age;
@@ -10,7 +14,9 @@ public class Person {
 
     private Activity freq;
 
-    Person() {}
+    private List<Observer> observers = new ArrayList<>();
+
+    public Person() {}
 
     public Person(boolean isWoman, double height, double weight, int age, Activity freq) {
         this.isWoman = isWoman;
@@ -20,24 +26,38 @@ public class Person {
         this.freq = freq;
     }
 
+    public void set(boolean isWoman, double height, double weight, int age, Activity freq) {
+        this.isWoman = isWoman;
+        this.height = height;
+        this.weight = weight;
+        this.age = age;
+        this.freq = freq;
+        this.notifyObservers();
+    }
+
     public void setWeight(double weight) {
         this.weight = weight;
+        notifyObservers();
     }
 
     public void setHeight(double height) {
         this.height = height;
+        notifyObservers();
     }
 
     public void setAge(int age) {
         this.age = age;
+        notifyObservers();
     }
 
     public void setWoman(boolean woman) {
         isWoman = woman;
+        notifyObservers();
     }
 
     public void setFreq(Activity freq) {
         this.freq = freq;
+        notifyObservers();
     }
 
     public double bmr() {
@@ -52,5 +72,22 @@ public class Person {
 
     public double calories() {
         return bmr() * freq.getAct();
+    }
+
+    @Override
+    public void register(Observer observer) {
+        observers.add(observer);
+    }
+
+    @Override
+    public void unregister(Observer observer) {
+        observers.remove(observer);
+    }
+
+    @Override
+    public void notifyObservers() {
+        for (var obs : observers) {
+            obs.update();
+        }
     }
 }

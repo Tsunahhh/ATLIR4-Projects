@@ -8,8 +8,10 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
+import util.Observer;
 
-public class BMRUI {
+public class BMRUI implements Observer {
+    Person person = new Person();
 
     private BMRInput bmrInput = new BMRInput();;
     private BMROutput bmrOutput = new BMROutput();
@@ -17,6 +19,9 @@ public class BMRUI {
     private Button btClear;
 
     public BMRUI(Stage primaryStage) {
+
+        person.register(this);
+
         VBox root = new VBox(10);
         root.setPadding(new Insets(10));
         HBox mainOne = new HBox(5);
@@ -35,18 +40,20 @@ public class BMRUI {
     private void genButtons() {
         btCalcBmr = new Button("Calcul du BMR");
         btCalcBmr.setMaxWidth(Double.MAX_VALUE);
-        btCalcBmr.setOnAction(actionEvent -> calcBmr());
-        
+        btCalcBmr.setOnAction(actionEvent -> calc());
+
         btClear = new Button("Clear");
         btClear.setMaxWidth(Double.MAX_VALUE);
         btClear.setOnAction(actionEvent -> clear());
     }
 
-    private void calcBmr() {
+    private void calc() {
         try {
-            Person person = new Person(bmrInput.isWoman(), bmrInput.getBMRHeight(), bmrInput.getBMRWeight(), bmrInput.getBMRAge(), bmrInput.getBMRLife());
-            bmrOutput.setBMR(person.bmr());
-            bmrOutput.setCal(person.calories());
+            person.set(bmrInput.isWoman(),
+                    bmrInput.getBMRHeight(),
+                    bmrInput.getBMRWeight(),
+                    bmrInput.getBMRAge(),
+                    bmrInput.getBMRLife());
         } catch (Exception e) {
             bmrOutput.failed();
         }
@@ -55,5 +62,11 @@ public class BMRUI {
     private void clear() {
         bmrInput.clear();
         bmrOutput.clear();
+    }
+
+    @Override
+    public void update() {
+        bmrOutput.setBMR(person.bmr());
+        bmrOutput.setCal(person.calories());
     }
 }
