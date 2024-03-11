@@ -10,9 +10,7 @@ public class Person {
 
     private Activity freq;
 
-    Person() {
-
-    }
+    Person() {}
 
     public Person(boolean isWoman, double height, double weight, int age, Activity freq) {
         this.isWoman = isWoman;

@@ -11,8 +11,8 @@ import javafx.stage.Stage;
 
 public class BMRUI {
 
-    private BMRInput bmrInput;
-    private BMROutput bmrOutput;
+    private BMRInput bmrInput = new BMRInput();;
+    private BMROutput bmrOutput = new BMROutput();
     private Button btCalcBmr;
     private Button btClear;
 
@@ -20,9 +20,6 @@ public class BMRUI {
         VBox root = new VBox(10);
         root.setPadding(new Insets(10));
         HBox mainOne = new HBox(5);
-
-        bmrInput = new BMRInput();
-        bmrOutput = new BMROutput();
 
         this.genButtons();
 
@@ -39,6 +36,7 @@ public class BMRUI {
         btCalcBmr = new Button("Calcul du BMR");
         btCalcBmr.setMaxWidth(Double.MAX_VALUE);
         btCalcBmr.setOnAction(actionEvent -> calcBmr());
+        
         btClear = new Button("Clear");
         btClear.setMaxWidth(Double.MAX_VALUE);
         btClear.setOnAction(actionEvent -> clear());
@@ -49,7 +47,7 @@ public class BMRUI {
             Person person = new Person(bmrInput.isWoman(), bmrInput.getBMRHeight(), bmrInput.getBMRWeight(), bmrInput.getBMRAge(), bmrInput.getBMRLife());
             bmrOutput.setBMR(person.bmr());
             bmrOutput.setCal(person.calories());
-        } catch (NumberFormatException nb) {
+        } catch (Exception e) {
             bmrOutput.failed();
         }
     }
