@@ -18,20 +18,20 @@ public class Person implements Observable {
 
     public Person() {}
 
-    public Person(boolean isWoman, double height, double weight, int age, Activity freq) {
+    public Person(boolean isWoman, double height, double weight, int age, String freq) {
         this.isWoman = isWoman;
         this.height = height;
         this.weight = weight;
         this.age = age;
-        this.freq = freq;
+        this.freq = Activity.getActivity(freq);
     }
 
-    public void set(boolean isWoman, double height, double weight, int age, Activity freq) {
+    public void set(boolean isWoman, double height, double weight, int age, String freq) {
         this.isWoman = isWoman;
         this.height = height;
         this.weight = weight;
         this.age = age;
-        this.freq = freq;
+        this.freq = Activity.getActivity(freq);
         this.notifyObservers();
     }
 
@@ -55,8 +55,8 @@ public class Person implements Observable {
         notifyObservers();
     }
 
-    public void setFreq(Activity freq) {
-        this.freq = freq;
+    public void setFreq(String freq) {
+        this.freq = Activity.getActivity(freq);
         notifyObservers();
     }
 
@@ -71,7 +71,7 @@ public class Person implements Observable {
     }
 
     public double calories() {
-        return bmr() * freq.getAct();
+        return bmr() * freq.getValue();
     }
 
     @Override

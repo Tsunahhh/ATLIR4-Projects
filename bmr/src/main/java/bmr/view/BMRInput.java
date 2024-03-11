@@ -64,8 +64,8 @@ public class BMRInput extends GridPane {
         this.add(rdbHomme, 2, 4);
 
         // ChoiceBox
-        cbxStyleLife.getItems().addAll("sedentaire", "peu", "moyen", "beaucoup", "extreme");
-        cbxStyleLife.setValue("sedentaire");
+        cbxStyleLife.getItems().addAll("Sédentaire", "Peu actif", "Actif", "Très actif", "Extrêmement actif");
+        cbxStyleLife.setValue("Mode de Vie");
         this.add(cbxStyleLife, 1, 5, 2, 1);
     }
 
@@ -86,34 +86,15 @@ public class BMRInput extends GridPane {
         return tmp.getText().equals("Femme");
     }
 
-    public Activity getBMRLife() {
-        switch (cbxStyleLife.getValue()) {
-            case "sedentaire" -> {
-                return Activity.NEVER;
-            }
-            case "peu" -> {
-                return Activity.LOW;
-            }
-            case "moyen" -> {
-                return Activity.MID;
-            }
-            case "beaucoup" -> {
-                return Activity.HIGH;
-            }
-            case "extreme" -> {
-                return Activity.EXTREME;
-            }
-            default -> {
-                throw new IllegalArgumentException("Activity not in the combobox");
-            }
-        }
+    public String getBMRLife() {
+        return cbxStyleLife.getValue();
     }
 
     public void clear() {
         tfdAge.setText("");
         tfdHeight.setText("");
         tfdWeight.setText("");
-        cbxStyleLife.setValue("sedentaire");
+        cbxStyleLife.setValue("Sédentaire");
         tgrSex.selectToggle(rdbFemme);
     }
 
