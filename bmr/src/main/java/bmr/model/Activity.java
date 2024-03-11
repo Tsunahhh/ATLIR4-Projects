@@ -1,4 +1,4 @@
-package bmr;
+package bmr.model;
 
 public enum Activity {
     NEVER(1.2),

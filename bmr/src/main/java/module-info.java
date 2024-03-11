@@ -1,9 +1,7 @@
 module bmr {
     requires javafx.controls;
-    requires javafx.fxml;
-
     requires org.controlsfx.controls;
-
-    opens bmr to javafx.fxml;
-    exports bmr;
+    exports bmr.model;
+    exports bmr.controller;
+    exports bmr.view;
 }

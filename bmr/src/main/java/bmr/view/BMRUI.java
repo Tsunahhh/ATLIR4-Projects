@@ -1,27 +1,24 @@
-package bmr;
+package bmr.view;
 
-import javafx.application.Application;
-import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
+import bmr.model.Person;
 import javafx.geometry.Insets;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
-import javafx.scene.control.RadioButton;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 
-public class BMRUI extends VBox{
+public class BMRUI {
 
     private BMRInput bmrInput;
     private BMROutput bmrOutput;
     private Button btCalcBmr;
     private Button btClear;
 
-    BMRUI(int spacing) {
-        super(spacing);
-        super.setPadding(new Insets(10));
+    public BMRUI(Stage primaryStage) {
+        VBox root = new VBox(10);
+        root.setPadding(new Insets(10));
         HBox mainOne = new HBox(5);
 
         bmrInput = new BMRInput();
@@ -30,7 +27,11 @@ public class BMRUI extends VBox{
         this.genButtons();
 
         mainOne.getChildren().addAll(bmrInput, bmrOutput);
-        super.getChildren().addAll(mainOne, btCalcBmr, btClear);
+        root.getChildren().addAll(mainOne, btCalcBmr, btClear);
+        Scene scene = new Scene(root, Color.GRAY);
+        primaryStage.setTitle("Calcule du BMR");
+        primaryStage.setScene(scene);
+        primaryStage.show();
 
     }
 
@@ -45,17 +46,9 @@ public class BMRUI extends VBox{
 
     private void calcBmr() {
         try {
-            BMRCalc calc = new BMRCalc(bmrInput.getBMRSexe(), bmrInput.getBMRHeight(), bmrInput.getBMRWeight(), bmrInput.getBMRAge());
-            double cal = -1;
-            switch (bmrInput.getBMRLife()) {
-                case "sedentaire" -> cal = calc.cal(Activity.NEVER);
-                case "peu" -> cal = calc.cal(Activity.LOW);
-                case "moyen" -> cal = calc.cal(Activity.MID);
-                case "beaucoup" -> cal = calc.cal((Activity.HIGH));
-                case "extreme" -> cal = calc.cal(Activity.EXTREME);
-            }
-            bmrOutput.setBMR(calc.bmr());
-            bmrOutput.setCal(cal);
+            Person person = new Person(bmrInput.isWoman(), bmrInput.getBMRHeight(), bmrInput.getBMRWeight(), bmrInput.getBMRAge(), bmrInput.getBMRLife());
+            bmrOutput.setBMR(person.bmr());
+            bmrOutput.setCal(person.calories());
         } catch (NumberFormatException nb) {
             bmrOutput.failed();
         }

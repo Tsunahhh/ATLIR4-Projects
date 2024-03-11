@@ -1,5 +1,6 @@
-package bmr;
+package bmr.view;
 
+import bmr.model.Activity;
 import javafx.geometry.Insets;
 import javafx.scene.control.*;
 import javafx.scene.layout.GridPane;
@@ -80,13 +81,32 @@ public class BMRInput extends GridPane {
         return Integer.parseInt(tfdAge.getText());
     }
 
-    public String getBMRSexe() {
+    public boolean isWoman() {
         RadioButton tmp = (RadioButton) tgrSex.getSelectedToggle();
-        return tmp.getText();
+        return tmp.getText().equals("Femme");
     }
 
-    public String getBMRLife() {
-        return cbxStyleLife.getValue();
+    public Activity getBMRLife() {
+        switch (cbxStyleLife.getValue()) {
+            case "sedentaire" -> {
+                return Activity.NEVER;
+            }
+            case "peu" -> {
+                return Activity.LOW;
+            }
+            case "moyen" -> {
+                return Activity.MID;
+            }
+            case "beaucoup" -> {
+                return Activity.HIGH;
+            }
+            case "extreme" -> {
+                return Activity.EXTREME;
+            }
+            default -> {
+                throw new IllegalArgumentException("Activity not in the combobox");
+            }
+        }
     }
 
     public void clear() {
