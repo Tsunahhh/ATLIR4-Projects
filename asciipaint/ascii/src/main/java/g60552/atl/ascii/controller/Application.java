@@ -2,6 +2,9 @@ package g60552.atl.ascii.controller;
 
 import g60552.atl.ascii.model.AsciiPaint;
 import g60552.atl.ascii.view.AsciiView;
+
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Scanner;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -92,6 +95,34 @@ public class Application {
         this.paint.setColor(idx, c);
     }
 
+    private void removeShape(Matcher m) {
+        int idx = Integer.parseInt(m.group(1));
+        this.paint.removeShape(idx);
+    }
+
+    private void group(Matcher m){
+        String match = m.group();
+        List<Integer> indexes = extractIndexes(match);
+        paint.group(indexes);
+    }
+
+    private void ungroup(Matcher m) {
+        int idx = Integer.parseInt(m.group(1));
+        paint.ungroup(idx);
+    }
+
+    private List<Integer> extractIndexes(String input) {
+        List<Integer> indexes = new ArrayList<>();
+        Pattern pattern = Pattern.compile("\\d+");
+        Matcher matcher = pattern.matcher(input);
+
+        while (matcher.find()) {
+            indexes.add(Integer.parseInt(matcher.group()));
+        }
+
+        return indexes;
+    }
+
     /**
      * Start application.
      */
@@ -102,6 +133,9 @@ public class Application {
         Pattern cmdCirc = Pattern.compile("^add\\s+(circle)\\s+(\\d+)\\s+(\\d+)\\s+(\\d+(?:\\.\\d+)?)\\s+([a-zA-Z])$");
         Pattern cmdMov = Pattern.compile("^move\\s+(\\d+)\\s+(\\d+)\\s+(\\d+)$");
         Pattern cmdCol = Pattern.compile("^color\\s+(\\d+)\\s+([a-zA-Z])$");
+        Pattern cmdDel = Pattern.compile("^delete\\s+(\\d+)$");
+        Pattern cmdGrp = Pattern.compile("^group(\\s+\\d+)+$");
+        Pattern cmdUgp = Pattern.compile("^ungroup\\s+(\\d+)$");
         String action = "";
         settings();
         AsciiView asciiView = new AsciiView(this.paint);
@@ -112,6 +146,8 @@ public class Application {
             if (action.equals("show")) asciiView.show();
             if (action.equals("list")) asciiView.list();
             if (action.equals("help")) asciiView.help();
+            if (action.equals("undo")) paint.undo();
+            if (action.equals("redo")) paint.redo();
             match = cmdRec.matcher(action);
             if (match.find()) this.addShape(match);
             match = cmdSqr.matcher(action);
@@ -122,6 +158,12 @@ public class Application {
             if (match.find()) this.move(match);
             match = cmdCol.matcher(action);
             if (match.find()) this.setCol(match);
+            match = cmdDel.matcher(action);
+            if (match.find()) this.removeShape(match);
+            match = cmdGrp.matcher(action);
+            if (match.find()) this.group(match);
+            match = cmdUgp.matcher(action);
+            if (match.find()) this.ungroup(match);
         }
     }
 

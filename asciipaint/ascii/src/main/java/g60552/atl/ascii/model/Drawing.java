@@ -1,13 +1,12 @@
 package g60552.atl.ascii.model;
 
-import java.util.Iterator;
-import java.util.LinkedList;
-import java.util.List;
+import java.util.*;
 
 /**
  * Class represent the drawing with shapes and methods on the draw
  */
-public class Drawing {
+public class
+Drawing {
     private List<Shape> shapes;
     private final int height;
     private final int width;
@@ -106,4 +105,33 @@ public class Drawing {
         return width;
     }
 
+    void removeShape(int idx) {
+        shapes.remove(idx);
+    }
+
+    void removeShape(Shape s) {
+        shapes.remove(s);
+    }
+
+    void group(List<Integer> idx) {
+        List<ColorShape> cs = new ArrayList<>();
+        idx.sort(Comparator.reverseOrder());
+
+        for (int i : idx) {
+            cs.add((ColorShape) shapes.remove(i));
+        }
+
+        Group group = new Group(cs);
+        shapes.add(group);
+    }
+
+    void ungroup(int idx) {
+        try {
+            Group group = (Group) shapes.get(idx);
+            shapes.remove(idx);
+            shapes.addAll(group.ungroup());
+        } catch (Exception e) {
+            System.out.println("the shape is not a group");
+        }
+    }
 }

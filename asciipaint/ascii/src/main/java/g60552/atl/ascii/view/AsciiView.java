@@ -77,6 +77,9 @@ public class AsciiView {
                     - add square <x> <y> <size> <color>
                     - move <index> <x> <y>
                     - color <index> <new color>
+                    - delete <index>
+                    - group <i1> [<i2> ...]
+                    - ungroup <index>
                     - list
                     - show
                     - help

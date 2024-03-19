@@ -1,12 +1,17 @@
 package g60552.atl.ascii.model;
 
+import g60552.atl.ascii.util.Command;
+
 import java.util.List;
+import java.util.Stack;
 
 /**
  * Class represent AsciiPaint with commands methods.
  */
 public class AsciiPaint {
     Drawing drawing;
+
+    private CommandManager commandManager = new CommandManager();
 
     /**
      * Constructor without argument
@@ -21,6 +26,7 @@ public class AsciiPaint {
      * @param height height
      */
     public AsciiPaint(int width, int height) {
+        // todo: verif
         drawing = new Drawing(width, height);
     }
 
@@ -32,7 +38,9 @@ public class AsciiPaint {
      * @param color color
      */
     public void newCircle(int x, int y, double radius, char color) {
-        drawing.addShape(new Circle(new Point(x, y), radius, color));
+        // todo: verif
+        Command command = new AddCommand(drawing, new Circle(new Point(x, y), radius, color));
+        commandManager.add(command);
     }
 
     /**
@@ -44,7 +52,10 @@ public class AsciiPaint {
      * @param color color
      */
     public void newRectangle(int x, int y, double width, double height, char color) {
-        drawing.addShape(new Rectangle(new Point(x, y), width, height, color));
+        // todo: verif
+
+        Command command = new AddCommand(drawing, new Rectangle(new Point(x, y), width, height, color));
+        commandManager.add(command);
     }
 
     /**
@@ -55,7 +66,9 @@ public class AsciiPaint {
      * @param color color
      */
     public void newSquare(int x, int y, double side, char color) {
-        drawing.addShape(new Square(new Point(x, y), side, color));
+        // todo: verif
+        Command command = new AddCommand(drawing, new Square(new Point(x, y), side, color));
+        commandManager.add(command);
     }
 
     /**
@@ -65,7 +78,9 @@ public class AsciiPaint {
      * @param y new position y
      */
     public void move(int index, int x, int y) {
-        this.drawing.move(index, x, y);
+        // todo: verif
+        Command command = new MoveCommand(drawing, index, x, y);
+        commandManager.add(command);
     }
 
     /**
@@ -74,7 +89,9 @@ public class AsciiPaint {
      * @param color new color
      */
     public void setColor(int index, char color) {
-        this.drawing.setColors(index, color);
+        // todo: verif
+        Command command = new ColorCommand(drawing, index, color);
+        commandManager.add(command);
     }
 
 
@@ -101,6 +118,7 @@ public class AsciiPaint {
      * @return the color
      */
     public char getColorPos(int x, int y) {
+        // todo: verif
         char c = ' ';
         Shape s = this.drawing.getShapeAt(new Point(x, y));
         if (s != null) {
@@ -115,5 +133,22 @@ public class AsciiPaint {
      */
     public List<Shape> getShapesList() {
         return this.drawing.getShapes();
+    }
+
+    public void removeShape(int idx) {
+        drawing.removeShape(idx);
+    }
+
+    public void group(List<Integer> idx) {
+        drawing.group(idx);
+    }
+    public void ungroup(int idx) {
+        drawing.ungroup(idx);
+    }
+    public void redo() {
+        commandManager.redo();
+    }
+    public void undo() {
+        commandManager.undo();
     }
 }
