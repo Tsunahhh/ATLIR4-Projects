@@ -71,6 +71,12 @@ public class AsciiPaint {
         commandManager.add(command);
     }
 
+    public void newLine(int x1, int y1, int x2, int y2, char color) {
+        System.out.println(x1 + " " + y1 + " " + x2 + " " + y2);
+        Command command = new AddCommand(drawing, new Line(new Point(x1, y1), new Point(x2, y2), color));
+        commandManager.add(command);
+    }
+
     /**
      * Move the shape to another position.
      * @param index index of shape
@@ -135,19 +141,43 @@ public class AsciiPaint {
         return this.drawing.getShapes();
     }
 
-    public void removeShape(int idx) {
-        drawing.removeShape(idx);
+    /**
+     * Delete a shape from index
+     * @param idx index
+     */
+    public void delShape(int idx) {
+        Command command = new DeleteCommand(drawing, idx);
+        commandManager.add(command);
     }
 
+    /**
+     * Group shapes from indexes.
+     * @param idx list of indexes
+     */
     public void group(List<Integer> idx) {
-        drawing.group(idx);
+        Command command = new GroupCommand(drawing, idx);
+        commandManager.add(command);
     }
+
+    /**
+     * Ungroup shapes.
+     * @param idx index of group
+     */
     public void ungroup(int idx) {
-        drawing.ungroup(idx);
+        Command command = new UngroupCommand(drawing, idx);
+        commandManager.add(command);
     }
+
+    /**
+     * Redo the command.
+     */
     public void redo() {
         commandManager.redo();
     }
+
+    /**
+     * Undo the command.
+     */
     public void undo() {
         commandManager.undo();
     }

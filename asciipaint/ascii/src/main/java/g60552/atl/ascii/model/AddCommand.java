@@ -12,7 +12,7 @@ public class AddCommand implements Command {
 
     @Override
     public void execute() {
-        this.drawing.addShape(shape);
+        this.drawing.addShape(shape, 0);
     }
 
     @Override

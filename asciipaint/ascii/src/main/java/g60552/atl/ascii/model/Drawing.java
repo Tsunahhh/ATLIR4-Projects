@@ -37,8 +37,12 @@ Drawing {
      * Add shape to the list.
      * @param shape Shape
      */
-    public void addShape(Shape shape) {
-        shapes.add(0, shape);
+    public void addShape(Shape shape, int index) {
+        shapes.add(index, shape);
+    }
+
+    public Shape getShape(int index) {
+        return shapes.get(index);
     }
 
     /**
@@ -105,33 +109,63 @@ Drawing {
         return width;
     }
 
-    void removeShape(int idx) {
-        shapes.remove(idx);
+    int getListSize() {
+        return this.shapes.size();
     }
 
+    /**
+     * Remove a shape
+     * @param idx index of shape
+     * @return shape
+     */
+    Shape removeShape(int idx) {
+        return shapes.remove(idx);
+    }
+
+    /**
+     * Remove a shape
+     * @param s shape to remove
+     */
     void removeShape(Shape s) {
         shapes.remove(s);
     }
 
-    void group(List<Integer> idx) {
+    /**
+     * Group shapes from indexes
+     * @param idx list of indexes
+     */
+    void group(List<Integer> idx, int newIndex) { // 2 4 6
         List<ColorShape> cs = new ArrayList<>();
-        idx.sort(Comparator.reverseOrder());
+        idx.sort(Comparator.reverseOrder()); // 6 4 2
 
         for (int i : idx) {
-            cs.add((ColorShape) shapes.remove(i));
+            cs.add((ColorShape) shapes.remove(i)); // 6 4 2
         }
 
         Group group = new Group(cs);
-        shapes.add(group);
+        if (newIndex == -1) {
+            shapes.add(group);
+        } else {
+            shapes.add(newIndex, group);
+        }
+
     }
 
-    void ungroup(int idx) {
+    /**
+     * Ungroup from index
+     * @param idx index
+     */
+    int ungroup(int idx) {
+        int cpt = 0;
         try {
             Group group = (Group) shapes.get(idx);
+            List<ColorShape> ungrouped = group.ungroup();
+            cpt = ungrouped.size();
             shapes.remove(idx);
-            shapes.addAll(group.ungroup());
+            shapes.addAll(ungrouped);
         } catch (Exception e) {
             System.out.println("the shape is not a group");
         }
+        return cpt;
     }
 }

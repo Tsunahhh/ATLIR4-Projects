@@ -22,7 +22,6 @@ public class Application {
      * @return an integer
      */
     private int robustInteger(String message) {
-        in.next();
         while (!in.hasNextInt()) {
             in.next();
             System.out.println(message);
@@ -38,8 +37,10 @@ public class Application {
         String ifSettings;
         System.out.print("### Settings <yes,no> ? "); ifSettings = in.next();
         if (ifSettings.equals("yes")) {
-            System.out.print("Height: "); heigth = robustInteger("Need an Integer for height !");
-            System.out.print("Width: "); width = robustInteger("Need an Integer for width !");
+            System.out.print("Height: ");
+            heigth = robustInteger("Need an Integer for height !");
+            System.out.print("Width: ");
+            width = robustInteger("Need an Integer for width !");
             paint = new AsciiPaint(width, heigth);
         } else {
             paint = new AsciiPaint();
@@ -71,6 +72,13 @@ public class Application {
                 color = m.group(5).charAt(0);
                 paint.newCircle(x, y, radius, color);
                 break;
+            case "line":
+                int x1 = Integer.parseInt(m.group(2));
+                int y1 = Integer.parseInt(m.group(3));
+                int x2 = Integer.parseInt(m.group(4));
+                int y2 = Integer.parseInt(m.group(5));
+                color = m.group(6).charAt(0);
+                paint.newLine(x1, y1, x2, y2, color);
         }
     }
 
@@ -95,9 +103,9 @@ public class Application {
         this.paint.setColor(idx, c);
     }
 
-    private void removeShape(Matcher m) {
+    private void delShape(Matcher m) {
         int idx = Integer.parseInt(m.group(1));
-        this.paint.removeShape(idx);
+        this.paint.delShape(idx);
     }
 
     private void group(Matcher m){
@@ -131,7 +139,8 @@ public class Application {
         Pattern cmdRec = Pattern.compile("^add\\s+(rectangle)\\s+(\\d+)\\s+(\\d+)\\s+(\\d+(?:\\.\\d+)?)\\s+(\\d+(?:\\.\\d+)?)\\s+([a-zA-Z])$");
         Pattern cmdSqr = Pattern.compile("^add\\s+(square)\\s+(\\d+)\\s+(\\d+)\\s+(\\d+(?:\\.\\d+)?)\\s+([a-zA-Z])$");
         Pattern cmdCirc = Pattern.compile("^add\\s+(circle)\\s+(\\d+)\\s+(\\d+)\\s+(\\d+(?:\\.\\d+)?)\\s+([a-zA-Z])$");
-        Pattern cmdMov = Pattern.compile("^move\\s+(\\d+)\\s+(\\d+)\\s+(\\d+)$");
+        Pattern cmdLine = Pattern.compile("^add\\s+(line)\\s+(\\d+)\\s+(\\d+)\\s+(\\d+)\\s+(\\d+)\\s+([a-zA-Z])$");
+        Pattern cmdMov = Pattern.compile("^move\\s+(-?\\d+)\\s+(-?\\d+)\\s+(\\d+)$");
         Pattern cmdCol = Pattern.compile("^color\\s+(\\d+)\\s+([a-zA-Z])$");
         Pattern cmdDel = Pattern.compile("^delete\\s+(\\d+)$");
         Pattern cmdGrp = Pattern.compile("^group(\\s+\\d+)+$");
@@ -141,7 +150,6 @@ public class Application {
         AsciiView asciiView = new AsciiView(this.paint);
         asciiView.show();
         while (!action.equals("exit")) {
-            System.out.print(">: ");
             action = in.nextLine();
             if (action.equals("show")) asciiView.show();
             if (action.equals("list")) asciiView.list();
@@ -154,16 +162,19 @@ public class Application {
             if (match.find()) this.addShape(match);
             match = cmdCirc.matcher(action);
             if (match.find()) this.addShape(match);
+            match = cmdLine.matcher(action);
+            if (match.find()) this.addShape(match);
             match = cmdMov.matcher(action);
             if (match.find()) this.move(match);
             match = cmdCol.matcher(action);
             if (match.find()) this.setCol(match);
             match = cmdDel.matcher(action);
-            if (match.find()) this.removeShape(match);
+            if (match.find()) this.delShape(match);
             match = cmdGrp.matcher(action);
             if (match.find()) this.group(match);
             match = cmdUgp.matcher(action);
             if (match.find()) this.ungroup(match);
+            System.out.print(">: ");
         }
     }
 
