@@ -6,10 +6,18 @@ import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
 
+/**
+ * Class represent the command to group some shapes
+ */
 public class GroupCommand implements Command {
     private Drawing drawing;
     private List<Integer> indexes;
 
+    /**
+     * Constructor with 2 arguments
+     * @param drawing the draw
+     * @param indexes a list with shapes we want to group.
+     */
     public GroupCommand(Drawing drawing, List<Integer> indexes) {
         this.drawing = drawing;
         this.indexes = indexes;

@@ -10,7 +10,7 @@ public interface Command {
     void execute();
 
     /**
-     * Unexecute the command
+     * Reverse the command
      */
     void unexecute();
 }

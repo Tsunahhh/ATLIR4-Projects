@@ -1,6 +1,5 @@
 package g60552.atl.ascii.model;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class Group extends ColorShape{

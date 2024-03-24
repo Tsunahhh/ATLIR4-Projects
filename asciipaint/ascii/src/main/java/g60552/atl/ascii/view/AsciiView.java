@@ -12,13 +12,24 @@ import java.util.List;
 public class AsciiView {
 
     private AsciiPaint ap;
+    private String help;
+
+    /**
+     * Construct without help mess
+     * @param ap AsciiPaint instance
+     */
+    public AsciiView(AsciiPaint ap) {
+        this(ap, "### Help");
+    }
 
     /**
      * Construct the view
      * @param ap AsciiPaint instance
+     * @param help help menu to show
      */
-    public AsciiView(AsciiPaint ap) {
+    public AsciiView(AsciiPaint ap, String help) {
         this.ap = ap;
+        this.help = help;
     }
 
     /**
@@ -70,20 +81,6 @@ public class AsciiView {
      * Show the help menu with commands examples.
      */
     public void help() {
-        System.out.println("""
-                ### Ascii Menu
-                    - add rectangle <x> <y> <width> <height> <color>
-                    - add circle <x> <y> <radius> <color>
-                    - add square <x> <y> <size> <color>
-                    - move <index> <x> <y>
-                    - color <index> <new color>
-                    - delete <index>
-                    - group <i1> [<i2> ...]
-                    - ungroup <index>
-                    - list
-                    - show
-                    - help
-                    - exit
-                """);
+        System.out.println(help);
     }
 }

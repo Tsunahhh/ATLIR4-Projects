@@ -3,7 +3,6 @@ package g60552.atl.ascii.model;
 import g60552.atl.ascii.util.Command;
 
 import java.util.List;
-import java.util.Stack;
 
 /**
  * Class represent AsciiPaint with commands methods.
@@ -26,7 +25,9 @@ public class AsciiPaint {
      * @param height height
      */
     public AsciiPaint(int width, int height) {
-        // todo: verif
+        if (width < 1 || height < 1) {
+            throw new IllegalArgumentException("settings: the size can't be null or negative");
+        }
         drawing = new Drawing(width, height);
     }
 
@@ -38,7 +39,9 @@ public class AsciiPaint {
      * @param color color
      */
     public void newCircle(int x, int y, double radius, char color) {
-        // todo: verif
+        if (radius < 1) {
+            throw new IllegalArgumentException("add: the radius of circle can't be null or negative");
+        }
         Command command = new AddCommand(drawing, new Circle(new Point(x, y), radius, color));
         commandManager.add(command);
     }
@@ -52,7 +55,9 @@ public class AsciiPaint {
      * @param color color
      */
     public void newRectangle(int x, int y, double width, double height, char color) {
-        // todo: verif
+        if (width < 1 || height < 1) {
+            throw new IllegalArgumentException("add: the size of rectangle can't be null or negative");
+        }
 
         Command command = new AddCommand(drawing, new Rectangle(new Point(x, y), width, height, color));
         commandManager.add(command);
@@ -66,7 +71,9 @@ public class AsciiPaint {
      * @param color color
      */
     public void newSquare(int x, int y, double side, char color) {
-        // todo: verif
+        if (side < 1) {
+            throw new IllegalArgumentException("add: the size of square can't be null or negative");
+        }
         Command command = new AddCommand(drawing, new Square(new Point(x, y), side, color));
         commandManager.add(command);
     }
@@ -84,7 +91,11 @@ public class AsciiPaint {
      * @param y new position y
      */
     public void move(int index, int x, int y) {
-        // todo: verif
+
+        if (drawing.getListSize() <= index) {
+            throw new IllegalArgumentException("move: index doesnt exist");
+        }
+
         Command command = new MoveCommand(drawing, index, x, y);
         commandManager.add(command);
     }
@@ -95,7 +106,9 @@ public class AsciiPaint {
      * @param color new color
      */
     public void setColor(int index, char color) {
-        // todo: verif
+        if (drawing.getListSize() <= index) {
+            throw new IllegalArgumentException("color: index doesnt exist");
+        }
         Command command = new ColorCommand(drawing, index, color);
         commandManager.add(command);
     }
@@ -118,13 +131,17 @@ public class AsciiPaint {
     }
 
     /**
-     * Get the color from a position on the table drawing.
+     * Get the color from a position on the draw.
      * @param x x-position
      * @param y y-position
      * @return the color
      */
     public char getColorPos(int x, int y) {
-        // todo: verif
+        if (x >= drawing.getWidth() || x < 0) {
+            throw new ArrayIndexOutOfBoundsException("getColorPos: x coord out of range");
+        } else if (y >= drawing.getHeight() || y < 0) {
+            throw new ArrayIndexOutOfBoundsException("getColorPos: y coord ouf of range");
+        }
         char c = ' ';
         Shape s = this.drawing.getShapeAt(new Point(x, y));
         if (s != null) {
@@ -146,6 +163,9 @@ public class AsciiPaint {
      * @param idx index
      */
     public void delShape(int idx) {
+        if (drawing.getListSize() <= idx) {
+            throw new IllegalArgumentException("delete: index doesnt exist");
+        }
         Command command = new DeleteCommand(drawing, idx);
         commandManager.add(command);
     }
@@ -155,6 +175,11 @@ public class AsciiPaint {
      * @param idx list of indexes
      */
     public void group(List<Integer> idx) {
+        for (int i : idx) {
+            if (drawing.getListSize() <= i) {
+                throw new IllegalArgumentException("group: index " + i + "doesnt exist");
+            }
+        }
         Command command = new GroupCommand(drawing, idx);
         commandManager.add(command);
     }
@@ -164,6 +189,9 @@ public class AsciiPaint {
      * @param idx index of group
      */
     public void ungroup(int idx) {
+        if (drawing.getListSize() <= idx) {
+            throw new IllegalArgumentException("ungroup: index doesnt exist");
+        }
         Command command = new UngroupCommand(drawing, idx);
         commandManager.add(command);
     }

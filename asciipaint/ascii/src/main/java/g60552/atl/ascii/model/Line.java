@@ -1,5 +1,8 @@
 package g60552.atl.ascii.model;
 
+/**
+ * Class represent a line with color.
+ */
 public class Line extends ColorShape {
     private Point p1;
     private Point p2;
@@ -8,7 +11,6 @@ public class Line extends ColorShape {
 
     /**
      * Create a ColorShape with a color.
-     *
      * @param color color of the shape
      */
     public Line(Point p1, Point p2, char color) {
@@ -20,8 +22,9 @@ public class Line extends ColorShape {
     }
 
     /**
+     * Verify if the point is inside the line.
      * @param p a point
-     * @return
+     * @return true if the point is inside or false.
      */
     @Override
     public boolean isInside(Point p) {
@@ -32,6 +35,7 @@ public class Line extends ColorShape {
     }
 
     /**
+     * Move the line in addition of the coord
      * @param dx coord-x to sum
      * @param dy coord-y to sum
      */

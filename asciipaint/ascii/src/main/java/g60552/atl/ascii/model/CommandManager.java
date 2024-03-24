@@ -29,6 +29,8 @@ public class CommandManager {
             Command command = undoStack.pop();
             command.unexecute();
             redoStack.add(command);
+        } else {
+            throw new RuntimeException("Nothing to undo!");
         }
     }
 
@@ -40,6 +42,8 @@ public class CommandManager {
             Command command = redoStack.pop();
             command.execute();
             undoStack.add(command);
+        } else {
+            throw new RuntimeException("Nothing to redo!");
         }
     }
 }
