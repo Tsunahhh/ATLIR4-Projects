@@ -4,32 +4,32 @@ package esi.atl.g60552.othello.model;
  * Representation of a disk.
  */
 public class Disk {
-    private Color color;
+    private DiskColor diskColor;
 
     /**
      * Construct a disk.
-     * @param color the color of the disk.
+     * @param diskColor the color of the disk.
      */
-    Disk(Color color) {
-        this.color = color;
+    Disk(DiskColor diskColor) {
+        this.diskColor = diskColor;
     }
 
     /**
      * Get the color of the disk
      * @return the color.
      */
-    public Color getColor() {
-        return color;
+    public DiskColor getColor() {
+        return diskColor;
     }
 
     /**
      * Flip the disk to the other color (BLACK <=> WHITE)
      */
     public void flip() {
-        if (color == Color.BLACK) {
-            color = Color.WHITE;
+        if (diskColor == DiskColor.BLACK) {
+            diskColor = DiskColor.WHITE;
         } else {
-            color = Color.BLACK;
+            diskColor = DiskColor.BLACK;
         }
     }
 
@@ -38,10 +38,10 @@ public class Disk {
      * @return a disk
      */
     public Disk getOpposite() {
-        if (color == Color.BLACK) {
-            return new Disk(Color.WHITE);
+        if (diskColor == DiskColor.BLACK) {
+            return new Disk(DiskColor.WHITE);
         } else {
-            return new Disk(Color.BLACK);
+            return new Disk(DiskColor.BLACK);
         }
     }
 }

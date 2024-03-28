@@ -1,12 +1,15 @@
 package esi.atl.g60552.othello.model;
 
+import java.util.List;
+
 /**
  * Class represent the game with his methods.
  */
 public class Reversi {
     private Board board;
     private int size;
-    public Reversi(int size) {
+    private List<Position> validPosition;
+    public Reversi(int size, List<Player> players) {
         if (size < 3) {
             throw new IllegalArgumentException("size is too low !");
         } else if (size > 15) {
@@ -15,7 +18,7 @@ public class Reversi {
             throw new IllegalArgumentException("size should be even !");
         }
         this.size = size;
-        board = new Board(size);
+        board = new Board(size, players);
     }
 
     /**
@@ -28,12 +31,15 @@ public class Reversi {
 
     /**
      * Place the disk.
-     * @param idx index in the listOfValidMoves
+     * @param x
+     * @param y
      * @return
      */
-    public void placeDisk(int idx) {
-        board.placeDisk(idx);
-        board.nextPlayer();
+    public void placeDisk(int x, int y) {
+        if (!isValidPosition(x, y)) {
+            throw new IllegalArgumentException("Reversi: you can't place the disk here !");
+        }
+        board.placeDisk(x, y);
     }
 
     /**
@@ -50,8 +56,38 @@ public class Reversi {
      * @param y
      * @return
      */
-    public Color getColor(int x, int y) {
+    public DiskColor getColor(int x, int y) {
         return board.getColorAt(x, y);
+    }
+
+    public void nextPlayer() {
+        board.nextPlayer();
+    }
+
+    public Player getWinner() {
+        return board.getWinner();
+    }
+
+    public Player currPlayer() {
+        return board.getCurrPlayer();
+    }
+
+    public boolean isValidPosition(int x, int y) {
+        List<Position> validPositions = board.getListOfValidMoves();
+        int i = 0;
+        boolean found = false;
+        while (i < validPositions.size() && !found) {
+            Position currPos = validPositions.get(i);
+            if (currPos.getX() == x && currPos.getY() == y) {
+                found = true;
+            }
+            i++;
+        }
+        return found;
+    }
+
+    public boolean isEmpty(int x, int y) {
+        return board.isEmpty(x, y);
     }
 
 }

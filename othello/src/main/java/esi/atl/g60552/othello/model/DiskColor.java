@@ -1,6 +1,6 @@
 package esi.atl.g60552.othello.model;
 
-public enum Color {
+public enum DiskColor {
     BLACK,
     WHITE
 }

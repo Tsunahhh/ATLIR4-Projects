@@ -3,4 +3,6 @@ module esi {
 
 
     exports esi.atl.g60552.othello.controller;
+    exports esi.atl.g60552.othello.view;
+    exports esi.atl.g60552.othello.model;
 }

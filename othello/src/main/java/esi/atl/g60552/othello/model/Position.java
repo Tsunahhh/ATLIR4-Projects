@@ -39,4 +39,8 @@ public class Position {
     public int getY() {
         return y;
     }
+
+    public boolean isEquals(Position other) {
+        return x == other.getX() && y == other.getY();
+    }
 }
