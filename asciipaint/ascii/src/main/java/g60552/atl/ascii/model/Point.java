@@ -4,7 +4,7 @@ import static java.lang.Math.pow;
 import static java.lang.Math.sqrt;
 
 /**
- * Class represent a point with operations
+ * Represents a point with operations
  */
 public class Point {
     private double x;

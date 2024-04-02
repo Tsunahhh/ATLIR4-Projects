@@ -1,6 +1,7 @@
 package g60552.atl.ascii.model;
 
 import g60552.atl.ascii.util.Command;
+import g60552.atl.ascii.util.CommandManager;
 
 import java.util.List;
 
@@ -8,7 +9,7 @@ import java.util.List;
  * Class represent AsciiPaint with commands methods.
  */
 public class AsciiPaint {
-    Drawing drawing;
+    private Drawing drawing; // TODO: PRIVATE !!
 
     private CommandManager commandManager = new CommandManager();
 

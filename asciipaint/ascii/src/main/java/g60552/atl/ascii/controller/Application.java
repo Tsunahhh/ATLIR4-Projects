@@ -15,7 +15,7 @@ public class Application {
 
     private AsciiPaint paint;
     private InputManager inputManager;
-    AsciiView asciiView;
+    AsciiView asciiView; // TODO private !!!
 
     /**
      * Constructor of the application.
@@ -31,6 +31,7 @@ public class Application {
      * Set parameters like size of paint
      */
     private  void settings() {
+        // onpréfère démarrer avec un truc par défaut et avoir des commandes pour changer.
         int heigth, width;
         String ifSettings;
         System.out.print("### Settings <yes,no> ? : ");
@@ -122,7 +123,7 @@ public class Application {
      * Delete a shape
      * @param m matched command
      */
-    public void delShape(Matcher m) {
+     void delShape(Matcher m) {
         int idx = Integer.parseInt(m.group(1));
         this.paint.delShape(idx);
     }
@@ -131,7 +132,7 @@ public class Application {
      * Group shapes.
      * @param m matched command
      */
-    public void group(Matcher m){
+     void group(Matcher m){
         String match = m.group();
         List<Integer> indexes = extractIndexes(match);
         paint.group(indexes);
@@ -141,7 +142,7 @@ public class Application {
      * Ungroup a group of shapes
      * @param m matched command
      */
-    public void ungroup(Matcher m) {
+     void ungroup(Matcher m) {
         int idx = Integer.parseInt(m.group(1));
         paint.ungroup(idx);
     }

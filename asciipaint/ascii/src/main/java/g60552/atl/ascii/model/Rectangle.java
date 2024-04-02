@@ -19,7 +19,7 @@ public class Rectangle extends ColorShape {
         super(color);
 
         if (width < 1 || height < 1) {
-            throw new IllegalArgumentException("size of shape is too low");
+            throw new IllegalArgumentException("size of shape is too low +++");
         }
 
         this.upperLeft = new Point(upperLeft);
@@ -33,13 +33,10 @@ public class Rectangle extends ColorShape {
      * @return true if in the perimeters of false.
      */
     public boolean isInside(Point p) {
-        boolean res = false;
-        if (p.getX() >= upperLeft.getX() && p.getX() < upperLeft.getX() + width) {
-            if (p.getY() >= upperLeft.getY() && p.getY() < upperLeft.getY() + heigth) {
-                res = true;
-            }
-        }
-        return res;
+        return     p.getX() >= upperLeft.getX()
+                && p.getX() < upperLeft.getX() + width
+                && p.getY() >= upperLeft.getY()
+                && p.getY() < upperLeft.getY() + heigth;
     }
 
 

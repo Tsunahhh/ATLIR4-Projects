@@ -25,7 +25,7 @@ Drawing {
      */
     public Drawing(int width, int height) {
         if (width < 1 || height < 1) {
-            throw new IllegalArgumentException("width or height can't be null or negative !");
+            throw new IllegalArgumentException("width or height can't be null or negative +++");
         }
 
         shapes = new LinkedList<>();
@@ -37,7 +37,7 @@ Drawing {
      * Add shape to the list.
      * @param shape Shape
      */
-    public void addShape(Shape shape, int index) {
+    protected void addShape(Shape shape, int index) {
         shapes.add(index, shape);
     }
 
@@ -69,7 +69,7 @@ Drawing {
      * @param idx index
      * @param c color
      */
-    public void setColors(int idx, char c) {
+    protected void setColors(int idx, char c) {
         ColorShape s = (ColorShape) this.shapes.get(idx);
         s.setColor(c);
     }
@@ -88,7 +88,7 @@ Drawing {
      * @param x position
      * @param y position
      */
-    public void move(int idx, int x, int y) {
+    protected void move(int idx, int x, int y) { //TODO  pas dans drawing.
         ColorShape curr = (ColorShape) shapes.get(idx);
         curr.move(x, y);
     }
@@ -97,7 +97,7 @@ Drawing {
      * Get height
      * @return height of draw
      */
-    int getHeight() {
+    public int getHeight() {
         return height;
     }
 
@@ -105,7 +105,7 @@ Drawing {
      * Get width
      * @return width of draw
      */
-    int getWidth() {
+    public int getWidth() {
         return width;
     }
 
@@ -134,7 +134,7 @@ Drawing {
      * Group shapes from indexes
      * @param idx list of indexes
      */
-    void group(List<Integer> idx, int newIndex) { // 2 4 6
+    void group(List<Integer> idx, int newIndex) { // 2 4 6 // TODO pas ici.
         List<ColorShape> cs = new ArrayList<>();
         idx.sort(Comparator.reverseOrder()); // 6 4 2
 

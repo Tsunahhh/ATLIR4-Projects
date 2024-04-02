@@ -11,7 +11,7 @@ import javafx.stage.Stage;
 import util.Observer;
 
 public class BMRUI implements Observer {
-    Person person = new Person();
+    Person person = new Person(); //PRIVATE TODO
 
     private BMRInput bmrInput = new BMRInput();;
     private BMROutput bmrOutput = new BMROutput();

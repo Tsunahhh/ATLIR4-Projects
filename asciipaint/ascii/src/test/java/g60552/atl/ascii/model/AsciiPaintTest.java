@@ -109,7 +109,8 @@ class AsciiPaintTest {
 
     @Test
     void squareNegativeSize() {
-        ap.newSquare(10, 10, -10, 'S');
+        assertThrows(IllegalArgumentException.class,
+                () -> ap.newSquare(10, 10, -10, 'S'));
     }
 
     @Test

@@ -24,4 +24,6 @@ public interface Shape {
      * @return the color
      */
     char getColor();
+
+    //TODO: setColor
 }

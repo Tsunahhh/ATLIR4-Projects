@@ -24,7 +24,7 @@ public class AddCommand implements Command {
      */
     @Override
     public void execute() {
-        this.drawing.addShape(shape, 0);
+        drawing.addShape(shape, 0);
     }
 
     /**
@@ -32,6 +32,6 @@ public class AddCommand implements Command {
      */
     @Override
     public void unexecute() {
-        this.drawing.removeShape(shape);
+        drawing.removeShape(shape);
     }
 }

@@ -1,4 +1,4 @@
-package g60552.atl.ascii.model;
+package g60552.atl.ascii.util;
 
 import g60552.atl.ascii.util.Command;
 
@@ -8,7 +8,7 @@ import java.util.Stack;
  * Represent a manager of commands
  */
 public class CommandManager {
-    Stack<Command> undoStack = new Stack<>();
+    Stack<Command> undoStack = new Stack<>(); // TODO PRIVATE !!!
     Stack<Command> redoStack = new Stack<>();
 
     /**
@@ -30,7 +30,7 @@ public class CommandManager {
             command.unexecute();
             redoStack.add(command);
         } else {
-            throw new RuntimeException("Nothing to undo!");
+            throw new RuntimeException("Nothing to undo!"); // pas d'erreur, on ignore.
         }
     }
 

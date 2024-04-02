@@ -22,12 +22,14 @@ public class GroupCommand implements Command {
         this.drawing = drawing;
         this.indexes = indexes;
         this.indexes.sort(Comparator.naturalOrder());
+        // construire le groupe ici. TODO
     }
     /**
      * Execute the group command
      */
     @Override
     public void execute() {
+        // TODO la logique ici et pas dans drawing: retirer les shape et ajouter le groupe.
         drawing.group(new ArrayList<>(indexes), -1);
     }
 

@@ -29,7 +29,7 @@ public class MoveCommand implements Command {
      * Execute the command.
      */
     @Override
-    public void execute() {
+    public void execute() { // TODO utiliser shape et pas drawing.
         drawing.move(index, dx, dy);
     }
 

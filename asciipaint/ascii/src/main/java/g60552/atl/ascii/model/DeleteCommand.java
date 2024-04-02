@@ -18,6 +18,7 @@ public class DeleteCommand implements Command {
     public DeleteCommand(Drawing drawing, int index) {
         this.drawing = drawing;
         this.index = index;
+        // stocker aussi la shape.
     }
 
     /**

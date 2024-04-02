@@ -27,7 +27,7 @@ public class UngroupCommand implements Command {
      */
     @Override
     public void execute() {
-        nbShapes = drawing.ungroup(index);
+        nbShapes = drawing.ungroup(index); // la logique ici pas dans drawing TODO.
         group = (Group) drawing.getShape(index);
     }
 

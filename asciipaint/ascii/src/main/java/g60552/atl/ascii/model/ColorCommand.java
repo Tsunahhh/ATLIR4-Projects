@@ -7,6 +7,8 @@ import g60552.atl.ascii.util.Command;
  */
 public class ColorCommand implements Command {
     private Drawing drawing;
+
+    // TODO: Shape shape
     private int index;
     private char color;
     private char oldColor;
@@ -21,7 +23,7 @@ public class ColorCommand implements Command {
         this.index = index;
         this.color = color;
         this.drawing = drawing;
-        this.oldColor = drawing.getShapes().get(index).getColor();
+        this.oldColor = drawing.getShape(index).getColor();
     }
 
     /**
@@ -29,6 +31,7 @@ public class ColorCommand implements Command {
      */
     @Override
     public void execute() {
+        // TODO: shape.setColor(color)
         drawing.setColors(index, color);
     }
 
