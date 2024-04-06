@@ -8,6 +8,7 @@ import javafx.scene.Scene;
 import javafx.scene.control.MenuBar;
 import javafx.stage.Stage;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
@@ -41,7 +42,7 @@ public class AppView {
     private void initGame() {
         Player p1 = new Human("Guest123", DiskColor.BLACK);
         Player p2 = new Human("Guest456", DiskColor.WHITE);
-        List<Player> players = Arrays.asList(p1, p2);
+        List<Player> players = new ArrayList<>(Arrays.asList(p1, p2));
         reversi = new Reversi(size, players);
     }
 }

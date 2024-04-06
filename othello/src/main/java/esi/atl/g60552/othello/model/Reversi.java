@@ -19,6 +19,7 @@ public class Reversi {
         }
         this.size = size;
         board = new Board(size, players);
+        board.nextPlayer();
     }
 
     /**
@@ -35,11 +36,11 @@ public class Reversi {
      * @param y
      * @return
      */
-    public void placeDisk(int x, int y) {
+    public boolean placeDisk(int x, int y) {
         if (!isValidPosition(x, y)) {
             throw new IllegalArgumentException("Reversi: you can't place the disk here !");
         }
-        board.placeDisk(x, y);
+        return board.placeDisk(x, y);
     }
 
     /**
@@ -88,6 +89,10 @@ public class Reversi {
 
     public boolean isEmpty(int x, int y) {
         return board.isEmpty(x, y);
+    }
+
+    public DiskColor getCurrPlayerColor() {
+        return board.getCurrPlayer().getColor();
     }
 
 }

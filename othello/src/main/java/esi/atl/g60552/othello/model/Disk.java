@@ -18,14 +18,14 @@ public class Disk {
      * Get the color of the disk
      * @return the color.
      */
-    public DiskColor getColor() {
+    DiskColor getColor() {
         return diskColor;
     }
 
     /**
      * Flip the disk to the other color (BLACK <=> WHITE)
      */
-    public void flip() {
+    void flip() {
         if (diskColor == DiskColor.BLACK) {
             diskColor = DiskColor.WHITE;
         } else {
@@ -37,7 +37,7 @@ public class Disk {
      * Get a disk with the opposite color.
      * @return a disk
      */
-    public Disk getOpposite() {
+     Disk getOpposite() {
         if (diskColor == DiskColor.BLACK) {
             return new Disk(DiskColor.WHITE);
         } else {

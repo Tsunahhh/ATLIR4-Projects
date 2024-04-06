@@ -7,7 +7,6 @@ import javafx.stage.Stage;
 
 public class ReversApp extends Application {
 
-
     @Override
     public void start(Stage stage) throws Exception {
         AppView av = new AppView(stage);
@@ -16,5 +15,4 @@ public class ReversApp extends Application {
     public static void main(String[] args) {
         launch(args);
     }
-
 }

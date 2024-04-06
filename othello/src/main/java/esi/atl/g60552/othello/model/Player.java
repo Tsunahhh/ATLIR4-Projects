@@ -6,5 +6,4 @@ package esi.atl.g60552.othello.model;
 public interface Player {
     String getName();
     DiskColor getColor();
-
 }

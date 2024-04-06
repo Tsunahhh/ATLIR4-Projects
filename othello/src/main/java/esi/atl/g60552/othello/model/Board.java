@@ -1,12 +1,15 @@
 package esi.atl.g60552.othello.model;
 
+import esi.atl.g60552.othello.util.Observable;
+import esi.atl.g60552.othello.util.Observer;
+
 import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Class represent the board of the game with his methods.
+ * Represents the board of the game with his methods.
  */
-public class Board {
+public class Board implements Observable {
 
     private Disk[][] board;
     private int size;
@@ -15,6 +18,7 @@ public class Board {
     private List<Position> listOfValidMoves;
     int blackDisks = 0;
     int whiteDisks = 0;
+    List<Observer> observers = new ArrayList<>();
 
     /**
      * Construct the board with size
@@ -24,6 +28,7 @@ public class Board {
         board = new Disk[size][size];
         this.size = size;
         participants = players;
+        listOfValidMoves = new ArrayList<>();
         init();
     }
 
@@ -52,9 +57,9 @@ public class Board {
 
     /**
      * Verify if the position is in the Board
-     * @param x
-     * @param y
-     * @return
+     * @param x x-coords
+     * @param y y-coords
+     * @return true if in the board or false
      */
     private boolean isInBoard(int x, int y) {
         return x > 0 && x < size && y > 0 && y < size;
@@ -105,7 +110,7 @@ public class Board {
 
         for (int i = 0; i < size; i++) {
             for (int j = 0; j < size; j++) {
-                if (isPlaceable(j, i)) {
+                if (isPlaceable(j, i) && board[i][j] == null) {
                     listOfValidMoves.add(new Position(j, i));
                 }
             }
@@ -163,15 +168,18 @@ public class Board {
     }
 
     /**
-     * Change the current player to the next player..
+     * Change the current player to the next player.
      */
     public void nextPlayer() {
         if (currPlayer == null) {
             currPlayer = participants.remove(0);
         } else {
+            Player tmp = participants.remove(0);
             participants.add(currPlayer);
-            participants.remove(0);
+            currPlayer = tmp;
         }
+        nextValidMoves();
+        notifyObservers();
     }
 
     public Player getCurrPlayer() {
@@ -197,13 +205,16 @@ public class Board {
      * @param x x-coords
      * @param y y-coords
      */
-    public void placeDisk(int x, int y) {
-
+    public boolean placeDisk(int x, int y) {
+        boolean res = false;
         for (Direction direction : Direction.values()) {
             if (isDirectionValid(x, y, direction)) {
                 flipDirection(x, y, direction);
+                res = true;
             }
         }
+        notifyObservers();
+        return res;
     }
 
     /**
@@ -216,5 +227,22 @@ public class Board {
 
     public boolean isEmpty(int x, int y) {
         return board[y][x] == null;
+    }
+
+    @Override
+    public void registerObserver(Observer observer) {
+        observers.add(observer);
+    }
+
+    @Override
+    public void unregisterObserver(Observer observer) {
+        observers.remove(observer);
+    }
+
+    @Override
+    public void notifyObservers() {
+        for (Observer observer : observers) {
+            observer.update();
+        }
     }
 }
