@@ -233,6 +233,12 @@ public class Board implements Observable {
         return listOfValidMoves;
     }
 
+    /**
+     * Verify if the position is empty
+     * @param x x-coords
+     * @param y y-coords
+     * @return true if empty or false
+     */
     public boolean isEmpty(int x, int y) {
         return board[y][x] == null;
     }

@@ -42,5 +42,4 @@ public class Human implements Player{
     public String getName() {
         return name;
     }
-
 }

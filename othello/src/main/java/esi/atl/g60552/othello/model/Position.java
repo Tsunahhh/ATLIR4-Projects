@@ -40,6 +40,11 @@ public class Position {
         return y;
     }
 
+    /**
+     * Verify if the position is equals to another position
+     * @param other the other position
+     * @return true if equals, false otherwise
+     */
     public boolean isEquals(Position other) {
         return x == other.getX() && y == other.getY();
     }

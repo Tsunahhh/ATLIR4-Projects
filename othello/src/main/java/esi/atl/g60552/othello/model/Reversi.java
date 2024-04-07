@@ -7,14 +7,20 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
+
 /**
- * Class represent the game with his methods.
+ * Reversi game. It represents the game with its methods.
  */
 public class Reversi implements Observable {
     private Board board;
     private int size;
     private List<Observer> observers = new ArrayList<>();
-    private List<Position> validPosition;
+
+    /**
+     * Constructor.
+     * @param size size of the board
+     * @param players players of the game
+     */
     public Reversi(int size, Player... players) {
         if (size < 3) {
             throw new IllegalArgumentException("size is too low !");
@@ -46,16 +52,15 @@ public class Reversi implements Observable {
 
     /**
      * Place the disk.
-     * @param x
-     * @param y
-     * @return
+     * @param x x position
+     * @param y y position
      */
     public void placeDisk(int x, int y) {
         if (!isValidPosition(x, y)) {
             throw new IllegalArgumentException("Reversi: you can't place the disk here !");
         }
 
-        if (board.placeDisk(x, y)) {
+        if (board.placeDisk(x, y)) { // notify only if the disk is placed
             nextPlayer();
             notifyObservers();
         }
@@ -70,27 +75,44 @@ public class Reversi implements Observable {
     }
 
     /**
-     *
-     * @param x
-     * @param y
-     * @return
+     * Get the color of the disk at the given position.
+     * @param x the x position
+     * @param y the y position
+     * @return the color
      */
     public DiskColor getColor(int x, int y) {
         return board.getColorAt(x, y);
     }
 
+    /**
+     * Switch to the next player.
+     */
     private void nextPlayer() {
         board.nextPlayer();
     }
 
+    /**
+     * Get the winner of the game.
+     * @return the winner
+     */
     public Player getWinner() {
         return board.getWinner();
     }
 
+    /**
+     * Get the current player.
+     * @return the current player
+     */
     public Player currPlayer() {
         return board.getCurrPlayer();
     }
 
+    /**
+     * Verify if the given position is valid.
+     * @param x x position
+     * @param y y position
+     * @return true if valid, false otherwise
+     */
     public boolean isValidPosition(int x, int y) {
         List<Position> validPositions = board.getListOfValidMoves();
         int i = 0;
@@ -105,6 +127,12 @@ public class Reversi implements Observable {
         return found;
     }
 
+    /**
+     * Check if the given position is empty.
+     * @param x the x position
+     * @param y the y position
+     * @return true if empty, false otherwise
+     */
     public boolean isEmpty(int x, int y) {
         return board.isEmpty(x, y);
     }
