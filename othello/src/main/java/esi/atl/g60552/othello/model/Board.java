@@ -36,10 +36,11 @@ public class Board implements Observable {
      * Initialize the board with disks in the middle.
      */
     private void init() {
-        board[size / 2][size / 2] = new Disk(DiskColor.BLACK);
-        board[size / 2 - 1][size / 2] = new Disk(DiskColor.WHITE);
-        board[size / 2 - 1][size / 2 - 1] = new Disk(DiskColor.BLACK);
-        board[size / 2][size / 2 - 1] = new Disk(DiskColor.WHITE);
+        board[size / 2][size / 2] = new Disk(DiskColor.WHITE);
+        board[size / 2 - 1][size / 2] = new Disk(DiskColor.BLACK);
+        board[size / 2 - 1][size / 2 - 1] = new Disk(DiskColor.WHITE);
+        board[size / 2][size / 2 - 1] = new Disk(DiskColor.BLACK);
+        nextPlayer();
     }
 
     /**
@@ -74,12 +75,18 @@ public class Board implements Observable {
      */
     private boolean isDirectionValid(int x, int y, Direction direction) {
         boolean isPlaceable = false;
+
         x += direction.getXDirection();
         y += direction.getYDirection();
+        if (!isInBoard(x, y) || board[y][x] == null || board[y][x].getColor() == currPlayer.getColor()) {
+            return false;
+        }
+
         while (isInBoard(x, y) && board[y][x] != null && board[y][x].getColor() != currPlayer.getColor()) {
             x += direction.getXDirection();
             y += direction.getYDirection();
         }
+
         if (isInBoard(x, y) && board[y][x] != null) {
             isPlaceable = true;
         }
@@ -103,9 +110,8 @@ public class Board implements Observable {
 
     /**
      * Get all the next placements for a player
-     * @return list of valid positions
      */
-    private List<Position> nextValidMoves() {
+    private void nextValidMoves() {
         listOfValidMoves = new ArrayList<>();
 
         for (int i = 0; i < size; i++) {
@@ -116,7 +122,6 @@ public class Board implements Observable {
             }
         }
 
-        return new ArrayList<>(listOfValidMoves);
     }
 
     /**
@@ -125,18 +130,18 @@ public class Board implements Observable {
      */
     private boolean isFull() {
         int i = 0;
-        boolean found = false;
-        while (i < size && !found) {
+        boolean isFull = true;
+        while (i < size && isFull) {
             int j = 0;
-            while (j < size && !found) {
+            while (j < size && isFull) {
                 if (board[i][j] == null) {
-                    found = true;
+                    isFull = false;
                 }
                 j++;
             }
             i++;
         }
-        return found;
+        return isFull;
     }
 
     /**
@@ -196,7 +201,9 @@ public class Board implements Observable {
         x += direction.getXDirection();
         y += direction.getYDirection();
         while (board[y][x].getColor() != currPlayer.getColor()) {
-            board[x][y].flip();
+            board[y][x].flip();
+            x += direction.getXDirection();
+            y += direction.getYDirection();
         }
     }
 
@@ -209,6 +216,7 @@ public class Board implements Observable {
         boolean res = false;
         for (Direction direction : Direction.values()) {
             if (isDirectionValid(x, y, direction)) {
+                board[y][x] = new Disk(currPlayer.getColor());
                 flipDirection(x, y, direction);
                 res = true;
             }
