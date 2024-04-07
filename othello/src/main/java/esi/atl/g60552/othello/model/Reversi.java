@@ -1,15 +1,21 @@
 package esi.atl.g60552.othello.model;
 
+import esi.atl.g60552.othello.util.Observable;
+import esi.atl.g60552.othello.util.Observer;
+
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 /**
  * Class represent the game with his methods.
  */
-public class Reversi {
+public class Reversi implements Observable {
     private Board board;
     private int size;
+    private List<Observer> observers = new ArrayList<>();
     private List<Position> validPosition;
-    public Reversi(int size, List<Player> players) {
+    public Reversi(int size, Player... players) {
         if (size < 3) {
             throw new IllegalArgumentException("size is too low !");
         } else if (size > 15) {
@@ -18,8 +24,16 @@ public class Reversi {
             throw new IllegalArgumentException("size should be even !");
         }
         this.size = size;
-        board = new Board(size, players);
-        board.nextPlayer();
+        ArrayList<Player> playersList = new ArrayList<>();
+        for (Player player : players) {
+            if (player == null) {
+                throw new IllegalArgumentException("Reversi: player is null !");
+            } else {
+                playersList.add(player);
+            }
+        }
+        board = new Board(size, playersList);
+        notifyObservers();
     }
 
     /**
@@ -36,11 +50,15 @@ public class Reversi {
      * @param y
      * @return
      */
-    public boolean placeDisk(int x, int y) {
+    public void placeDisk(int x, int y) {
         if (!isValidPosition(x, y)) {
             throw new IllegalArgumentException("Reversi: you can't place the disk here !");
         }
-        return board.placeDisk(x, y);
+
+        if (board.placeDisk(x, y)) {
+            nextPlayer();
+            notifyObservers();
+        }
     }
 
     /**
@@ -61,7 +79,7 @@ public class Reversi {
         return board.getColorAt(x, y);
     }
 
-    public void nextPlayer() {
+    private void nextPlayer() {
         board.nextPlayer();
     }
 
@@ -91,8 +109,20 @@ public class Reversi {
         return board.isEmpty(x, y);
     }
 
-    public DiskColor getCurrPlayerColor() {
-        return board.getCurrPlayer().getColor();
+    @Override
+    public void registerObserver(Observer observer) {
+        observers.add(observer);
     }
 
+    @Override
+    public void unregisterObserver(Observer observer) {
+        observers.remove(observer);
+    }
+
+    @Override
+    public void notifyObservers() {
+        for (Observer observer : observers) {
+            observer.update();
+        }
+    }
 }
