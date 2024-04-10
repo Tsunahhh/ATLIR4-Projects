@@ -3,14 +3,14 @@ package esi.atl.g60552.othello.model;
 /**
  * Frontend for the Reversi game.
  */
-public class RevesiFront {
+public class ReversiFront {
     private Reversi reversi;
 
     /**
      * Constructor.
      * @param reversi the game to represent
      */
-    public RevesiFront(Reversi reversi) {
+    public ReversiFront(Reversi reversi) {
         this.reversi = reversi;
 
     }

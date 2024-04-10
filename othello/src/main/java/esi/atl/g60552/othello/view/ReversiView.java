@@ -17,14 +17,13 @@ public class ReversiView extends GridPane implements Observer {
         super();
         this.reversi = reversi;
         init();
-        //update();
+        update();
     }
 
     private void init() {
         // Définir le fond en vert
         BackgroundFill backgroundFill = new BackgroundFill(Color.GREEN, CornerRadii.EMPTY, null);
         super.setBackground(new Background(backgroundFill));
-        update();
     }
 
     private void actions(int col, int row, final CaseView caseView) {
@@ -36,7 +35,7 @@ public class ReversiView extends GridPane implements Observer {
                     caseView.setColorRectangle(Color.RED);
                 }
 
-                if (reversi.getCurrPlayerColor() == DiskColor.BLACK) {
+                if (reversi.currPlayer().getColor() == DiskColor.BLACK) {
                     caseView.setColorDisk(Color.rgb(0, 0, 0, 0.5));
                 } else {
                     caseView.setColorDisk(Color.rgb(255, 255, 255, 0.5));
@@ -47,7 +46,6 @@ public class ReversiView extends GridPane implements Observer {
         caseView.onMouseClickedProperty().set(e -> {
             if (reversi.isValidPosition(col, row)) {
                 reversi.placeDisk(col, row);
-                reversi.nextPlayer();
             }
         });
 

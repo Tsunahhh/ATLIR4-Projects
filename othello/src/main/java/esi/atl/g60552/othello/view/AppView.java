@@ -24,6 +24,7 @@ public class AppView {
         initGame();
         //initStopButton();
         ReversiView rv = new ReversiView(reversi);
+        reversi.registerObserver(rv);
         Scene sc = new Scene(rv);
         stage.setScene(sc);
         stage.show();
@@ -42,7 +43,6 @@ public class AppView {
     private void initGame() {
         Player p1 = new Human("Guest123", DiskColor.BLACK);
         Player p2 = new Human("Guest456", DiskColor.WHITE);
-        List<Player> players = new ArrayList<>(Arrays.asList(p1, p2));
-        reversi = new Reversi(size, players);
+        reversi = new Reversi(size, p1, p2);
     }
 }
