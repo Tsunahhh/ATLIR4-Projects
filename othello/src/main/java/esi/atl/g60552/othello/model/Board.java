@@ -14,22 +14,14 @@ public class Board {
 
     private Disk[][] board;
     private int size;
-    private Player currPlayer;// todo pas dans Board
-    List<Player> participants; // 2 players
-    private List<Position> listOfValidMoves;
-    int blackDisks = 0; // todo: on préfère le calculer à chaque fois
-    int whiteDisks = 0;
-    List<Observer> observers = new ArrayList<>();
 
     /**
      * Construct the board with size
      * @param size the size
      */
-    Board(int size, List<Player> players) {
+    Board(int size) {
         board = new Disk[size][size];
         this.size = size;
-        participants = players;
-        listOfValidMoves = new ArrayList<>();
         init();
     }
 
@@ -41,7 +33,6 @@ public class Board {
         board[size / 2 - 1][size / 2] = new Disk(DiskColor.BLACK);
         board[size / 2 - 1][size / 2 - 1] = new Disk(DiskColor.WHITE);
         board[size / 2][size / 2 - 1] = new Disk(DiskColor.BLACK);
-        nextPlayer();
     }
 
     /**
@@ -63,129 +54,8 @@ public class Board {
      * @param y y-coords
      * @return true if in the board or false
      */
-    private boolean isInBoard(int x, int y) {
+    public boolean isInBoard(int x, int y) {
         return x >= 0 && x < size && y >= 0 && y < size;
-    }
-
-    /**
-     * Verify if the direction can be flipped by the player
-     * @param x x-coords
-     * @param y y-coords
-     * @param direction the direction
-     * @return true if the direction can be flipped or false
-     */
-    boolean isDirectionValid(int x, int y, Direction direction) {// todo pas dans Baord
-        boolean isPlaceable = false;
-
-        if (isInBoard(x, y) && isEmpty(x, y)) {
-            x += direction.getXDirection();
-            y += direction.getYDirection();
-            // The next one is other color than player
-            if (isInBoard(x, y) && !isEmpty(x, y) && getColorAt(x, y) != currPlayer.getColor()) {
-                while (isInBoard(x, y) && !isEmpty(x, y) && !isPlaceable) {
-                    if (getColorAt(x, y) == currPlayer.getColor()) {
-                        isPlaceable = true;
-                    }
-                    x += direction.getXDirection();
-                    y += direction.getYDirection();
-                }
-            }
-
-        }
-
-        return isPlaceable;
-    }
-
-    /**
-     * Verify if the position is a placeable case for the current player
-     * @param x x-coords
-     * @param y y-coords
-     * @return true if placeable of false
-     */
-    boolean isPlaceable(int x, int y) {
-        return Arrays.stream(Direction.values()).anyMatch(direction -> isDirectionValid(x, y, direction));
-    }
-
-    /**
-     * Get all the next placements for a player
-     */
-    private void nextValidMoves() {
-        listOfValidMoves = new ArrayList<>();
-
-        for (int i = 0; i < size; i++) {
-            for (int j = 0; j < size; j++) {
-                if (isPlaceable(j, i) && board[i][j] == null) {
-                    listOfValidMoves.add(new Position(j, i));
-                }
-            }
-        }
-
-    }
-
-    /**
-     * Verify if board is full or not
-     * @return true if full or false
-     */
-    private boolean isFull() {
-        int i = 0;
-        boolean isFull = true;
-        while (i < size && isFull) {
-            int j = 0;
-            while (j < size && isFull) {
-                if (board[i][j] == null) {
-                    isFull = false;
-                }
-                j++;
-            }
-            i++;
-        }
-        return isFull;
-    }
-
-    /**
-     * Verify if the game is over.
-     * @return true if over or false.
-     */
-    public boolean isOver() {
-        return isFull() || listOfValidMoves.isEmpty();
-    }
-
-    /**
-     * Get the winner of the game.
-     * @return the winner
-     */
-    public Player getWinner() {
-        Player winner;
-        List<Player> listOfPlayers = participants; // 1 other (the other player)
-        Player other = listOfPlayers.get(0);
-
-        if (listOfValidMoves.isEmpty()) {
-            winner = other;
-        } else if (currPlayer.getColor() == DiskColor.BLACK) {
-            winner = (blackDisks > whiteDisks) ? currPlayer : other;
-        }  else {
-            winner = (whiteDisks > blackDisks) ? currPlayer : other;
-        }
-
-        return winner;
-    }
-
-    /**
-     * Change the current player to the next player.
-     */
-    public void nextPlayer() {
-        if (currPlayer == null) {
-            currPlayer = participants.remove(0);
-        } else {
-            Player tmp = participants.remove(0);
-            participants.add(currPlayer);
-            currPlayer = tmp;
-        }
-        nextValidMoves();
-    }
-
-    public Player getCurrPlayer() {
-        return currPlayer;
     }
 
     /**
@@ -194,14 +64,17 @@ public class Board {
      * @param y y-coords
      * @param direction the direction
      */
-    private void flipDirection(int x, int y, Direction direction) {
+    int flipDirection(int x, int y, Direction direction, Player player) {
         x += direction.getXDirection();
         y += direction.getYDirection();
-        while (board[y][x].getColor() != currPlayer.getColor()) {
+        int cpt = 0;
+        while (board[y][x].getColor() != player.getColor()) {
             board[y][x].flip();
+            cpt++;
             x += direction.getXDirection();
             y += direction.getYDirection();
         }
+        return cpt;
     }
 
     /**
@@ -209,34 +82,10 @@ public class Board {
      * @param x x-coords
      * @param y y-coords
      */
-    public boolean placeDisk(int x, int y) {
-        if (!isPlaceable(x, y)) {
-            throw new IllegalArgumentException("Board: you can't place the disk here !");
-        }
-
-        boolean res = false;
-
-        for (Direction direction : Direction.values()) {
-            if (isDirectionValid(x, y, direction)) {
-                flipDirection(x, y, direction);
-                res = true;
-            }
-        }
-
-        if (res) {
-            board[y][x] = new Disk(currPlayer.getColor());
-        }
-
-        return res;
+    void placeDisk(int x, int y, DiskColor color) {
+        board[y][x] = new Disk(color);
     }
 
-    /**
-     * Get a list positions of valid moves
-     * @return the list
-     */
-    public List<Position> getListOfValidMoves() {
-        return listOfValidMoves; // todo calculer
-    }
 
     /**
      * Verify if the position is empty
@@ -246,5 +95,33 @@ public class Board {
      */
     public boolean isEmpty(int x, int y) {
         return board[y][x] == null;
+    }
+
+    public int getBlackDisks() {
+        int count = 0;
+        for (int i = 0; i < board.length; i++) {
+            for (int j = 0; j < board[i].length; j++) {
+                if (board[i][j].getColor() == DiskColor.BLACK) {
+                    count++;
+                }
+            }
+        }
+        return count;
+    }
+
+    public int getWhiteDisks() {
+        int count = 0;
+        for (int i = 0; i < board.length; i++) {
+            for (int j = 0; j < board[i].length; j++) {
+                if (board[i][j].getColor() == DiskColor.WHITE) {
+                    count++;
+                }
+            }
+        }
+        return count;
+    }
+
+    public int getSize() {
+        return size;
     }
 }

@@ -17,8 +17,4 @@ public interface Observable {
      */
     void unregisterObserver(Observer observer);
 
-    /**
-     * Notify observers for updates.
-     */
-    void notifyObservers();
 }

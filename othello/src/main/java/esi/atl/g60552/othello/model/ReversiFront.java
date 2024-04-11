@@ -19,9 +19,6 @@ public class ReversiFront {
      * Get the size of the board.
      * @return the size
      */
-    public int getSize() {
-        return reversi.getSize();
-    }
 
     /**
      * Get the color of the disk at the given position.
@@ -30,7 +27,7 @@ public class ReversiFront {
      * @return the color
      */
     public DiskColor getColor(int x, int y) {
-        return reversi.getColor(x, y);
+        return reversi.getColorAt(x, y);
     }
 
     /**
@@ -55,9 +52,7 @@ public class ReversiFront {
      * @param y the y position
      * @return true if empty, false otherwise
      */
-    public boolean isEmpty(int x, int y) {
-        return reversi.isEmpty(x, y);
-    }
+
 
     /**
      * Check if the given position is valid.

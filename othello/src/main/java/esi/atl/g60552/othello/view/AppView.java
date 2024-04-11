@@ -18,14 +18,12 @@ public class AppView implements Observer {
     private ButtonsBox buttonsBox;
     private Scene scene;
 
-
     public AppView(Stage stage) {
         initViews();
         initGame();
-        register();
+        update();
         stage.setScene(scene);
         stage.show();
-        update();
     }
 
     private void initViews() {
@@ -47,11 +45,7 @@ public class AppView implements Observer {
     private void initGame() {
         Player p1 = new Human("Human", DiskColor.BLACK);
         Player p2 = new Human("Strategy", DiskColor.WHITE);
-        reversi = new Reversi(4, p1, p2);
-        reversiView.setGame(reversi);
-    }
-
-    private void register() {
+        reversi = new Reversi(8, p1, p2);
         reversi.registerObserver(this);
     }
 
@@ -70,6 +64,6 @@ public class AppView implements Observer {
         } else {
             settingsView.hideSettings();
         }
-        reversiView.update();
+        reversiView.update(reversi);
     }
 }

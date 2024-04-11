@@ -10,9 +10,9 @@ public class GameInfo extends HBox {
         super();
     }
 
-
-
     void update(Player player, int score, int time) {
-
+        Label playerName = new Label(player.getName());
+        Label scoreLabel = new Label(String.valueOf(score));
+        Label timeLabel = new Label(String.valueOf(time));
     }
 }

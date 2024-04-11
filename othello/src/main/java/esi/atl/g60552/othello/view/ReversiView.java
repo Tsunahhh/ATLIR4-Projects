@@ -1,38 +1,24 @@
 package esi.atl.g60552.othello.view;
 
+import esi.atl.g60552.othello.model.Board;
 import esi.atl.g60552.othello.model.DiskColor;
+import esi.atl.g60552.othello.model.Position;
 import esi.atl.g60552.othello.model.Reversi;
-import esi.atl.g60552.othello.util.Observer;
-import javafx.scene.control.Label;
-import javafx.scene.layout.Background;
-import javafx.scene.layout.BackgroundFill;
-import javafx.scene.layout.CornerRadii;
 import javafx.scene.layout.GridPane;
 import javafx.scene.paint.Color;
 
+import java.util.List;
+
 public class ReversiView extends GridPane {
-    private Reversi reversi; // pas en attribut
 
     public ReversiView() {
         super();
-        init();
-        update();
     }
 
-    void setGame(Reversi reversi) {
-        this.reversi = reversi;
-        update();
-    }
-
-    private void init() {
-        // Définir le fond en vert
-        //BackgroundFill backgroundFill = new BackgroundFill(Color.GREEN, CornerRadii.EMPTY, null);
-        //super.setBackground(new Background(backgroundFill));
-    }
-
-    private void actions(int col, int row, final CaseView caseView) {
+    private void actions(Reversi reversi, int col, int row, final CaseView caseView) {
+        Board board = reversi.getBoard();
         caseView.setOnMouseEntered(e -> {
-            if (reversi.isEmpty(col, row)) {
+            if (board.isEmpty(col, row)) {
                 if (reversi.isValidPosition(col, row)) {
                     caseView.setColorRectangle(Color.LIME);
                 } else {
@@ -55,28 +41,27 @@ public class ReversiView extends GridPane {
 
         caseView.setOnMouseExited(e -> {
             caseView.setColorRectangle(Color.GREEN);
-            if (reversi.isEmpty(col, row)) {
+            if (board.isEmpty(col, row)) {
                 caseView.eraseDisk();
             }
         });
     }
 
-    public void update() {
+    public void update(Reversi reversi) {
         this.getChildren().clear();
-        if (reversi != null) {
-            for (int row = 0; row < reversi.getSize(); row++) {
-                for (int col = 0; col < reversi.getSize(); col++) {
-                    CaseView caseView = new CaseView();
-                    if (!reversi.isEmpty(col, row)) {
-                        if (reversi.getColor(col, row) == DiskColor.BLACK) {
-                            caseView.setColorDisk(Color.BLACK);
-                        } else if (reversi.getColor(col, row) == DiskColor.WHITE) {
-                            caseView.setColorDisk(Color.WHITE);
-                        }
+        Board board = reversi.getBoard();
+        for (int row = 0; row < board.getSize(); row++) {
+            for (int col = 0; col < board.getSize(); col++) {
+                CaseView caseView = new CaseView();
+                if (!board.isEmpty(col, row)) {
+                    if (board.getColorAt(col, row) == DiskColor.BLACK) {
+                        caseView.setColorDisk(Color.BLACK);
+                    } else if (board.getColorAt(col, row) == DiskColor.WHITE) {
+                        caseView.setColorDisk(Color.WHITE);
                     }
-                    actions(col, row, caseView);
-                    this.add(caseView, col, row);
                 }
+                actions(reversi, col, row, caseView);
+                this.add(caseView, col, row);
             }
         }
     }

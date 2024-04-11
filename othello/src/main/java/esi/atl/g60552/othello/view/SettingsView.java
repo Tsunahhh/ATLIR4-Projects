@@ -15,11 +15,8 @@ public class SettingsView extends GridPane {
     private int difficulty = 1;
 
     SettingsView() {
+
     }
-
-
-
-
 
     void hideSettings() {
 
