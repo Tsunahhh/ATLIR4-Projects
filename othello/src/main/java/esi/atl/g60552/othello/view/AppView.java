@@ -61,11 +61,18 @@ public class AppView implements Observer {
             reversiView.update(reversi);
             gameOverPopup(reversi.getWinner());
             settingsView.show();
-            initGame();
+            reset();
         } else {
             settingsView.hide();
         }
         reversiView.update(reversi);
+    }
+    
+    void reset() {
+        initGame();
+        gameInfo.update(reversi.currPlayer(), 0);
+        reversiView.update(reversi);
+        settingsView.show();
     }
 
     void gameOverPopup(Player winner) {
@@ -95,9 +102,7 @@ public class AppView implements Observer {
     }
 
     void stop() {
-        initGame();
-        update();
-        settingsView.show();
+        reset();
     }
 
     void leave() {
@@ -105,8 +110,7 @@ public class AppView implements Observer {
     }
 
     void apply() {
-        initGame();
         reversiView.setBgGameColor(settingsView.getBGColor());
-        update();
+        reset();
     }
 }

@@ -7,14 +7,23 @@ import javafx.scene.layout.HBox;
 
 public class GameInfo extends HBox {
     GameInfo() {
-        super();
+        super(10);
     }
 
     void update(Player player, int score) {
         this.getChildren().clear();
         Label playerName = new Label("Player: " + player.getName());
+        playerName.setStyle("-fx-font-family: 'Segoe UI', Helvetica, Arial, sans-serif; " +
+                "-fx-font-size: 14px; " +
+                "-fx-text-fill: #333333;");
         Label color = new Label("Color: " + player.getColor().name());
+        color.setStyle("-fx-font-family: 'Segoe UI', Helvetica, Arial, sans-serif; " +
+                "-fx-font-size: 14px; " +
+                "-fx-text-fill: #333333;");
         Label scoreLabel = new Label("Score: " + String.valueOf(score));
+        scoreLabel.setStyle("-fx-font-family: 'Segoe UI', Helvetica, Arial, sans-serif; " +
+                "-fx-font-size: 14px; " +
+                "-fx-text-fill: #333333;");
         this.getChildren().addAll(playerName, color, scoreLabel);
     }
 }

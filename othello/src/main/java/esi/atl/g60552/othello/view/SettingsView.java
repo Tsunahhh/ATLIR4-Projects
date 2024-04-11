@@ -58,28 +58,82 @@ public class SettingsView extends GridPane {
             tfdSize.getItems().add(i);
         }
         tfdSize.setValue(8);
+        tfdSize.setStyle("-fx-font-family: 'Segoe UI', Helvetica, Arial, sans-serif; " +
+                "-fx-font-size: 14px; " +
+                "-fx-text-fill: #333333; " +
+                "-fx-background-color: #ffffff; " +
+                "-fx-background-radius: 5px; " +
+                "-fx-border-width: 2px; " +
+                "-fx-border-color: #333333; " +
+                "-fx-padding: 8px 16px;");
         this.add(tfdSize, 1, 1);
 
+        colorPicker.setStyle("-fx-font-family: 'Segoe UI', Helvetica, Arial, sans-serif; " +
+                "-fx-font-size: 14px; " +
+                "-fx-text-fill: #333333; " +
+                "-fx-background-color: #ffffff; " +
+                "-fx-background-radius: 5px; " +
+                "-fx-border-width: 2px; " +
+                "-fx-border-color: #333333; " +
+                "-fx-padding: 8px 16px;");
         this.add(colorPicker, 1, 2);
 
         tfdPlayer1.setText("Player1");
+        tfdPlayer1.setStyle("-fx-font-family: 'Segoe UI', Helvetica, Arial, sans-serif; " +
+                "-fx-font-size: 14px; " +
+                "-fx-text-fill: #333333; " +
+                "-fx-background-color: #ffffff; " +
+                "-fx-background-radius: 5px; " +
+                "-fx-border-width: 2px; " +
+                "-fx-border-color: #333333; " +
+                "-fx-padding: 8px 16px;");
         this.add(tfdPlayer1, 1, 3);
 
         tfdPlayer2.setText("Player2");
+        tfdPlayer2.setStyle("-fx-font-family: 'Segoe UI', Helvetica, Arial, sans-serif; " +
+                "-fx-font-size: 14px; " +
+                "-fx-text-fill: #333333; " +
+                "-fx-background-color: #ffffff; " +
+                "-fx-background-radius: 5px; " +
+                "-fx-border-width: 2px; " +
+                "-fx-border-color: #333333; " +
+                "-fx-padding: 8px 16px;");
         this.add(tfdPlayer2, 1, 5);
 
         tfdDifficulty.getItems().addAll("Easy", "Medium", "Hard");
         tfdDifficulty.setValue("Medium");
+        tfdDifficulty.setStyle("-fx-font-family: 'Segoe UI', Helvetica, Arial, sans-serif; " +
+                "-fx-font-size: 14px; " +
+                "-fx-text-fill: #333333; " +
+                "-fx-background-color: #ffffff; " +
+                "-fx-background-radius: 5px; " +
+                "-fx-border-width: 2px; " +
+                "-fx-border-color: #333333; " +
+                "-fx-padding: 8px 16px;");
         this.add(tfdDifficulty, 1, 6);
 
         ToggleGroup group = new ToggleGroup();
         rdbBot.setToggleGroup(group);
+        rdbBot.setStyle("-fx-font-family: 'Segoe UI', Helvetica, Arial, sans-serif; " +
+                "-fx-font-size: 14px; " +
+                "-fx-text-fill: #333333;");
         rdbHuman.setToggleGroup(group);
-        rdbHuman.setSelected(true);
+        rdbHuman.setStyle("-fx-font-family: 'Segoe UI', Helvetica, Arial, sans-serif; " +
+                "-fx-font-size: 14px; " +
+                "-fx-text-fill: #333333;");
+        rdbBot.setSelected(true);
         this.add(rdbBot, 1, 4);
         this.add(rdbHuman, 2, 4);
 
         apply = new Button("Apply");
+        apply.setStyle("-fx-font-family: 'Segoe UI', Helvetica, Arial, sans-serif; " +
+                "-fx-font-size: 14px; " +
+                "-fx-text-fill: #333333; " +
+                "-fx-background-color: #ffffff; " +
+                "-fx-background-radius: 5px; " +
+                "-fx-border-width: 2px; " +
+                "-fx-border-color: #333333; " +
+                "-fx-padding: 8px 16px;");
         this.add(apply, 1, 7);
     }
 
