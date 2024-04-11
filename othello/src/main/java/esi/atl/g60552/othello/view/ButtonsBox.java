@@ -7,7 +7,7 @@ import javafx.scene.layout.HBox;
 
 public class ButtonsBox extends HBox {
 
-    private Reversi reversi;
+    private AppView appView;
     private Button pause;
     private Button undo;
     private Button redo;
@@ -15,8 +15,9 @@ public class ButtonsBox extends HBox {
     private Button stop;
     private Button leave;
 
-    ButtonsBox() {
+    ButtonsBox(AppView appView) {
         super();
+        this.appView = appView;
         HBox.setMargin(this, new Insets(10));
         initButtons();
         initHandles();
@@ -34,22 +35,23 @@ public class ButtonsBox extends HBox {
 
     void initHandles() {
         leave.setOnMouseClicked(e -> {
-            System.exit(0);
+            appView.leave();
         });
         pause.setOnMouseClicked(e -> {
-
+            appView.pause();
         });
         pass.setOnMouseClicked(e -> {
-            reversi.pass();
+            appView.pass();
         });
         stop.setOnMouseClicked(e -> {
-
+            appView.stop();
         });
     }
 
     void showButtons() {
 
     }
+
     void hideButtons() {
 
     }
