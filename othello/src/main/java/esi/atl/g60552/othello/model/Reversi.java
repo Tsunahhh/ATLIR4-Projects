@@ -174,6 +174,7 @@ public class Reversi implements Observable {
         Player winner;
         List<Player> listOfPlayers = participants; // 1 other (the other player)
         Player other = listOfPlayers.get(0);
+
         int whiteDisks = board.getWhiteDisks();
         int blackDisks = board.getBlackDisks();
 

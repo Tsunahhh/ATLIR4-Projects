@@ -11,8 +11,11 @@ import java.util.List;
 
 public class ReversiView extends GridPane {
 
-    public ReversiView() {
+    private Color bgGameColor;
+
+    ReversiView() {
         super();
+        this.bgGameColor = Color.GREEN;
     }
 
     private void actions(Reversi reversi, int col, int row, final CaseView caseView) {
@@ -40,7 +43,7 @@ public class ReversiView extends GridPane {
         });
 
         caseView.setOnMouseExited(e -> {
-            caseView.setColorRectangle(Color.GREEN);
+            caseView.setColorRectangle(bgGameColor);
             if (board.isEmpty(col, row)) {
                 caseView.eraseDisk();
             }
@@ -52,7 +55,7 @@ public class ReversiView extends GridPane {
         Board board = reversi.getBoard();
         for (int row = 0; row < board.getSize(); row++) {
             for (int col = 0; col < board.getSize(); col++) {
-                CaseView caseView = new CaseView();
+                CaseView caseView = new CaseView(bgGameColor);
                 if (!board.isEmpty(col, row)) {
                     if (board.getColorAt(col, row) == DiskColor.BLACK) {
                         caseView.setColorDisk(Color.BLACK);
@@ -64,5 +67,9 @@ public class ReversiView extends GridPane {
                 this.add(caseView, col, row);
             }
         }
+    }
+
+    void setBgGameColor(Color bgGameColor) {
+        this.bgGameColor = bgGameColor;
     }
 }

@@ -12,13 +12,15 @@ import java.util.Stack;
 public class CaseView extends StackPane {
     Circle circle;
     Rectangle rectangle;
-    public CaseView() {
+    Color backgroundColor;
+    public CaseView(Color backgroundColor) {
         super();
+        this.backgroundColor = backgroundColor;
         init();
     }
 
     void init() {
-        rectangle = new Rectangle(50, 50, Color.GREEN);
+        rectangle = new Rectangle(50, 50, backgroundColor);
         rectangle.setStroke(Color.BLACK);
         circle = new Circle(20, Color.TRANSPARENT);
         this.getChildren().addAll(rectangle, circle);
