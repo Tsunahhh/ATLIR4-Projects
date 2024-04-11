@@ -101,7 +101,7 @@ public class Board {
         int count = 0;
         for (int i = 0; i < board.length; i++) {
             for (int j = 0; j < board[i].length; j++) {
-                if (board[i][j].getColor() == DiskColor.BLACK) {
+                if (!isEmpty(j, i) && board[i][j].getColor() == DiskColor.BLACK) {
                     count++;
                 }
             }
@@ -113,7 +113,7 @@ public class Board {
         int count = 0;
         for (int i = 0; i < board.length; i++) {
             for (int j = 0; j < board[i].length; j++) {
-                if (board[i][j].getColor() == DiskColor.WHITE) {
+                if (!isEmpty(j, i) && board[i][j].getColor() == DiskColor.WHITE) {
                     count++;
                 }
             }
