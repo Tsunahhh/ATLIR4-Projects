@@ -4,19 +4,20 @@ import esi.atl.g60552.othello.util.Observable;
 import esi.atl.g60552.othello.util.Observer;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 /**
  * Represents the board of the game with his methods.
  */
-public class Board implements Observable {
+public class Board {
 
     private Disk[][] board;
     private int size;
-    private Player currPlayer;
+    private Player currPlayer;// todo pas dans Board
     List<Player> participants; // 2 players
     private List<Position> listOfValidMoves;
-    int blackDisks = 0;
+    int blackDisks = 0; // todo: on préfère le calculer à chaque fois
     int whiteDisks = 0;
     List<Observer> observers = new ArrayList<>();
 
@@ -63,7 +64,7 @@ public class Board implements Observable {
      * @return true if in the board or false
      */
     private boolean isInBoard(int x, int y) {
-        return x > 0 && x < size && y > 0 && y < size;
+        return x >= 0 && x < size && y >= 0 && y < size;
     }
 
     /**
@@ -73,23 +74,25 @@ public class Board implements Observable {
      * @param direction the direction
      * @return true if the direction can be flipped or false
      */
-    private boolean isDirectionValid(int x, int y, Direction direction) {
+    boolean isDirectionValid(int x, int y, Direction direction) {// todo pas dans Baord
         boolean isPlaceable = false;
 
-        x += direction.getXDirection();
-        y += direction.getYDirection();
-        if (!isInBoard(x, y) || board[y][x] == null || board[y][x].getColor() == currPlayer.getColor()) {
-            return false;
-        }
-
-        while (isInBoard(x, y) && board[y][x] != null && board[y][x].getColor() != currPlayer.getColor()) {
+        if (isInBoard(x, y) && isEmpty(x, y)) {
             x += direction.getXDirection();
             y += direction.getYDirection();
+            // The next one is other color than player
+            if (isInBoard(x, y) && !isEmpty(x, y) && getColorAt(x, y) != currPlayer.getColor()) {
+                while (isInBoard(x, y) && !isEmpty(x, y) && !isPlaceable) {
+                    if (getColorAt(x, y) == currPlayer.getColor()) {
+                        isPlaceable = true;
+                    }
+                    x += direction.getXDirection();
+                    y += direction.getYDirection();
+                }
+            }
+
         }
 
-        if (isInBoard(x, y) && board[y][x] != null) {
-            isPlaceable = true;
-        }
         return isPlaceable;
     }
 
@@ -99,13 +102,8 @@ public class Board implements Observable {
      * @param y y-coords
      * @return true if placeable of false
      */
-    private boolean isPlaceable(int x, int y) {
-        for (Direction direction : Direction.values()) {
-            if (isDirectionValid(x, y, direction)) {
-                return true;
-            }
-        }
-        return false;
+    boolean isPlaceable(int x, int y) {
+        return Arrays.stream(Direction.values()).anyMatch(direction -> isDirectionValid(x, y, direction));
     }
 
     /**
@@ -184,7 +182,6 @@ public class Board implements Observable {
             currPlayer = tmp;
         }
         nextValidMoves();
-        notifyObservers();
     }
 
     public Player getCurrPlayer() {
@@ -213,15 +210,23 @@ public class Board implements Observable {
      * @param y y-coords
      */
     public boolean placeDisk(int x, int y) {
+        if (!isPlaceable(x, y)) {
+            throw new IllegalArgumentException("Board: you can't place the disk here !");
+        }
+
         boolean res = false;
+
         for (Direction direction : Direction.values()) {
             if (isDirectionValid(x, y, direction)) {
-                board[y][x] = new Disk(currPlayer.getColor());
                 flipDirection(x, y, direction);
                 res = true;
             }
         }
-        notifyObservers();
+
+        if (res) {
+            board[y][x] = new Disk(currPlayer.getColor());
+        }
+
         return res;
     }
 
@@ -230,7 +235,7 @@ public class Board implements Observable {
      * @return the list
      */
     public List<Position> getListOfValidMoves() {
-        return listOfValidMoves;
+        return listOfValidMoves; // todo calculer
     }
 
     /**
@@ -241,22 +246,5 @@ public class Board implements Observable {
      */
     public boolean isEmpty(int x, int y) {
         return board[y][x] == null;
-    }
-
-    @Override
-    public void registerObserver(Observer observer) {
-        observers.add(observer);
-    }
-
-    @Override
-    public void unregisterObserver(Observer observer) {
-        observers.remove(observer);
-    }
-
-    @Override
-    public void notifyObservers() {
-        for (Observer observer : observers) {
-            observer.update();
-        }
     }
 }

@@ -24,7 +24,7 @@ class DirectionTest {
             assertEquals(Direction.DOWNLEFT.getYDirection(), 1);
             assertEquals(Direction.DOWNRIGHT.getYDirection(), 1);
             assertEquals(Direction.UP.getYDirection(), -1);
-            assertEquals(Direction.DOWN.getYDirection(), -1);
+            assertEquals(Direction.DOWN.getYDirection(), 1);
             assertEquals(Direction.LEFT.getYDirection(), 0);
             assertEquals(Direction.RIGHT.getYDirection(), 0);
         }

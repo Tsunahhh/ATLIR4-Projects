@@ -35,6 +35,4 @@ public class CaseView extends StackPane {
     public void eraseDisk() {
         circle.setFill(Color.TRANSPARENT);
     }
-
-
 }

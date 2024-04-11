@@ -1,48 +1,75 @@
 package esi.atl.g60552.othello.view;
 
-import esi.atl.g60552.othello.model.DiskColor;
-import esi.atl.g60552.othello.model.Human;
-import esi.atl.g60552.othello.model.Player;
-import esi.atl.g60552.othello.model.Reversi;
+import esi.atl.g60552.othello.model.*;
 import javafx.scene.Scene;
-import javafx.scene.control.MenuBar;
+import javafx.scene.control.Alert;
+import javafx.scene.layout.HBox;
+import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
+import esi.atl.g60552.othello.util.Observer;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-
-public class AppView {
-    private int size;
-    private String name;
-    private MenuBar menuBar;
+public class AppView implements Observer {
     private Reversi reversi;
+    private VBox root;
+    private HBox corps;
+    private GameInfo gameInfo;
+    private ReversiView reversiView;
+    private SettingsView settingsView;
+    private ButtonsBox buttonsBox;
+    private Scene scene;
+
 
     public AppView(Stage stage) {
-        settings();
-        initMenuBar();
+        initViews();
         initGame();
-        //initStopButton();
-        ReversiView rv = new ReversiView(reversi);
-        reversi.registerObserver(rv);
-        Scene sc = new Scene(rv);
-        stage.setScene(sc);
+        register();
+        stage.setScene(scene);
         stage.show();
+        update();
     }
 
-    private void settings() {
-        SettingsView settingsView = new SettingsView();
-        this.size = settingsView.getSize();
-        this.name = settingsView.getName();
-    }
+    private void initViews() {
+        root = new VBox();
 
-    private void initMenuBar() {
-        menuBar = new MenuBar();
+        gameInfo = new GameInfo();
+
+        corps = new HBox();
+        settingsView = new SettingsView();
+        reversiView = new ReversiView();
+        corps.getChildren().addAll(reversiView, settingsView);
+
+        buttonsBox = new ButtonsBox();
+
+        root.getChildren().addAll(gameInfo, corps, buttonsBox);
+        scene = new Scene(root);
     }
 
     private void initGame() {
-        Player p1 = new Human("Guest123", DiskColor.BLACK);
-        Player p2 = new Human("Guest456", DiskColor.WHITE);
-        reversi = new Reversi(size, p1, p2);
+        Player p1 = new Human("Human", DiskColor.BLACK);
+        Player p2 = new Human("Strategy", DiskColor.WHITE);
+        reversi = new Reversi(4, p1, p2);
+        reversiView.setGame(reversi);
+    }
+
+    private void register() {
+        reversi.registerObserver(this);
+    }
+
+
+    @Override
+    public void update() {
+        gameInfo.update(reversi.currPlayer(), 0, 0);
+        if (reversi.isOver()) {
+            Alert gameOver = new Alert(Alert.AlertType.INFORMATION);
+            gameOver.setTitle("Game Over");
+            gameOver.setHeaderText("Game Over");
+            gameOver.setContentText("Congratulations!");
+            gameOver.showAndWait();
+            settingsView.showSettings();
+            initGame();
+        } else {
+            settingsView.hideSettings();
+        }
+        reversiView.update();
     }
 }

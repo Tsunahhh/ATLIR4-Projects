@@ -22,7 +22,7 @@ public class Reversi implements Observable {
      * @param players players of the game
      */
     public Reversi(int size, Player... players) {
-        if (size < 3) {
+        if (size < 3) { // todo constante
             throw new IllegalArgumentException("size is too low !");
         } else if (size > 15) {
             throw new IllegalArgumentException("size is too high !");
@@ -39,7 +39,7 @@ public class Reversi implements Observable {
             }
         }
         board = new Board(size, playersList);
-        notifyObservers();
+        notifyObservers(); // todo: remove personne n'a pu s'enregistrer
     }
 
     /**
@@ -47,7 +47,7 @@ public class Reversi implements Observable {
      * @return true if over or false.
      */
     public boolean isOver() {
-        return board.isOver();
+        return board.isOver(); // todo la logique du jeu pas dans Board
     }
 
     /**
@@ -66,6 +66,7 @@ public class Reversi implements Observable {
         }
     }
 
+    // todo : passer son tour
     /**
      * Get the size of the board
      * @return the size
@@ -80,7 +81,7 @@ public class Reversi implements Observable {
      * @param y the y position
      * @return the color
      */
-    public DiskColor getColor(int x, int y) {
+    public DiskColor getColor(int x, int y) { // todo getBoard().getColor()
         return board.getColorAt(x, y);
     }
 
@@ -114,7 +115,7 @@ public class Reversi implements Observable {
      * @return true if valid, false otherwise
      */
     public boolean isValidPosition(int x, int y) {
-        List<Position> validPositions = board.getListOfValidMoves();
+        List<Position> validPositions = board.getListOfValidMoves(); // todo lz logique du jeu pas dans board
         int i = 0;
         boolean found = false;
         while (i < validPositions.size() && !found) {
@@ -148,7 +149,7 @@ public class Reversi implements Observable {
     }
 
     @Override
-    public void notifyObservers() {
+    public void notifyObservers() { //todo private
         for (Observer observer : observers) {
             observer.update();
         }
