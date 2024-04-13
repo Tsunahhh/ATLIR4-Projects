@@ -92,65 +92,65 @@ class ReversiTest {
 
     @Test
     void placeableValidAtStart() {
-        assertFalse(reversi.isPlaceable(0, 0));
-        assertTrue(reversi.isPlaceable(0, 1));
-        assertFalse(reversi.isPlaceable(0, 2));
-        assertFalse(reversi.isPlaceable(0, 3));
-        assertTrue(reversi.isPlaceable(1, 0));
-        assertFalse(reversi.isPlaceable(1, 1));
-        assertFalse(reversi.isPlaceable(1, 2));
-        assertFalse(reversi.isPlaceable(1, 3));
-        assertFalse(reversi.isPlaceable(2, 0));
-        assertFalse(reversi.isPlaceable(2, 1));
-        assertFalse(reversi.isPlaceable(2, 2));
-        assertTrue(reversi.isPlaceable(2, 3));
-        assertFalse(reversi.isPlaceable(3, 0));
-        assertFalse(reversi.isPlaceable(3, 1));
-        assertTrue(reversi.isPlaceable(3, 2));
-        assertFalse(reversi.isPlaceable(3, 3));
+        assertFalse(reversi.isPlaceable(0, 0, reversi.currPlayer()));
+        assertTrue(reversi.isPlaceable(0, 1, reversi.currPlayer()));
+        assertFalse(reversi.isPlaceable(0, 2, reversi.currPlayer()));
+        assertFalse(reversi.isPlaceable(0, 3, reversi.currPlayer()));
+        assertTrue(reversi.isPlaceable(1, 0, reversi.currPlayer()));
+        assertFalse(reversi.isPlaceable(1, 1, reversi.currPlayer()));
+        assertFalse(reversi.isPlaceable(1, 2, reversi.currPlayer()));
+        assertFalse(reversi.isPlaceable(1, 3, reversi.currPlayer()));
+        assertFalse(reversi.isPlaceable(2, 0, reversi.currPlayer()));
+        assertFalse(reversi.isPlaceable(2, 1, reversi.currPlayer()));
+        assertFalse(reversi.isPlaceable(2, 2, reversi.currPlayer()));
+        assertTrue(reversi.isPlaceable(2, 3, reversi.currPlayer()));
+        assertFalse(reversi.isPlaceable(3, 0, reversi.currPlayer()));
+        assertFalse(reversi.isPlaceable(3, 1, reversi.currPlayer()));
+        assertTrue(reversi.isPlaceable(3, 2, reversi.currPlayer()));
+        assertFalse(reversi.isPlaceable(3, 3, reversi.currPlayer()));
     }
 
     @Test
     void isDirectionValidAtStart() {
         // (1; 0) is normally a placeable position
-        assertFalse(reversi.isDirectionValid(1, 0, Direction.UP));
-        assertTrue(reversi.isDirectionValid(1, 0, Direction.DOWN));
-        assertFalse(reversi.isDirectionValid(1, 0, Direction.LEFT));
-        assertFalse(reversi.isDirectionValid(1, 0, Direction.RIGHT));
-        assertFalse(reversi.isDirectionValid(1, 0, Direction.UPLEFT));
-        assertFalse(reversi.isDirectionValid(1, 0, Direction.UPRIGHT));
-        assertFalse(reversi.isDirectionValid(1, 0, Direction.DOWNLEFT));
-        assertFalse(reversi.isDirectionValid(1, 0, Direction.DOWNRIGHT));
+        assertFalse(reversi.isDirectionValid(1, 0, Direction.UP, reversi.getCurrPlayer()));
+        assertTrue(reversi.isDirectionValid(1, 0, Direction.DOWN, reversi.getCurrPlayer()));
+        assertFalse(reversi.isDirectionValid(1, 0, Direction.LEFT, reversi.getCurrPlayer()));
+        assertFalse(reversi.isDirectionValid(1, 0, Direction.RIGHT, reversi.getCurrPlayer()));
+        assertFalse(reversi.isDirectionValid(1, 0, Direction.UPLEFT, reversi.getCurrPlayer()));
+        assertFalse(reversi.isDirectionValid(1, 0, Direction.UPRIGHT, reversi.getCurrPlayer()));
+        assertFalse(reversi.isDirectionValid(1, 0, Direction.DOWNLEFT, reversi.getCurrPlayer()));
+        assertFalse(reversi.isDirectionValid(1, 0, Direction.DOWNRIGHT, reversi.getCurrPlayer()));
 
         // (0; 1) is normally a placeable position
-        assertFalse(reversi.isDirectionValid(0, 1, Direction.UP));
-        assertFalse(reversi.isDirectionValid(0, 1, Direction.DOWN));
-        assertFalse(reversi.isDirectionValid(0, 1, Direction.LEFT));
-        assertTrue(reversi.isDirectionValid(0, 1, Direction.RIGHT));
-        assertFalse(reversi.isDirectionValid(0, 1, Direction.UPLEFT));
-        assertFalse(reversi.isDirectionValid(0, 1, Direction.UPRIGHT));
-        assertFalse(reversi.isDirectionValid(0, 1, Direction.DOWNLEFT));
-        assertFalse(reversi.isDirectionValid(0, 1, Direction.DOWNRIGHT));
+        assertFalse(reversi.isDirectionValid(0, 1, Direction.UP, reversi.getCurrPlayer()));
+        assertFalse(reversi.isDirectionValid(0, 1, Direction.DOWN, reversi.getCurrPlayer()));
+        assertFalse(reversi.isDirectionValid(0, 1, Direction.LEFT, reversi.getCurrPlayer()));
+        assertTrue(reversi.isDirectionValid(0, 1, Direction.RIGHT, reversi.getCurrPlayer()));
+        assertFalse(reversi.isDirectionValid(0, 1, Direction.UPLEFT, reversi.getCurrPlayer()));
+        assertFalse(reversi.isDirectionValid(0, 1, Direction.UPRIGHT, reversi.getCurrPlayer()));
+        assertFalse(reversi.isDirectionValid(0, 1, Direction.DOWNLEFT, reversi.getCurrPlayer()));
+        assertFalse(reversi.isDirectionValid(0, 1, Direction.DOWNRIGHT, reversi.getCurrPlayer()));
 
         // (2; 3) is normally a placeable position
-        assertTrue(reversi.isDirectionValid(2, 3, Direction.UP));
-        assertFalse(reversi.isDirectionValid(2, 3, Direction.DOWN));
-        assertFalse(reversi.isDirectionValid(2, 3, Direction.LEFT));
-        assertFalse(reversi.isDirectionValid(2, 3, Direction.RIGHT));
-        assertFalse(reversi.isDirectionValid(2, 3, Direction.UPLEFT));
-        assertFalse(reversi.isDirectionValid(2, 3, Direction.UPRIGHT));
-        assertFalse(reversi.isDirectionValid(2, 3, Direction.DOWNLEFT));
-        assertFalse(reversi.isDirectionValid(2, 3, Direction.DOWNRIGHT));
+        assertTrue(reversi.isDirectionValid(2, 3, Direction.UP, reversi.getCurrPlayer()));
+        assertFalse(reversi.isDirectionValid(2, 3, Direction.DOWN, reversi.getCurrPlayer()));
+        assertFalse(reversi.isDirectionValid(2, 3, Direction.LEFT, reversi.getCurrPlayer()));
+        assertFalse(reversi.isDirectionValid(2, 3, Direction.RIGHT, reversi.getCurrPlayer()));
+        assertFalse(reversi.isDirectionValid(2, 3, Direction.UPLEFT, reversi.getCurrPlayer()));
+        assertFalse(reversi.isDirectionValid(2, 3, Direction.UPRIGHT, reversi.getCurrPlayer()));
+        assertFalse(reversi.isDirectionValid(2, 3, Direction.DOWNLEFT, reversi.getCurrPlayer()));
+        assertFalse(reversi.isDirectionValid(2, 3, Direction.DOWNRIGHT, reversi.getCurrPlayer()));
 
         // (3; 2) is normally a placeable position
-        assertFalse(reversi.isDirectionValid(3, 2, Direction.UP));
-        assertFalse(reversi.isDirectionValid(3, 2, Direction.DOWN));
-        assertTrue(reversi.isDirectionValid(3, 2, Direction.LEFT));
-        assertFalse(reversi.isDirectionValid(3, 2, Direction.RIGHT));
-        assertFalse(reversi.isDirectionValid(3, 2, Direction.UPLEFT));
-        assertFalse(reversi.isDirectionValid(3, 2, Direction.UPRIGHT));
-        assertFalse(reversi.isDirectionValid(3, 2, Direction.DOWNLEFT));
-        assertFalse(reversi.isDirectionValid(3, 2, Direction.DOWNRIGHT));
+        assertFalse(reversi.isDirectionValid(3, 2, Direction.UP, reversi.getCurrPlayer()));
+        assertFalse(reversi.isDirectionValid(3, 2, Direction.DOWN, reversi.getCurrPlayer()));
+        assertTrue(reversi.isDirectionValid(3, 2, Direction.LEFT, reversi.getCurrPlayer()));
+        assertFalse(reversi.isDirectionValid(3, 2, Direction.RIGHT, reversi.getCurrPlayer()));
+        assertFalse(reversi.isDirectionValid(3, 2, Direction.UPLEFT, reversi.getCurrPlayer()));
+        assertFalse(reversi.isDirectionValid(3, 2, Direction.UPRIGHT, reversi.getCurrPlayer()));
+        assertFalse(reversi.isDirectionValid(3, 2, Direction.DOWNLEFT, reversi.getCurrPlayer()));
+        assertFalse(reversi.isDirectionValid(3, 2, Direction.DOWNRIGHT, reversi.getCurrPlayer()));
     }
 
     @Test
@@ -174,44 +174,44 @@ class ReversiTest {
         situationB();
 
         // 3; 0
-        assertFalse(reversi.isDirectionValid(3, 0, Direction.UP));
-        assertFalse(reversi.isDirectionValid(3, 0, Direction.DOWN));
-        assertTrue(reversi.isDirectionValid(3, 0, Direction.LEFT));
-        assertFalse(reversi.isDirectionValid(3, 0, Direction.RIGHT));
-        assertFalse(reversi.isDirectionValid(3, 0, Direction.UPLEFT));
-        assertFalse(reversi.isDirectionValid(3, 0, Direction.UPRIGHT));
-        assertTrue(reversi.isDirectionValid(3, 0, Direction.DOWNLEFT));
-        assertFalse(reversi.isDirectionValid(3, 0, Direction.DOWNRIGHT));
+        assertFalse(reversi.isDirectionValid(3, 0, Direction.UP, reversi.getCurrPlayer()));
+        assertFalse(reversi.isDirectionValid(3, 0, Direction.DOWN, reversi.getCurrPlayer()));
+        assertTrue(reversi.isDirectionValid(3, 0, Direction.LEFT, reversi.getCurrPlayer()));
+        assertFalse(reversi.isDirectionValid(3, 0, Direction.RIGHT, reversi.getCurrPlayer()));
+        assertFalse(reversi.isDirectionValid(3, 0, Direction.UPLEFT, reversi.getCurrPlayer()));
+        assertFalse(reversi.isDirectionValid(3, 0, Direction.UPRIGHT, reversi.getCurrPlayer()));
+        assertTrue(reversi.isDirectionValid(3, 0, Direction.DOWNLEFT, reversi.getCurrPlayer()));
+        assertFalse(reversi.isDirectionValid(3, 0, Direction.DOWNRIGHT, reversi.getCurrPlayer()));
 
         // 3; 1
-        assertFalse(reversi.isDirectionValid(3, 1, Direction.UP));
-        assertFalse(reversi.isDirectionValid(3, 1, Direction.DOWN));
-        assertTrue(reversi.isDirectionValid(3, 1, Direction.LEFT));
-        assertFalse(reversi.isDirectionValid(3, 1, Direction.RIGHT));
-        assertFalse(reversi.isDirectionValid(3, 1, Direction.UPLEFT));
-        assertFalse(reversi.isDirectionValid(3, 1, Direction.UPRIGHT));
-        assertFalse(reversi.isDirectionValid(3, 1, Direction.DOWNLEFT));
-        assertFalse(reversi.isDirectionValid(3, 1, Direction.DOWNRIGHT));
+        assertFalse(reversi.isDirectionValid(3, 1, Direction.UP, reversi.getCurrPlayer()));
+        assertFalse(reversi.isDirectionValid(3, 1, Direction.DOWN, reversi.getCurrPlayer()));
+        assertTrue(reversi.isDirectionValid(3, 1, Direction.LEFT, reversi.getCurrPlayer()));
+        assertFalse(reversi.isDirectionValid(3, 1, Direction.RIGHT, reversi.getCurrPlayer()));
+        assertFalse(reversi.isDirectionValid(3, 1, Direction.UPLEFT, reversi.getCurrPlayer()));
+        assertFalse(reversi.isDirectionValid(3, 1, Direction.UPRIGHT, reversi.getCurrPlayer()));
+        assertFalse(reversi.isDirectionValid(3, 1, Direction.DOWNLEFT, reversi.getCurrPlayer()));
+        assertFalse(reversi.isDirectionValid(3, 1, Direction.DOWNRIGHT, reversi.getCurrPlayer()));
 
         // 3; 2
-        assertFalse(reversi.isDirectionValid(3, 2, Direction.UP));
-        assertFalse(reversi.isDirectionValid(3, 2, Direction.DOWN));
-        assertTrue(reversi.isDirectionValid(3, 2, Direction.LEFT));
-        assertFalse(reversi.isDirectionValid(3, 2, Direction.RIGHT));
-        assertTrue(reversi.isDirectionValid(3, 2, Direction.UPLEFT));
-        assertFalse(reversi.isDirectionValid(3, 2, Direction.UPRIGHT));
-        assertFalse(reversi.isDirectionValid(3, 2, Direction.DOWNLEFT));
-        assertFalse(reversi.isDirectionValid(3, 2, Direction.DOWNRIGHT));
+        assertFalse(reversi.isDirectionValid(3, 2, Direction.UP, reversi.getCurrPlayer()));
+        assertFalse(reversi.isDirectionValid(3, 2, Direction.DOWN, reversi.getCurrPlayer()));
+        assertTrue(reversi.isDirectionValid(3, 2, Direction.LEFT, reversi.getCurrPlayer()));
+        assertFalse(reversi.isDirectionValid(3, 2, Direction.RIGHT, reversi.getCurrPlayer()));
+        assertTrue(reversi.isDirectionValid(3, 2, Direction.UPLEFT, reversi.getCurrPlayer()));
+        assertFalse(reversi.isDirectionValid(3, 2, Direction.UPRIGHT, reversi.getCurrPlayer()));
+        assertFalse(reversi.isDirectionValid(3, 2, Direction.DOWNLEFT, reversi.getCurrPlayer()));
+        assertFalse(reversi.isDirectionValid(3, 2, Direction.DOWNRIGHT, reversi.getCurrPlayer()));
 
         // 3; 3
-        assertFalse(reversi.isDirectionValid(3, 3, Direction.UP));
-        assertFalse(reversi.isDirectionValid(3, 3, Direction.DOWN));
-        assertFalse(reversi.isDirectionValid(3, 3, Direction.LEFT));
-        assertFalse(reversi.isDirectionValid(3, 3, Direction.RIGHT));
-        assertTrue(reversi.isDirectionValid(3, 3, Direction.UPLEFT));
-        assertFalse(reversi.isDirectionValid(3, 3, Direction.UPRIGHT));
-        assertFalse(reversi.isDirectionValid(3, 3, Direction.DOWNLEFT));
-        assertFalse(reversi.isDirectionValid(3, 3, Direction.DOWNRIGHT));
+        assertFalse(reversi.isDirectionValid(3, 3, Direction.UP, reversi.getCurrPlayer()));
+        assertFalse(reversi.isDirectionValid(3, 3, Direction.DOWN, reversi.getCurrPlayer()));
+        assertFalse(reversi.isDirectionValid(3, 3, Direction.LEFT, reversi.getCurrPlayer()));
+        assertFalse(reversi.isDirectionValid(3, 3, Direction.RIGHT, reversi.getCurrPlayer()));
+        assertTrue(reversi.isDirectionValid(3, 3, Direction.UPLEFT, reversi.getCurrPlayer()));
+        assertFalse(reversi.isDirectionValid(3, 3, Direction.UPRIGHT, reversi.getCurrPlayer()));
+        assertFalse(reversi.isDirectionValid(3, 3, Direction.DOWNLEFT, reversi.getCurrPlayer()));
+        assertFalse(reversi.isDirectionValid(3, 3, Direction.DOWNRIGHT, reversi.getCurrPlayer()));
     }
 
 }

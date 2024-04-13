@@ -12,15 +12,23 @@ public class RandomStrategy implements Strategy {
     }
 
     private Position randomPos() {
-        List<Position> positions = reversi.getListOfValidMoves();
+        List<Position> positions = reversi.getListOfValidMoves(reversi.currPlayer());
         Random random = new Random();
-        return positions.get(random.nextInt(positions.size()));
+        Position result = null;
+        if (!positions.isEmpty()) {
+            result = positions.get(random.nextInt(positions.size()));
+        }
+        return result;
     }
 
 
     @Override
     public void playStrategy() {
         Position position = randomPos();
-        reversi.placeDisk(position.getX(), position.getY());
+        if (position != null) {
+            reversi.placeDisk(position.getX(), position.getY());
+        } else {
+            reversi.pass();
+        }
     }
 }

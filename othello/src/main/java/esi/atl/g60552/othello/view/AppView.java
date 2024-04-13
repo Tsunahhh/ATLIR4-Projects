@@ -4,56 +4,70 @@ import esi.atl.g60552.othello.model.*;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
-import javafx.scene.layout.HBox;
-import javafx.scene.layout.VBox;
+import javafx.scene.image.Image;
+import javafx.scene.layout.BorderPane;
 import javafx.stage.Stage;
 import esi.atl.g60552.othello.util.Observer;
 
 
 public class AppView implements Observer {
-
+    private static final int MARGIN_ = 20;
     private Reversi reversi;
-    private VBox root;
-    private HBox corps;
+    private BorderPane root;
+    private BorderPane corps;
     private GameInfo gameInfo;
     private ReversiView reversiView;
     private SettingsView settingsView;
     private ButtonsBox buttonsBox;
-    private Scene scene;
     private Stage stage;
+    private Thread timer;
 
     public AppView(Stage stage) {
         this.stage = stage;
         initViews();
         initGame();
         update();
-        showSettings();
-        stage.setScene(scene);
+        stage.getIcons().add(new Image(getClass().getResource("/icons/icon.png").toString()));
+        stage.setTitle("Reversi");
+        stage.setResizable(false);
         stage.show();
     }
 
     private void initViews() {
-        root = new VBox(10);
-        root.setAlignment(Pos.CENTER);
+        root = new BorderPane();
 
         gameInfo = new GameInfo();
+        //Pane topPane = new Pane(gameInfo);
+        BorderPane.setMargin(gameInfo, new javafx.geometry.Insets(0, 0, MARGIN_, 0));
+        root.setTop(gameInfo);
 
-        corps = new HBox(10);
-        corps.setAlignment(Pos.CENTER);
+        corps = new BorderPane();
+
         settingsView = new SettingsView(this);
         settingsView.setAlignment(Pos.CENTER);
+        corps.setRight(settingsView);
+
         reversiView = new ReversiView();
-        corps.getChildren().addAll(reversiView, settingsView);
+        reversiView.setAlignment(Pos.CENTER);
+        corps.setCenter(reversiView);
+        root.setCenter(corps);
+
 
         buttonsBox = new ButtonsBox(this);
+        BorderPane.setMargin(buttonsBox, new javafx.geometry.Insets(MARGIN_, 0, 0, 0));
+        root.setBottom(buttonsBox);
 
-        root.getChildren().addAll(gameInfo, corps, buttonsBox);
-        scene = new Scene(root);
+
+        Scene scene = new Scene(root);
+        stage.setScene(scene);
+        stage.setFullScreen(true);
     }
+
 
     private void initGame() {
         Player p1 = new Human(settingsView.getPlayer1(), DiskColor.BLACK);
         Player p2;
+
         if (settingsView.isBot()) {
             p2 = new Bot(settingsView.getPlayer2(), DiskColor.WHITE);
         } else {
@@ -67,15 +81,20 @@ public class AppView implements Observer {
 
     @Override
     public void update() {
-        gameInfo.update(reversi.currPlayer(), 0);
+        gameInfo.update(reversi.currPlayer(), reversi.getScore(reversi.currPlayer()));
         if (reversi.isOver()) {
             reversiView.update(reversi);
             gameOverPopup(reversi.getWinner());
-            showSettings();
             reset();
-        } else {
-            hideSettings();
         }
+
+        // Settings showed only when game is not playing
+        if (reversi.isPlaying()) {
+            hideSettings();
+        } else {
+            showSettings();
+        }
+
         reversiView.update(reversi);
     }
     
@@ -83,14 +102,13 @@ public class AppView implements Observer {
         initGame();
         gameInfo.update(reversi.currPlayer(), 0);
         reversiView.update(reversi);
-        if (!corps.getChildren().contains(settingsView)) {
-            showSettings();
-        }
+        update();
     }
 
     void gameOverPopup(Player winner) {
         Alert gameOver = new Alert(Alert.AlertType.WARNING);
         gameOver.setTitle("Game Over");
+
 
         if (winner.getColor() == DiskColor.BLACK) {
             gameOver.setHeaderText("Winner is Black");
@@ -99,15 +117,19 @@ public class AppView implements Observer {
         }
 
         gameOver.setContentText("Congratulations " + reversi.getWinner().getName() + " you won the game!");
-        gameOver.showAndWait();
+        Stage gameOverStage = (Stage) gameOver.getDialogPane().getScene().getWindow();
+        gameOverStage.getIcons().add(new Image(getClass().getResource("/icons/icon.png").toString()));
+        gameOverStage.showAndWait();
     }
 
     void pause() {
-        Alert pause = new Alert(Alert.AlertType.INFORMATION);
-        pause.setTitle("Pause");
-        pause.setHeaderText("Game is paused");
-        pause.setContentText("Click OK to resume the game");
-        pause.showAndWait();
+        if (reversi.isPlaying()) {
+            Alert pause = new Alert(Alert.AlertType.INFORMATION);
+            pause.setTitle("Pause");
+            pause.setHeaderText("Game is paused");
+            pause.setContentText("Click OK to resume the game");
+            pause.showAndWait();
+        }
     }
 
     void pass() {
@@ -115,12 +137,16 @@ public class AppView implements Observer {
     }
 
     void giveUp() {
-        Alert giveUp = new Alert(Alert.AlertType.CONFIRMATION);
-        giveUp.setTitle("Give Up");
-        giveUp.setHeaderText("Give Up");
-        giveUp.setContentText("Game is over: " + reversi.getCurrPlayer().getName() + " give up !");
-        giveUp.showAndWait();
-        reset();
+        if (reversi.isPlaying()) {
+            Alert giveUp = new Alert(Alert.AlertType.CONFIRMATION);
+            giveUp.setTitle("Give Up");
+            giveUp.setHeaderText("Give Up");
+            giveUp.setContentText("Game is over: " + reversi.getCurrPlayer().getName() + " give up !");
+            Stage giveUpStage = (Stage) giveUp.getDialogPane().getScene().getWindow();
+            giveUpStage.getIcons().add(new Image(getClass().getResource("/icons/icon.png").toString()));
+            giveUp.showAndWait();
+            reset();
+        }
     }
 
     void leave() {
@@ -130,17 +156,33 @@ public class AppView implements Observer {
     void apply() {
         reversiView.setBgGameColor(settingsView.getBGColor());
         reset();
+        //adaptSize();
+    }
+
+    void fullScreen() {
+        if (stage.isMaximized()) {
+            stage.setMaximized(false);
+
+        } else {
+            stage.setMaximized(true);
+            stage.setAlwaysOnTop(true);
+        }
+    }
+
+    void undo() {
+        //reversi.undo();
+    }
+    void redo() {
+        //reversi.redo();
     }
 
     void showSettings() {
-        corps.getChildren().add(settingsView);
+        if (!corps.getChildren().contains(settingsView)) {
+            corps.getChildren().add(settingsView);
+        }
     }
 
     void hideSettings() {
         corps.getChildren().remove(settingsView);
-    }
-
-    void resize() {
-        stage.sizeToScene();
     }
 }

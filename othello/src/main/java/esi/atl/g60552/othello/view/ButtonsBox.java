@@ -10,6 +10,7 @@ public class ButtonsBox extends HBox {
     private Button pause;
     private Button undo;
     private Button redo;
+    private Button fullScreen;
     private Button pass;
     private Button stop;
     private Button leave;
@@ -35,10 +36,11 @@ public class ButtonsBox extends HBox {
         pause = new Button("Pause");
         pass = new Button("Pass");
         stop = new Button("Stop");
+        fullScreen = new Button("Full Screen");
         leave = new Button("Leave");
         redo = new Button("Redo");
         undo = new Button("Undo");
-        this.getChildren().addAll(undo, redo, pause, pass, stop, leave);
+        this.getChildren().addAll(fullScreen, undo, redo, pause, pass, stop, leave);
     }
 
     void initHandles() {
@@ -53,6 +55,15 @@ public class ButtonsBox extends HBox {
         });
         stop.setOnMouseClicked(e -> {
             appView.giveUp();
+        });
+        redo.setOnMouseClicked(e -> {
+            appView.redo();
+        });
+        undo.setOnMouseClicked(e -> {
+            appView.undo();
+        });
+        fullScreen.setOnMouseClicked(e -> {
+            appView.fullScreen();
         });
     }
 
@@ -98,6 +109,14 @@ public class ButtonsBox extends HBox {
                 "-fx-border-color: #333333; " +
                 "-fx-padding: 8px 16px;");
         undo.setStyle("-fx-font-family: 'Segoe UI', Helvetica, Arial, sans-serif; " +
+                "-fx-font-size: 14px; " +
+                "-fx-text-fill: #333333; " +
+                "-fx-background-color: #ffffff; " +
+                "-fx-background-radius: 5px; " +
+                "-fx-border-width: 2px; " +
+                "-fx-border-color: #333333; " +
+                "-fx-padding: 8px 16px;");
+        fullScreen.setStyle("-fx-font-family: 'Segoe UI', Helvetica, Arial, sans-serif; " +
                 "-fx-font-size: 14px; " +
                 "-fx-text-fill: #333333; " +
                 "-fx-background-color: #ffffff; " +

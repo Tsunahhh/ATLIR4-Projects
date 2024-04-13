@@ -46,7 +46,7 @@ public class SettingsView extends GridPane {
                 "-fx-background-radius: 5px; " +
                 "-fx-border-width: 2px; " +
                 "-fx-border-color: #333333; " +
-                "-fx-padding: 8px 16px;");
+                "-fx-padding: 8px 8px;");
     }
 
     void initLabels() {
@@ -56,25 +56,25 @@ public class SettingsView extends GridPane {
                 "-fx-text-fill: #333333; " +
                 "-fx-background-color: #ffffff; " +
                 "-fx-background-radius: 5px; " +
-                "-fx-padding: 8px 16px;");
+                "-fx-padding: 8px 8px;");
         this.add(lblSettings, 0, 0, 3, 1);
         Label lblSize = new Label("Size: ");
-        lblSize.setStyle("-fx-padding: 8px 16px;");
+        lblSize.setStyle("-fx-padding: 4px 8px;");
         this.add(lblSize, 0, 1, 1, 1);
         Label lblColor = new Label("BackGround: ");
-        lblColor.setStyle("-fx-padding: 8px 16px;");
+        lblColor.setStyle("-fx-padding: 4px 8px;");
         this.add(lblColor, 0, 2, 1, 1);
         Label lblPlayer1 = new Label("Player1: ");
-        lblPlayer1.setStyle("-fx-padding: 8px 16px;");
+        lblPlayer1.setStyle("-fx-padding: 4px 8px;");
         this.add(lblPlayer1, 0, 3, 1, 1);
         Label lblIsBot = new Label("Is Player 2: ");
-        lblIsBot.setStyle("-fx-padding: 8px 16px;");
+        lblIsBot.setStyle("-fx-padding: 4px 8px;");
         this.add(lblIsBot, 0, 4, 1, 1);
         Label lblPlayer2 = new Label("Player2: ");
-        lblPlayer2.setStyle("-fx-padding: 8px 16px;");
+        lblPlayer2.setStyle("-fx-padding: 4px 8px;");
         this.add(lblPlayer2, 0, 5, 1, 1);
         Label lblDifficulty = new Label("Difficulty: ");
-        lblDifficulty.setStyle("-fx-padding: 8px 16px;");
+        lblDifficulty.setStyle("-fx-padding: 4px 8px;");
         this.add(lblDifficulty, 0, 6, 1, 1);
     }
 
@@ -90,8 +90,8 @@ public class SettingsView extends GridPane {
                 "-fx-background-radius: 5px; " +
                 "-fx-border-width: 2px; " +
                 "-fx-border-color: #333333; " +
-                "-fx-padding: 8px 16px;");
-        this.add(tfdSize, 1, 1);
+                "-fx-padding: 4px 8px;");
+        this.add(tfdSize, 1, 1, 2, 1);
 
         colorPicker.setStyle("-fx-font-family: 'Segoe UI', Helvetica, Arial, sans-serif; " +
                 "-fx-font-size: 14px; " +
@@ -100,8 +100,8 @@ public class SettingsView extends GridPane {
                 "-fx-background-radius: 5px; " +
                 "-fx-border-width: 2px; " +
                 "-fx-border-color: #333333; " +
-                "-fx-padding: 8px 16px;");
-        this.add(colorPicker, 1, 2);
+                "-fx-padding: 4px 8px;");
+        this.add(colorPicker, 1, 2, 2, 1);
 
         tfdPlayer1.setText("Player1");
         tfdPlayer1.setStyle("-fx-font-family: 'Segoe UI', Helvetica, Arial, sans-serif; " +
@@ -111,8 +111,8 @@ public class SettingsView extends GridPane {
                 "-fx-background-radius: 5px; " +
                 "-fx-border-width: 2px; " +
                 "-fx-border-color: #333333; " +
-                "-fx-padding: 8px 16px;");
-        this.add(tfdPlayer1, 1, 3);
+                "-fx-padding: 4px 8px;");
+        this.add(tfdPlayer1, 1, 3, 2, 1);
 
         tfdPlayer2.setText("Player2");
         tfdPlayer2.setStyle("-fx-font-family: 'Segoe UI', Helvetica, Arial, sans-serif; " +
@@ -122,8 +122,8 @@ public class SettingsView extends GridPane {
                 "-fx-background-radius: 5px; " +
                 "-fx-border-width: 2px; " +
                 "-fx-border-color: #333333; " +
-                "-fx-padding: 8px 16px;");
-        this.add(tfdPlayer2, 1, 5);
+                "-fx-padding: 4px 8px;");
+        this.add(tfdPlayer2, 1, 5, 2, 1);
 
         chbDifficulty.getItems().addAll("Easy", "Medium", "Hard");
         chbDifficulty.setValue("Medium");
@@ -134,8 +134,8 @@ public class SettingsView extends GridPane {
                 "-fx-background-radius: 5px; " +
                 "-fx-border-width: 2px; " +
                 "-fx-border-color: #333333; " +
-                "-fx-padding: 8px 16px;");
-        this.add(chbDifficulty, 1, 6);
+                "-fx-padding: 4px 8px;");
+        this.add(chbDifficulty, 1, 6, 2, 1);
 
         ToggleGroup group = new ToggleGroup();
         rdbBot.setToggleGroup(group);
@@ -147,8 +147,8 @@ public class SettingsView extends GridPane {
                 "-fx-font-size: 14px; " +
                 "-fx-text-fill: #333333;");
         rdbBot.setSelected(true);
-        this.add(rdbBot, 1, 4);
-        this.add(rdbHuman, 2, 4);
+        this.add(rdbBot, 1, 4, 1, 1);
+        this.add(rdbHuman, 2, 4, 1, 1);
 
         apply = new Button("Apply");
         apply.setStyle("-fx-font-family: 'Segoe UI', Helvetica, Arial, sans-serif; " +
@@ -158,8 +158,8 @@ public class SettingsView extends GridPane {
                 "-fx-background-radius: 5px; " +
                 "-fx-border-width: 2px; " +
                 "-fx-border-color: #333333; " +
-                "-fx-padding: 8px 16px;");
-        this.add(apply, 1, 7);
+                "-fx-padding: 4px 8px;");
+        this.add(apply, 1, 7, 2, 1);
     }
 
     public int getSize() {

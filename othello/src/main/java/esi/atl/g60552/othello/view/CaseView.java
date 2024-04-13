@@ -1,28 +1,33 @@
 package esi.atl.g60552.othello.view;
 
-import javafx.scene.control.Cell;
 import javafx.scene.layout.StackPane;
 import javafx.scene.paint.Color;
-import javafx.scene.paint.Paint;
 import javafx.scene.shape.Circle;
 import javafx.scene.shape.Rectangle;
 
-import java.util.Stack;
+import java.util.Objects;
 
 public class CaseView extends StackPane {
-    Circle circle;
-    Rectangle rectangle;
-    Color backgroundColor;
-    public CaseView(Color backgroundColor) {
+    private final int size;
+    private Circle circle;
+    private Rectangle rectangle;
+    private Color backgroundColor;
+
+    public CaseView(Color backgroundColor, int size) {
         super();
         this.backgroundColor = backgroundColor;
+        this.size = size;
         init();
     }
 
     void init() {
-        rectangle = new Rectangle(50, 50, backgroundColor);
-        rectangle.setStroke(Color.BLACK);
-        circle = new Circle(20, Color.TRANSPARENT);
+        rectangle = new Rectangle(size, size, backgroundColor);
+        if (backgroundColor.equals(Color.BLACK)) {
+            rectangle.setStroke(Color.WHITE);
+        } else {
+            rectangle.setStroke(Color.BLACK);
+        }
+        circle = new Circle((int)(size / 2) - 4 , Color.TRANSPARENT);
         this.getChildren().addAll(rectangle, circle);
     }
 
@@ -32,9 +37,19 @@ public class CaseView extends StackPane {
 
     public void setColorDisk(Color color) {
         circle.setFill(color);
+        if (Objects.equals(color, Color.BLACK)) {
+            circle.setStroke(Color.WHITE);
+        } else {
+            circle.setStroke(Color.BLACK);
+        }
     }
 
     public void eraseDisk() {
         circle.setFill(Color.TRANSPARENT);
+        circle.setStroke(Color.TRANSPARENT);
+    }
+
+    public int getSize() {
+        return size;
     }
 }

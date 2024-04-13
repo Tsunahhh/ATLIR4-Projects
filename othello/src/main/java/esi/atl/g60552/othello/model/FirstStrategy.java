@@ -13,8 +13,13 @@ public class FirstStrategy implements Strategy {
 
     @Override
     public void playStrategy() {
-        List<Position> positions = reversi.getListOfValidMoves();
-        Position selected = positions.get(0);
-        reversi.placeDisk(selected.getX(), selected.getY());
+        List<Position> positions = reversi.getListOfValidMoves(reversi.currPlayer());
+        if (positions.isEmpty()) {
+            reversi.pass();
+        } else {
+            Position selected = positions.get(0);
+            reversi.placeDisk(selected.getX(), selected.getY());
+        }
+
     }
 }

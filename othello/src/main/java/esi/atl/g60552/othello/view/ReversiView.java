@@ -10,7 +10,7 @@ import javafx.scene.paint.Color;
 import java.util.List;
 
 public class ReversiView extends GridPane {
-
+    private static final int REVERSI_SIZE = 700;
     private Color bgGameColor;
 
     ReversiView() {
@@ -55,7 +55,7 @@ public class ReversiView extends GridPane {
         Board board = reversi.getBoard();
         for (int row = 0; row < board.getSize(); row++) {
             for (int col = 0; col < board.getSize(); col++) {
-                CaseView caseView = new CaseView(bgGameColor);
+                CaseView caseView = new CaseView(bgGameColor, REVERSI_SIZE / reversi.getBoard().getSize());
                 if (!board.isEmpty(col, row)) {
                     if (board.getColorAt(col, row) == DiskColor.BLACK) {
                         caseView.setColorDisk(Color.BLACK);
