@@ -2,6 +2,7 @@ package esi.atl.g60552.othello.model;
 
 import esi.atl.g60552.othello.util.Observable;
 import esi.atl.g60552.othello.util.Observer;
+import esi.atl.g60552.othello.util.Strategy;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -14,6 +15,7 @@ import java.util.List;
 public class Reversi implements Observable {
     private static final int MIN_SIZE = 3;
     private static final int MAX_SIZE = 15;
+    private Strategy strategy;
     private int size;
     private Board board;
     private Player currPlayer;
@@ -25,13 +27,19 @@ public class Reversi implements Observable {
      * @param size size of the board
      * @param players players of the game
      */
-    public Reversi(int size, Player... players) {
+    public Reversi(int size, int difficulty, Player... players) {
         if (size < MIN_SIZE) {
             throw new IllegalArgumentException("size is too low !");
         } else if (size > MAX_SIZE) {
             throw new IllegalArgumentException("size is too high !");
         } else if (size % 2 == 1) {
             throw new IllegalArgumentException("size should be even !");
+        }
+
+        switch (difficulty){
+            case 0 -> strategy = new FirstStrategy(this);
+            case 1 -> strategy = new RandomStrategy(this);
+            case 2 -> strategy = new GluttonStrategy(this);
         }
 
         this.size = size;
@@ -196,7 +204,17 @@ public class Reversi implements Observable {
         Player tmp = participants.remove(0);
         participants.add(currPlayer);
         currPlayer = tmp;
+        notifyObservers();
+        if (currPlayer instanceof Bot) {
+            try  {
+                Thread.sleep(200);
+            } catch (InterruptedException e) {
+                throw new RuntimeException(e);
+            }
+            strategy.playStrategy();
+        }
     }
+
 
     public Player getCurrPlayer() {
         return currPlayer;

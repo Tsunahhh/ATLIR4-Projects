@@ -1,13 +1,12 @@
 package esi.atl.g60552.othello.view;
 
-import esi.atl.g60552.othello.model.Reversi;
-import javafx.geometry.Insets;
+import javafx.geometry.Pos;
 import javafx.scene.control.Button;
 import javafx.scene.layout.HBox;
 
 public class ButtonsBox extends HBox {
 
-    private AppView appView;
+    private final AppView appView;
     private Button pause;
     private Button undo;
     private Button redo;
@@ -18,7 +17,15 @@ public class ButtonsBox extends HBox {
     ButtonsBox(AppView appView) {
         super(10);
         this.appView = appView;
-        HBox.setMargin(this, new Insets(10));
+        this.setStyle("-fx-font-family: 'Segoe UI', Helvetica, Arial, sans-serif; " +
+                "-fx-font-size: 14px; " +
+                "-fx-text-fill: #333333; " +
+                "-fx-background-color: #ffffff; " +
+                "-fx-background-radius: 5px; " +
+                "-fx-border-width: 2px; " +
+                "-fx-border-color: #333333; " +
+                "-fx-padding: 8px 16px;");
+        this.setAlignment(Pos.CENTER);
         initButtons();
         initHandles();
         initStyles();
@@ -45,7 +52,7 @@ public class ButtonsBox extends HBox {
             appView.pass();
         });
         stop.setOnMouseClicked(e -> {
-            appView.stop();
+            appView.giveUp();
         });
     }
 
