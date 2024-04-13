@@ -8,6 +8,14 @@ import javafx.scene.layout.HBox;
 public class GameInfo extends HBox {
     GameInfo() {
         super(10);
+        this.setStyle("-fx-font-family: 'Segoe UI', Helvetica, Arial, sans-serif; " +
+                "-fx-font-size: 14px; " +
+                "-fx-text-fill: #333333; " +
+                "-fx-background-color: #ffffff; " +
+                "-fx-background-radius: 5px; " +
+                "-fx-border-width: 2px; " +
+                "-fx-border-color: #333333; " +
+                "-fx-padding: 8px 16px;");
     }
 
     void update(Player player, int score) {

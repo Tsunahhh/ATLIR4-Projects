@@ -1,11 +1,11 @@
 package esi.atl.g60552.othello.view;
 
 import esi.atl.g60552.othello.model.*;
+import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
-import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 import esi.atl.g60552.othello.util.Observer;
 
@@ -20,23 +20,28 @@ public class AppView implements Observer {
     private SettingsView settingsView;
     private ButtonsBox buttonsBox;
     private Scene scene;
+    private Stage stage;
 
     public AppView(Stage stage) {
+        this.stage = stage;
         initViews();
         initGame();
         update();
-        settingsView.show();
+        showSettings();
         stage.setScene(scene);
         stage.show();
     }
 
     private void initViews() {
-        root = new VBox();
+        root = new VBox(10);
+        root.setAlignment(Pos.CENTER);
 
         gameInfo = new GameInfo();
 
-        corps = new HBox();
+        corps = new HBox(10);
+        corps.setAlignment(Pos.CENTER);
         settingsView = new SettingsView(this);
+        settingsView.setAlignment(Pos.CENTER);
         reversiView = new ReversiView();
         corps.getChildren().addAll(reversiView, settingsView);
 
@@ -48,8 +53,14 @@ public class AppView implements Observer {
 
     private void initGame() {
         Player p1 = new Human(settingsView.getPlayer1(), DiskColor.BLACK);
-        Player p2 = new Human(settingsView.getPlayer2(), DiskColor.WHITE);
-        reversi = new Reversi(settingsView.getSize(), p1, p2);
+        Player p2;
+        if (settingsView.isBot()) {
+            p2 = new Bot(settingsView.getPlayer2(), DiskColor.WHITE);
+        } else {
+            p2 = new Human(settingsView.getPlayer2(), DiskColor.WHITE);
+        }
+
+        reversi = new Reversi(settingsView.getSize(), settingsView.getDifficulty(), p1, p2);
         reversi.registerObserver(this);
     }
 
@@ -60,10 +71,10 @@ public class AppView implements Observer {
         if (reversi.isOver()) {
             reversiView.update(reversi);
             gameOverPopup(reversi.getWinner());
-            settingsView.show();
+            showSettings();
             reset();
         } else {
-            settingsView.hide();
+            hideSettings();
         }
         reversiView.update(reversi);
     }
@@ -72,7 +83,9 @@ public class AppView implements Observer {
         initGame();
         gameInfo.update(reversi.currPlayer(), 0);
         reversiView.update(reversi);
-        settingsView.show();
+        if (!corps.getChildren().contains(settingsView)) {
+            showSettings();
+        }
     }
 
     void gameOverPopup(Player winner) {
@@ -101,7 +114,12 @@ public class AppView implements Observer {
         reversi.pass();
     }
 
-    void stop() {
+    void giveUp() {
+        Alert giveUp = new Alert(Alert.AlertType.CONFIRMATION);
+        giveUp.setTitle("Give Up");
+        giveUp.setHeaderText("Give Up");
+        giveUp.setContentText("Game is over: " + reversi.getCurrPlayer().getName() + " give up !");
+        giveUp.showAndWait();
         reset();
     }
 
@@ -112,5 +130,17 @@ public class AppView implements Observer {
     void apply() {
         reversiView.setBgGameColor(settingsView.getBGColor());
         reset();
+    }
+
+    void showSettings() {
+        corps.getChildren().add(settingsView);
+    }
+
+    void hideSettings() {
+        corps.getChildren().remove(settingsView);
+    }
+
+    void resize() {
+        stage.sizeToScene();
     }
 }

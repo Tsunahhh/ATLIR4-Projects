@@ -4,8 +4,12 @@ import javafx.geometry.Insets;
 import javafx.scene.control.*;
 import javafx.scene.effect.ColorAdjust;
 import javafx.scene.effect.ColorInput;
+import javafx.scene.layout.Background;
+import javafx.scene.layout.BackgroundFill;
+import javafx.scene.layout.CornerRadii;
 import javafx.scene.layout.GridPane;
 import javafx.scene.paint.Color;
+import javafx.scene.paint.Paint;
 
 import java.util.Optional;
 
@@ -18,7 +22,7 @@ public class SettingsView extends GridPane {
     private TextField tfdPlayer2 = new TextField();
     private RadioButton rdbBot = new RadioButton("Bot");
     private RadioButton rdbHuman = new RadioButton("Human");
-    private ChoiceBox<String> tfdDifficulty = new ChoiceBox<>();
+    private ChoiceBox<String> chbDifficulty = new ChoiceBox<>();
     private Button apply = new Button("Apply");
 
     SettingsView(AppView appView) {
@@ -34,23 +38,44 @@ public class SettingsView extends GridPane {
         this.setPadding(new Insets(10));
         this.setHgap(15);
         this.setVgap(6);
+        this.setBackground(new Background(new BackgroundFill(Color.WHITE, CornerRadii.EMPTY, new Insets(5))));
+        this.setStyle("-fx-font-family: 'Segoe UI', Helvetica, Arial, sans-serif; " +
+                "-fx-font-size: 14px; " +
+                "-fx-text-fill: #333333; " +
+                "-fx-background-color: #ffffff; " +
+                "-fx-background-radius: 5px; " +
+                "-fx-border-width: 2px; " +
+                "-fx-border-color: #333333; " +
+                "-fx-padding: 8px 16px;");
     }
 
     void initLabels() {
         Label lblSettings = new Label("Settings: ");
+        lblSettings.setStyle("-fx-font-family: 'Segoe UI', Helvetica, Arial, sans-serif; " +
+                "-fx-font-size: 24px; " +
+                "-fx-text-fill: #333333; " +
+                "-fx-background-color: #ffffff; " +
+                "-fx-background-radius: 5px; " +
+                "-fx-padding: 8px 16px;");
         this.add(lblSettings, 0, 0, 3, 1);
         Label lblSize = new Label("Size: ");
-        this.add(lblSize, 0, 1);
+        lblSize.setStyle("-fx-padding: 8px 16px;");
+        this.add(lblSize, 0, 1, 1, 1);
         Label lblColor = new Label("BackGround: ");
-        this.add(lblColor, 0, 2);
+        lblColor.setStyle("-fx-padding: 8px 16px;");
+        this.add(lblColor, 0, 2, 1, 1);
         Label lblPlayer1 = new Label("Player1: ");
-        this.add(lblPlayer1, 0, 3);
+        lblPlayer1.setStyle("-fx-padding: 8px 16px;");
+        this.add(lblPlayer1, 0, 3, 1, 1);
         Label lblIsBot = new Label("Is Player 2: ");
-        this.add(lblIsBot, 0, 4);
+        lblIsBot.setStyle("-fx-padding: 8px 16px;");
+        this.add(lblIsBot, 0, 4, 1, 1);
         Label lblPlayer2 = new Label("Player2: ");
-        this.add(lblPlayer2, 0, 5);
+        lblPlayer2.setStyle("-fx-padding: 8px 16px;");
+        this.add(lblPlayer2, 0, 5, 1, 1);
         Label lblDifficulty = new Label("Difficulty: ");
-        this.add(lblDifficulty, 0, 6);
+        lblDifficulty.setStyle("-fx-padding: 8px 16px;");
+        this.add(lblDifficulty, 0, 6, 1, 1);
     }
 
     void initInputs() {
@@ -100,9 +125,9 @@ public class SettingsView extends GridPane {
                 "-fx-padding: 8px 16px;");
         this.add(tfdPlayer2, 1, 5);
 
-        tfdDifficulty.getItems().addAll("Easy", "Medium", "Hard");
-        tfdDifficulty.setValue("Medium");
-        tfdDifficulty.setStyle("-fx-font-family: 'Segoe UI', Helvetica, Arial, sans-serif; " +
+        chbDifficulty.getItems().addAll("Easy", "Medium", "Hard");
+        chbDifficulty.setValue("Medium");
+        chbDifficulty.setStyle("-fx-font-family: 'Segoe UI', Helvetica, Arial, sans-serif; " +
                 "-fx-font-size: 14px; " +
                 "-fx-text-fill: #333333; " +
                 "-fx-background-color: #ffffff; " +
@@ -110,7 +135,7 @@ public class SettingsView extends GridPane {
                 "-fx-border-width: 2px; " +
                 "-fx-border-color: #333333; " +
                 "-fx-padding: 8px 16px;");
-        this.add(tfdDifficulty, 1, 6);
+        this.add(chbDifficulty, 1, 6);
 
         ToggleGroup group = new ToggleGroup();
         rdbBot.setToggleGroup(group);
@@ -157,16 +182,8 @@ public class SettingsView extends GridPane {
         return rdbBot.isSelected();
     }
 
-    public String getDifficulty() {
-        return tfdDifficulty.getValue();
-    }
-
-    public void hide() {
-        this.setVisible(false);
-    }
-
-    public void show() {
-        this.setVisible(true);
+    public int getDifficulty() {
+        return chbDifficulty.getSelectionModel().getSelectedIndex();
     }
 
     public void initHandlers() {
