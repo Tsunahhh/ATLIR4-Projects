@@ -1,6 +1,7 @@
 package esi.atl.g60552.othello.view;
 
 import esi.atl.g60552.othello.model.*;
+import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
@@ -8,6 +9,7 @@ import javafx.scene.image.Image;
 import javafx.scene.layout.BorderPane;
 import javafx.stage.Stage;
 import esi.atl.g60552.othello.util.Observer;
+import javafx.stage.StageStyle;
 
 
 public class AppView implements Observer {
@@ -27,18 +29,14 @@ public class AppView implements Observer {
         initViews();
         initGame();
         update();
-        stage.getIcons().add(new Image(getClass().getResource("/icons/icon.png").toString()));
-        stage.setTitle("Reversi");
-        stage.setResizable(false);
-        stage.show();
+        initStage();
     }
 
     private void initViews() {
         root = new BorderPane();
 
         gameInfo = new GameInfo();
-        //Pane topPane = new Pane(gameInfo);
-        BorderPane.setMargin(gameInfo, new javafx.geometry.Insets(0, 0, MARGIN_, 0));
+        BorderPane.setMargin(gameInfo, new Insets(0, 0, MARGIN_, 0));
         root.setTop(gameInfo);
 
         corps = new BorderPane();
@@ -49,20 +47,24 @@ public class AppView implements Observer {
 
         reversiView = new ReversiView();
         reversiView.setAlignment(Pos.CENTER);
+        BorderPane.setMargin(reversiView, new Insets(0, MARGIN_, 0, 0));
         corps.setCenter(reversiView);
         root.setCenter(corps);
 
 
         buttonsBox = new ButtonsBox(this);
-        BorderPane.setMargin(buttonsBox, new javafx.geometry.Insets(MARGIN_, 0, 0, 0));
+        BorderPane.setMargin(buttonsBox, new Insets(MARGIN_, 0, 0, 0));
         root.setBottom(buttonsBox);
-
 
         Scene scene = new Scene(root);
         stage.setScene(scene);
-        stage.setFullScreen(true);
     }
 
+    private void initStage() {
+        stage.getIcons().add(new Image(getClass().getResource("/icons/icon.png").toString()));
+        stage.setTitle("Reversi");
+        stage.show();
+    }
 
     private void initGame() {
         Player p1 = new Human(settingsView.getPlayer1(), DiskColor.BLACK);
@@ -149,7 +151,7 @@ public class AppView implements Observer {
         }
     }
 
-    void leave() {
+    void quit() {
         System.exit(0);
     }
 
@@ -159,14 +161,18 @@ public class AppView implements Observer {
         //adaptSize();
     }
 
-    void fullScreen() {
+    void fullScreenWindow() {
+        Stage newStage = new Stage();
         if (stage.isMaximized()) {
-            stage.setMaximized(false);
-
+            newStage.initStyle(StageStyle.DECORATED);
         } else {
-            stage.setMaximized(true);
-            stage.setAlwaysOnTop(true);
+            newStage.initStyle(StageStyle.UNDECORATED);
         }
+        newStage.setScene(stage.getScene());
+        stage.close();
+        stage = newStage;
+        stage.setMaximized(!stage.isMaximized());
+        initStage();
     }
 
     void undo() {
@@ -178,7 +184,7 @@ public class AppView implements Observer {
 
     void showSettings() {
         if (!corps.getChildren().contains(settingsView)) {
-            corps.getChildren().add(settingsView);
+            corps.setRight(settingsView);
         }
     }
 

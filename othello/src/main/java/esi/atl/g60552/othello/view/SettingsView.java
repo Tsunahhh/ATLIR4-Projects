@@ -2,16 +2,11 @@ package esi.atl.g60552.othello.view;
 
 import javafx.geometry.Insets;
 import javafx.scene.control.*;
-import javafx.scene.effect.ColorAdjust;
-import javafx.scene.effect.ColorInput;
 import javafx.scene.layout.Background;
 import javafx.scene.layout.BackgroundFill;
 import javafx.scene.layout.CornerRadii;
 import javafx.scene.layout.GridPane;
 import javafx.scene.paint.Color;
-import javafx.scene.paint.Paint;
-
-import java.util.Optional;
 
 public class SettingsView extends GridPane {
 
@@ -24,6 +19,7 @@ public class SettingsView extends GridPane {
     private RadioButton rdbHuman = new RadioButton("Human");
     private ChoiceBox<String> chbDifficulty = new ChoiceBox<>();
     private Button apply = new Button("Apply");
+    private Button fullScreen;
 
     SettingsView(AppView appView) {
         super();
@@ -160,6 +156,17 @@ public class SettingsView extends GridPane {
                 "-fx-border-color: #333333; " +
                 "-fx-padding: 4px 8px;");
         this.add(apply, 1, 7, 2, 1);
+
+        fullScreen = new Button("Full Screen");
+        fullScreen.setStyle("-fx-font-family: 'Segoe UI', Helvetica, Arial, sans-serif; " +
+                "-fx-font-size: 14px; " +
+                "-fx-text-fill: #333333; " +
+                "-fx-background-color: #ffffff; " +
+                "-fx-background-radius: 5px; " +
+                "-fx-border-width: 2px; " +
+                "-fx-border-color: #333333; " +
+                "-fx-padding: 4px 8px;");
+        this.add(fullScreen, 1, 8, 2, 1);
     }
 
     public int getSize() {
@@ -189,6 +196,9 @@ public class SettingsView extends GridPane {
     public void initHandlers() {
         apply.setOnAction(e -> {
             this.appView.apply();
+        });
+        fullScreen.setOnMouseClicked(e -> {
+            appView.fullScreenWindow();
         });
     }
 }
