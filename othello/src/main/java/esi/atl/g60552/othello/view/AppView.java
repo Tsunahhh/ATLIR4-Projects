@@ -23,6 +23,8 @@ public class AppView implements Observer {
     private ButtonsBox buttonsBox;
     private Stage stage;
     private Thread timer;
+    private final double APP_HEIGHT;
+    private final double APP_WIDTH;
 
     public AppView(Stage stage) {
         this.stage = stage;
@@ -30,6 +32,8 @@ public class AppView implements Observer {
         initGame();
         update();
         initStage();
+        this.APP_HEIGHT = stage.getHeight();
+        this.APP_WIDTH = stage.getWidth();
     }
 
     private void initViews() {
@@ -63,6 +67,7 @@ public class AppView implements Observer {
     private void initStage() {
         stage.getIcons().add(new Image(getClass().getResource("/icons/icon.png").toString()));
         stage.setTitle("Reversi");
+        stage.setResizable(false);
         stage.show();
     }
 
@@ -158,12 +163,18 @@ public class AppView implements Observer {
     void apply() {
         reversiView.setBgGameColor(settingsView.getBGColor());
         reset();
-        //adaptSize();
+    }
+
+    void adaptWindow() {
+        stage.setWidth(APP_WIDTH);
+        stage.setHeight(APP_HEIGHT);
+        stage.centerOnScreen();
     }
 
     void fullScreenWindow() {
         Stage newStage = new Stage();
-        if (stage.isMaximized()) {
+        boolean isMaximized = stage.isMaximized();
+        if (isMaximized) {
             newStage.initStyle(StageStyle.DECORATED);
         } else {
             newStage.initStyle(StageStyle.UNDECORATED);
@@ -171,8 +182,10 @@ public class AppView implements Observer {
         newStage.setScene(stage.getScene());
         stage.close();
         stage = newStage;
-        stage.setMaximized(!stage.isMaximized());
+
+        stage.setMaximized(!isMaximized);
         initStage();
+        if (isMaximized) adaptWindow();
     }
 
     void undo() {
