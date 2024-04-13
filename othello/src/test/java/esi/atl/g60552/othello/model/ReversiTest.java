@@ -17,7 +17,7 @@ class ReversiTest {
         ArrayList<Player> playersList = new ArrayList<>();
         playersList.add(p1);
         playersList.add(p2);
-        reversi = new Reversi(4, p1, p2);
+        reversi = new Reversi(4,0,  p1, p2);
     }
 
     /**
