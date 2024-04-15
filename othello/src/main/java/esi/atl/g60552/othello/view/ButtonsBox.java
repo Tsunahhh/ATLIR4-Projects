@@ -122,5 +122,4 @@ public class ButtonsBox extends HBox {
     void hideButtons() {
 
     }
-
 }
