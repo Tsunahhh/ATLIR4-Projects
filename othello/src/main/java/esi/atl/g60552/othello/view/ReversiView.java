@@ -10,7 +10,7 @@ import javafx.scene.paint.Color;
 import java.util.List;
 
 public class ReversiView extends GridPane {
-    private static final int REVERSI_SIZE = 700;
+    private static final int REVERSI_SIZE = 500;
     private Color bgGameColor;
 
     ReversiView() {

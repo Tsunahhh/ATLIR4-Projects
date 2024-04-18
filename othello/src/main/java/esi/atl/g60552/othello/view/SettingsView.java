@@ -28,6 +28,7 @@ public class SettingsView extends GridPane {
         initLabels();
         initInputs();
         initHandlers();
+        initStyle();
     }
 
     void init() {
@@ -35,14 +36,6 @@ public class SettingsView extends GridPane {
         this.setHgap(15);
         this.setVgap(6);
         this.setBackground(new Background(new BackgroundFill(Color.WHITE, CornerRadii.EMPTY, new Insets(5))));
-        this.setStyle("-fx-font-family: 'Segoe UI', Helvetica, Arial, sans-serif; " +
-                "-fx-font-size: 14px; " +
-                "-fx-text-fill: #333333; " +
-                "-fx-background-color: #ffffff; " +
-                "-fx-background-radius: 5px; " +
-                "-fx-border-width: 2px; " +
-                "-fx-border-color: #333333; " +
-                "-fx-padding: 8px 8px;");
     }
 
     void initLabels() {
@@ -79,58 +72,17 @@ public class SettingsView extends GridPane {
             tfdSize.getItems().add(i);
         }
         tfdSize.setValue(8);
-        tfdSize.setStyle("-fx-font-family: 'Segoe UI', Helvetica, Arial, sans-serif; " +
-                "-fx-font-size: 14px; " +
-                "-fx-text-fill: #333333; " +
-                "-fx-background-color: #ffffff; " +
-                "-fx-background-radius: 5px; " +
-                "-fx-border-width: 2px; " +
-                "-fx-border-color: #333333; " +
-                "-fx-padding: 4px 8px;");
         this.add(tfdSize, 1, 1, 2, 1);
-
-        colorPicker.setStyle("-fx-font-family: 'Segoe UI', Helvetica, Arial, sans-serif; " +
-                "-fx-font-size: 14px; " +
-                "-fx-text-fill: #333333; " +
-                "-fx-background-color: #ffffff; " +
-                "-fx-background-radius: 5px; " +
-                "-fx-border-width: 2px; " +
-                "-fx-border-color: #333333; " +
-                "-fx-padding: 4px 8px;");
         this.add(colorPicker, 1, 2, 2, 1);
 
         tfdPlayer1.setText("Player1");
-        tfdPlayer1.setStyle("-fx-font-family: 'Segoe UI', Helvetica, Arial, sans-serif; " +
-                "-fx-font-size: 14px; " +
-                "-fx-text-fill: #333333; " +
-                "-fx-background-color: #ffffff; " +
-                "-fx-background-radius: 5px; " +
-                "-fx-border-width: 2px; " +
-                "-fx-border-color: #333333; " +
-                "-fx-padding: 4px 8px;");
         this.add(tfdPlayer1, 1, 3, 2, 1);
 
         tfdPlayer2.setText("Player2");
-        tfdPlayer2.setStyle("-fx-font-family: 'Segoe UI', Helvetica, Arial, sans-serif; " +
-                "-fx-font-size: 14px; " +
-                "-fx-text-fill: #333333; " +
-                "-fx-background-color: #ffffff; " +
-                "-fx-background-radius: 5px; " +
-                "-fx-border-width: 2px; " +
-                "-fx-border-color: #333333; " +
-                "-fx-padding: 4px 8px;");
         this.add(tfdPlayer2, 1, 5, 2, 1);
 
-        chbDifficulty.getItems().addAll("Easy", "Medium", "Hard");
-        chbDifficulty.setValue("Medium");
-        chbDifficulty.setStyle("-fx-font-family: 'Segoe UI', Helvetica, Arial, sans-serif; " +
-                "-fx-font-size: 14px; " +
-                "-fx-text-fill: #333333; " +
-                "-fx-background-color: #ffffff; " +
-                "-fx-background-radius: 5px; " +
-                "-fx-border-width: 2px; " +
-                "-fx-border-color: #333333; " +
-                "-fx-padding: 4px 8px;");
+        chbDifficulty.getItems().addAll("Diet", "First", "Random", "Glutton");
+        chbDifficulty.setValue("Random");
         this.add(chbDifficulty, 1, 6, 2, 1);
 
         ToggleGroup group = new ToggleGroup();
@@ -147,26 +99,31 @@ public class SettingsView extends GridPane {
         this.add(rdbHuman, 2, 4, 1, 1);
 
         apply = new Button("Apply");
-        apply.setStyle("-fx-font-family: 'Segoe UI', Helvetica, Arial, sans-serif; " +
-                "-fx-font-size: 14px; " +
-                "-fx-text-fill: #333333; " +
-                "-fx-background-color: #ffffff; " +
-                "-fx-background-radius: 5px; " +
-                "-fx-border-width: 2px; " +
-                "-fx-border-color: #333333; " +
-                "-fx-padding: 4px 8px;");
         this.add(apply, 1, 7, 2, 1);
 
         fullScreen = new Button("Full Screen");
-        fullScreen.setStyle("-fx-font-family: 'Segoe UI', Helvetica, Arial, sans-serif; " +
+        this.add(fullScreen, 1, 8, 2, 1);
+    }
+
+    private void initStyle() {
+        for (var node : this.getChildren()) {
+            node.setStyle("-fx-font-family: 'Segoe UI', Helvetica, Arial, sans-serif; " +
+                    "-fx-font-size: 14px; " +
+                    "-fx-text-fill: #333333; " +
+                    "-fx-background-color: #ffffff; " +
+                    "-fx-background-radius: 5px; " +
+                    "-fx-border-width: 2px; " +
+                    "-fx-border-color: #333333; " +
+                    "-fx-padding: 4px 8px;");
+        }
+        this.setStyle("-fx-font-family: 'Segoe UI', Helvetica, Arial, sans-serif; " +
                 "-fx-font-size: 14px; " +
                 "-fx-text-fill: #333333; " +
                 "-fx-background-color: #ffffff; " +
                 "-fx-background-radius: 5px; " +
                 "-fx-border-width: 2px; " +
                 "-fx-border-color: #333333; " +
-                "-fx-padding: 4px 8px;");
-        this.add(fullScreen, 1, 8, 2, 1);
+                "-fx-padding: 8px 8px;");
     }
 
     public int getSize() {
