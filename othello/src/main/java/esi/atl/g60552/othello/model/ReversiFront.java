@@ -12,7 +12,6 @@ public class ReversiFront {
      */
     public ReversiFront(Reversi reversi) {
         this.reversi = reversi;
-
     }
 
     /**

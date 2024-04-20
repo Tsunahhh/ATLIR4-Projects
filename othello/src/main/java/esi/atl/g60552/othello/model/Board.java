@@ -42,10 +42,14 @@ public class Board {
      * @return the color
      */
     public DiskColor getColorAt(int x, int y) {
+        return getDiskAt(x, y).getColor();
+    }
+
+    public Disk getDiskAt(int x, int y) {
         if (isEmpty(x, y)) {
             throw new IllegalArgumentException("Board: this case is Empty");
         }
-        return board[y][x].getColor();
+        return board[y][x];
     }
 
     /**
@@ -123,5 +127,13 @@ public class Board {
 
     public int getSize() {
         return size;
+    }
+
+    void replace(Board board) {
+        for (int i = 0; i < board.getSize(); i++) {
+            for (int j = 0; j < board.getSize(); j++) {
+                this.board[i][j] = (board.isEmpty(j, i)) ? null : board.getDiskAt(j, i);
+            }
+        }
     }
 }

@@ -4,9 +4,7 @@ import esi.atl.g60552.othello.util.Observable;
 import esi.atl.g60552.othello.util.Observer;
 import esi.atl.g60552.othello.util.Strategy;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
+import java.util.*;
 
 
 /**
@@ -29,6 +27,7 @@ public class Reversi implements Observable {
      * @param players players of the game
      */
     public Reversi(int size, int difficulty, Player... players) {
+
         if (size < MIN_SIZE) {
             throw new IllegalArgumentException("size is too low !");
         } else if (size > MAX_SIZE) {
@@ -38,9 +37,10 @@ public class Reversi implements Observable {
         }
 
         switch (difficulty){
-            case 0 -> strategy = new FirstStrategy(this);
-            case 1 -> strategy = new RandomStrategy(this);
-            case 2 -> strategy = new GluttonStrategy(this);
+            case 0 -> strategy = new DietStrategy(this);
+            case 1 -> strategy = new FirstStrategy(this);
+            case 2 -> strategy = new RandomStrategy(this);
+            case 3 -> strategy = new GluttonStrategy(this);
         }
 
         this.size = size;
@@ -78,7 +78,7 @@ public class Reversi implements Observable {
         if (isValidPosition(x, y)) { // notify only if the disk is placed
             isPlaying = true;
             for (Direction direction : Direction.values()) {
-                if (isDirectionValid(x, y, direction, currPlayer)) {
+                if (isDirectionValid(x, y, direction, currPlayer) != 0) {
                     board.flipDirection(x, y, direction, currPlayer);
                 }
             }
@@ -121,56 +121,50 @@ public class Reversi implements Observable {
      * @return true if valid, false otherwise
      */
     public boolean isValidPosition(int x, int y) {
-        List<Position> validPositions = getListOfValidMoves(currPlayer);
-        int i = 0;
-        boolean found = false;
-        while (i < validPositions.size() && !found) {
-            Position currPos = validPositions.get(i);
-            if (currPos.getX() == x && currPos.getY() == y) {
-                found = true;
+        Map<Position, Integer> validPositions = getListOfValidMoves(currPlayer);
+        for (var position : validPositions.keySet()) {
+            if (position.getX() == x && position.getY() == y) {
+                return true;
             }
-            i++;
         }
-        return found;
+        return false;
     }
 
-    boolean isDirectionValid(int x, int y, Direction direction, Player player) {
-        boolean isPlaceable = false;
-        if (board.isInBoard(x, y) && board.isEmpty(x, y)) {
+    int isDirectionValid(int x, int y, Direction direction, Player player) {
+        int cptPlaceable = 0;
+        if (getBoard().isEmpty(x, y)) {
             x += direction.getXDirection();
             y += direction.getYDirection();
-            // The next one is other color than player
-            if (board.isInBoard(x, y) && !board.isEmpty(x, y) && board.getColorAt(x, y) != player.getColor()) {
-                while (board.isInBoard(x, y) && !board.isEmpty(x, y) && !isPlaceable) {
-                    if (board.getColorAt(x, y) == player.getColor()) {
-                        isPlaceable = true;
-                    }
-                    x += direction.getXDirection();
-                    y += direction.getYDirection();
-                }
+            while (getBoard().isInBoard(x, y) && !getBoard().isEmpty(x, y) && getBoard().getColorAt(x, y) != player.getColor()) {
+                cptPlaceable++;
+                x += direction.getXDirection();
+                y += direction.getYDirection();
             }
-
+            if (!getBoard().isInBoard(x, y) || getBoard().isEmpty(x, y)) {
+                cptPlaceable = 0;
+            }
         }
-
-        return isPlaceable;
+        return cptPlaceable;
     }
 
     /**
      * Get a list positions of valid moves
      * @return the list
      */
-    public List<Position> getListOfValidMoves(Player player) {
-        List<Position> listOfValidMoves = new ArrayList<>();
+    public Map<Position, Integer> getListOfValidMoves(Player player) {
+        Map<Position, Integer> moves = new HashMap<>();
+        //List<Position> listOfValidMoves = new ArrayList<>();
 
         for (int i = 0; i < size; i++) {
             for (int j = 0; j < size; j++) {
-                if (isPlaceable(j, i, player) && board.isEmpty(j, i)) {
-                    listOfValidMoves.add(new Position(j, i));
+                int cptPlaceable = isPlaceable(j, i, player);
+                if (cptPlaceable != 0) {
+                    moves.put(new Position(j, i), cptPlaceable);
                 }
             }
         }
 
-        return listOfValidMoves;
+        return moves;
     }
 
     /**
@@ -179,8 +173,12 @@ public class Reversi implements Observable {
      * @param y y-coords
      * @return true if placeable of false
      */
-    boolean isPlaceable(int x, int y, Player player) {
-        return Arrays.stream(Direction.values()).anyMatch(direction -> isDirectionValid(x, y, direction, player));
+    int isPlaceable(int x, int y, Player player) {
+        int diskCpt = 0;
+        for (Direction currDir : Direction.values()) {
+            diskCpt += isDirectionValid(x, y, currDir, player);
+        }
+        return diskCpt;
     }
 
     /**
@@ -257,5 +255,9 @@ public class Reversi implements Observable {
         for (Observer observer : observers) {
             observer.update();
         }
+    }
+
+    void setBoard(Board board) {
+        this.board = board;
     }
 }
