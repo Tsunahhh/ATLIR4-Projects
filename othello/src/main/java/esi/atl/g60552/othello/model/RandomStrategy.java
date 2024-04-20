@@ -3,6 +3,7 @@ package esi.atl.g60552.othello.model;
 import esi.atl.g60552.othello.util.Strategy;
 
 import java.util.List;
+import java.util.Map;
 import java.util.Random;
 
 public class RandomStrategy implements Strategy {
@@ -12,11 +13,16 @@ public class RandomStrategy implements Strategy {
     }
 
     private Position randomPos() {
-        List<Position> positions = reversi.getListOfValidMoves(reversi.currPlayer());
+        Map<Position, Integer> positions = reversi.getListOfValidMoves(reversi.currPlayer());
         Random random = new Random();
         Position result = null;
         if (!positions.isEmpty()) {
-            result = positions.get(random.nextInt(positions.size()));
+            int cpt = random.nextInt(positions.size());
+            for (Map.Entry<Position, Integer> entry : positions.entrySet()) {
+                if (random.nextInt(0, positions.size()) == cpt) {
+                    result = entry.getKey();
+                }
+            }
         }
         return result;
     }

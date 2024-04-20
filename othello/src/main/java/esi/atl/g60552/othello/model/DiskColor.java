@@ -5,5 +5,10 @@ package esi.atl.g60552.othello.model;
  */
 public enum DiskColor {
     BLACK,
-    WHITE
+    WHITE;
+
+    DiskColor() {}
+    DiskColor getOppositeColor() {
+        return (this == BLACK) ? WHITE : BLACK;
+    }
 }
