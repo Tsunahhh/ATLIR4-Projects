@@ -107,14 +107,17 @@ public class SettingsView extends GridPane {
 
     private void initStyle() {
         for (var node : this.getChildren()) {
-            node.setStyle("-fx-font-family: 'Segoe UI', Helvetica, Arial, sans-serif; " +
-                    "-fx-font-size: 14px; " +
-                    "-fx-text-fill: #333333; " +
-                    "-fx-background-color: #ffffff; " +
-                    "-fx-background-radius: 5px; " +
-                    "-fx-border-width: 2px; " +
-                    "-fx-border-color: #333333; " +
-                    "-fx-padding: 4px 8px;");
+            if (! (node instanceof Label)) {
+                node.setStyle("-fx-font-family: 'Segoe UI', Helvetica, Arial, sans-serif; " +
+                        "-fx-font-size: 14px; " +
+                        "-fx-text-fill: #333333; " +
+                        "-fx-background-color: #ffffff; " +
+                        "-fx-background-radius: 5px; " +
+                        "-fx-border-width: 2px; " +
+                        "-fx-border-color: #333333; " +
+                        "-fx-padding: 4px 8px;"
+                );
+            }
         }
         this.setStyle("-fx-font-family: 'Segoe UI', Helvetica, Arial, sans-serif; " +
                 "-fx-font-size: 14px; " +
