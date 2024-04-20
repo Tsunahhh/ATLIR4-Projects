@@ -48,7 +48,6 @@ public class Reversi implements Observable {
         currPlayer = participants.remove(0);
         board = new Board(size);
     }
-
     /**
      * Verify if the game is over.
      * @return true if over or false.
@@ -63,7 +62,6 @@ public class Reversi implements Observable {
 
         return getListOfValidMoves(currPlayer).isEmpty();
     }
-
     /**
      * Place the disk.
      * @param x x position
@@ -89,13 +87,10 @@ public class Reversi implements Observable {
             notifyObservers();
         }
     }
-
     public void pass() {
         nextPlayer();
         notifyObservers();
     }
-
-
     /**
      * Get the color of the disk at the given position.
      * @param x the x position
@@ -105,7 +100,6 @@ public class Reversi implements Observable {
     public DiskColor getColorAt(int x, int y) { // todo getBoard().getColor()
         return board.getColorAt(x, y);
     }
-
     /**
      * Get the current player.
      * @return the current player
@@ -113,7 +107,6 @@ public class Reversi implements Observable {
     public Player currPlayer() {
         return currPlayer;
     }
-
     /**
      * Verify if the given position is valid.
      * @param x x position
@@ -129,7 +122,6 @@ public class Reversi implements Observable {
         }
         return false;
     }
-
     int isDirectionValid(int x, int y, Direction direction, Player player) {
         int cptPlaceable = 0;
         if (getBoard().isEmpty(x, y)) {
@@ -146,7 +138,6 @@ public class Reversi implements Observable {
         }
         return cptPlaceable;
     }
-
     /**
      * Get a list positions of valid moves
      * @return the list
@@ -166,7 +157,6 @@ public class Reversi implements Observable {
 
         return moves;
     }
-
     /**
      * Verify if the position is a placeable case for the current player
      * @param x x-coords
@@ -180,7 +170,6 @@ public class Reversi implements Observable {
         }
         return diskCpt;
     }
-
     /**
      * Get the winner of the game.
      * @return the winner
@@ -201,10 +190,6 @@ public class Reversi implements Observable {
 
         return winner;
     }
-
-    /**
-     * Change the current player to the next player.
-     */
     void nextPlayer() {
         Player tmp = participants.remove(0);
         participants.add(currPlayer);
@@ -219,7 +204,6 @@ public class Reversi implements Observable {
             strategy.playStrategy();
         }
     }
-
     public int getScore(Player player) {
         if (player.getColor() == DiskColor.BLACK) {
             return board.getBlackDisks();
@@ -227,36 +211,28 @@ public class Reversi implements Observable {
             return board.getWhiteDisks();
         }
     }
-
     public boolean isPlaying() {
         return isPlaying;
     }
-
-
     public Player getCurrPlayer() {
         return currPlayer;
     }
-
     public Board getBoard() {
         return board;
     }
-
     @Override
     public void registerObserver(Observer observer) {
         observers.add(observer);
     }
-
     @Override
     public void unregisterObserver(Observer observer) {
         observers.remove(observer);
     }
-
     private void notifyObservers() {
         for (Observer observer : observers) {
             observer.update();
         }
     }
-
     void setBoard(Board board) {
         this.board = board;
     }
