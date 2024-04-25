@@ -5,7 +5,7 @@ import java.util.Stack;
 public class CommandManager {
     Stack<Command> undoStack = new Stack<>();
     Stack<Command> redoStack = new Stack<>();
-    CommandManager() {
+    public CommandManager() {
     }
 
     public void add(Command newCmd) {

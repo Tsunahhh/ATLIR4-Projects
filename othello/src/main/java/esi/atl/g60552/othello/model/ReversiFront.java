@@ -12,34 +12,44 @@ public class ReversiFront {
 
     public ReversiFront(Reversi reversi) {
         this.reversi = reversi;
+        this.commandManager = new CommandManager();
     }
+
     public DiskColor getColor(int x, int y) {
         return reversi.getColorAt(x, y);
     }
+
     public Player currPlayer() {
         return reversi.currPlayer();
     }
+
     public int getScore(Player player) {
         return reversi.getScore(player);
     }
+
     public boolean isValidPosition(int x, int y) {
         return reversi.isValidPosition(x, y);
     }
+
     public String getWinnerName() {
         return reversi.getWinner().getName();
     }
+
     public void placeDisk(int x, int y) {
         Command command = new PlaceDiskCommand(reversi, x, y);
         commandManager.add(command);
 
     }
+
     public void pass() {
         Command command = new PassCommand(reversi);
         commandManager.add(command);
     }
+
     public void undo() {
         commandManager.undo();
     }
+
     public void redo() {
         commandManager.redo();
     }

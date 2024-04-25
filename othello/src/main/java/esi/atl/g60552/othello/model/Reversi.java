@@ -3,6 +3,7 @@ package esi.atl.g60552.othello.model;
 import esi.atl.g60552.othello.util.Observable;
 import esi.atl.g60552.othello.util.Observer;
 import esi.atl.g60552.othello.util.Strategy;
+import javafx.application.Platform;
 
 import java.util.*;
 
@@ -144,7 +145,6 @@ public class Reversi implements Observable {
      */
     public Map<Position, Integer> getListOfValidMoves(Player player) {
         Map<Position, Integer> moves = new HashMap<>();
-        //List<Position> listOfValidMoves = new ArrayList<>();
 
         for (int i = 0; i < size; i++) {
             for (int j = 0; j < size; j++) {
@@ -195,13 +195,18 @@ public class Reversi implements Observable {
         participants.add(currPlayer);
         currPlayer = tmp;
         notifyObservers();
+
         if (currPlayer instanceof Bot) {
-            try  {
-                Thread.sleep(250);
-            } catch (InterruptedException e) {
-                throw new RuntimeException(e);
-            }
-            strategy.playStrategy();
+            new Thread (() -> {
+
+                try {
+                    Thread.sleep(500);
+                } catch (InterruptedException e) {
+                    throw new RuntimeException(e);
+                }
+                Platform.runLater(() -> {strategy.playStrategy();});
+                
+            }).start();
         }
     }
     public int getScore(Player player) {

@@ -36,7 +36,6 @@ public class ButtonsBox extends HBox {
         pause = new Button("Pause");
         pass = new Button("Pass");
         stop = new Button("Stop");
-
         quit = new Button("Quit");
         redo = new Button("Redo");
         undo = new Button("Undo");
@@ -66,60 +65,16 @@ public class ButtonsBox extends HBox {
     }
 
     void initStyles() {
-        pause.setStyle("-fx-font-family: 'Segoe UI', Helvetica, Arial, sans-serif; " +
-                "-fx-font-size: 14px; " +
-                "-fx-text-fill: #333333; " +
-                "-fx-background-color: #ffffff; " +
-                "-fx-background-radius: 5px; " +
-                "-fx-border-width: 2px; " +
-                "-fx-border-color: #333333; " +
-                "-fx-padding: 8px 16px;");
-        pass.setStyle("-fx-font-family: 'Segoe UI', Helvetica, Arial, sans-serif; " +
-                "-fx-font-size: 14px; " +
-                "-fx-text-fill: #333333; " +
-                "-fx-background-color: #ffffff; " +
-                "-fx-background-radius: 5px; " +
-                "-fx-border-width: 2px; " +
-                "-fx-border-color: #333333; " +
-                "-fx-padding: 8px 16px;");
-        stop.setStyle("-fx-font-family: 'Segoe UI', Helvetica, Arial, sans-serif; " +
-                "-fx-font-size: 14px; " +
-                "-fx-text-fill: #333333; " +
-                "-fx-background-color: #ffffff; " +
-                "-fx-background-radius: 5px; " +
-                "-fx-border-width: 2px; " +
-                "-fx-border-color: #333333; " +
-                "-fx-padding: 8px 16px;");
-        quit.setStyle("-fx-font-family: 'Segoe UI', Helvetica, Arial, sans-serif; " +
-                "-fx-font-size: 14px; " +
-                "-fx-text-fill: #333333; " +
-                "-fx-background-color: #ffffff; " +
-                "-fx-background-radius: 5px; " +
-                "-fx-border-width: 2px; " +
-                "-fx-border-color: #333333; " +
-                "-fx-padding: 8px 16px;");
-        redo.setStyle("-fx-font-family: 'Segoe UI', Helvetica, Arial, sans-serif; " +
-                "-fx-font-size: 14px; " +
-                "-fx-text-fill: #333333; " +
-                "-fx-background-color: #ffffff; " +
-                "-fx-background-radius: 5px; " +
-                "-fx-border-width: 2px; " +
-                "-fx-border-color: #333333; " +
-                "-fx-padding: 8px 16px;");
-        undo.setStyle("-fx-font-family: 'Segoe UI', Helvetica, Arial, sans-serif; " +
-                "-fx-font-size: 14px; " +
-                "-fx-text-fill: #333333; " +
-                "-fx-background-color: #ffffff; " +
-                "-fx-background-radius: 5px; " +
-                "-fx-border-width: 2px; " +
-                "-fx-border-color: #333333; " +
-                "-fx-padding: 8px 16px;");
-    }
-    void showButtons() {
-
-    }
-
-    void hideButtons() {
+        for (var btn : this.getChildren()) {
+            btn.setStyle("-fx-font-family: 'Segoe UI', Helvetica, Arial, sans-serif; " +
+                    "-fx-font-size: 14px; " +
+                    "-fx-text-fill: #333333; " +
+                    "-fx-background-color: #ffffff; " +
+                    "-fx-background-radius: 5px; " +
+                    "-fx-border-width: 2px; " +
+                    "-fx-border-color: #333333; " +
+                    "-fx-padding: 8px 16px;");
+        }
 
     }
 }

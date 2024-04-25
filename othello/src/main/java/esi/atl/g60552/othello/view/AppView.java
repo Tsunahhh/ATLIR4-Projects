@@ -15,6 +15,7 @@ import javafx.stage.StageStyle;
 public class AppView implements Observer {
     private static final int MARGIN_ = 20;
     private Reversi reversi;
+    private ReversiFront reversiFront;
     private BorderPane root;
     private BorderPane corps;
     private GameInfo gameInfo;
@@ -83,6 +84,7 @@ public class AppView implements Observer {
 
         reversi = new Reversi(settingsView.getSize(), settingsView.getDifficulty(), p1, p2);
         reversi.registerObserver(this);
+        //reversi = new ReversiFront(reversi);
     }
 
 

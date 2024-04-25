@@ -1,16 +1,11 @@
 package esi.atl.g60552.othello.view;
 
-import esi.atl.g60552.othello.model.Board;
-import esi.atl.g60552.othello.model.DiskColor;
-import esi.atl.g60552.othello.model.Position;
-import esi.atl.g60552.othello.model.Reversi;
+import esi.atl.g60552.othello.model.*;
 import javafx.scene.layout.GridPane;
 import javafx.scene.paint.Color;
 
-import java.util.List;
-
 public class ReversiView extends GridPane {
-    private static final int REVERSI_SIZE = 500;
+    private static final int REVERSI_SIZE = 550;
     private Color bgGameColor;
 
     ReversiView() {
@@ -21,7 +16,7 @@ public class ReversiView extends GridPane {
     private void actions(Reversi reversi, int col, int row, final CaseView caseView) {
         Board board = reversi.getBoard();
         caseView.setOnMouseEntered(e -> {
-            if (board.isEmpty(col, row)) {
+            if (board.isEmpty(col, row) && (reversi.getCurrPlayer() instanceof Human)) {
                 if (reversi.isValidPosition(col, row)) {
                     caseView.setColorRectangle(Color.LIME);
                 } else {
@@ -37,7 +32,7 @@ public class ReversiView extends GridPane {
         });
 
         caseView.onMouseClickedProperty().set(e -> {
-            if (reversi.isValidPosition(col, row)) {
+            if (reversi.isValidPosition(col, row) && (reversi.getCurrPlayer() instanceof Human)) {
                 reversi.placeDisk(col, row);
             }
         });
