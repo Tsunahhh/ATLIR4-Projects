@@ -7,6 +7,7 @@ import java.util.Map;
 import java.util.Random;
 
 public class RandomStrategy implements Strategy {
+    private static final int PERCENT_OF_PASS = 5;
     private Reversi reversi;
     public RandomStrategy(Reversi reversi) {
         this.reversi = reversi;
@@ -17,11 +18,14 @@ public class RandomStrategy implements Strategy {
         Random random = new Random();
         Position result = null;
         if (!positions.isEmpty()) {
-            int cpt = random.nextInt(positions.size());
+            int cpt = 0;
+            int randInt = random.nextInt(0, positions.size());
             for (Map.Entry<Position, Integer> entry : positions.entrySet()) {
-                if (random.nextInt(0, positions.size()) == cpt) {
+                if (randInt == cpt) {
                     result = entry.getKey();
+                    System.out.println("oui");
                 }
+                cpt++;
             }
         }
         return result;
@@ -31,7 +35,9 @@ public class RandomStrategy implements Strategy {
     @Override
     public void playStrategy() {
         Position position = randomPos();
-        if (position != null) {
+        Random random = new Random();
+        // Chance to pass if there is a pos valid
+        if (position != null && random.nextInt(1, 101) > PERCENT_OF_PASS) {
             reversi.placeDisk(position.getX(), position.getY());
         } else {
             reversi.pass();
