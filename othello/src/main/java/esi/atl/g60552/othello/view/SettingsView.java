@@ -39,31 +39,26 @@ public class SettingsView extends GridPane {
     }
 
     void initLabels() {
-        Label lblSettings = new Label("Settings: ");
+        Label lblSettings = new Label("Settings ");
         lblSettings.setStyle("-fx-font-family: 'Segoe UI', Helvetica, Arial, sans-serif; " +
                 "-fx-font-size: 24px; " +
-                "-fx-text-fill: #333333; " +
-                "-fx-background-color: #ffffff; " +
                 "-fx-background-radius: 5px; " +
-                "-fx-padding: 8px 8px;");
+                "-fx-padding: 8px 8px;" +
+                "-fx-font-weight: bold;" +
+                "-fx-underline: true;"
+        );
         this.add(lblSettings, 0, 0, 3, 1);
         Label lblSize = new Label("Size: ");
-        lblSize.setStyle("-fx-padding: 4px 8px;");
         this.add(lblSize, 0, 1, 1, 1);
         Label lblColor = new Label("BackGround: ");
-        lblColor.setStyle("-fx-padding: 4px 8px;");
         this.add(lblColor, 0, 2, 1, 1);
         Label lblPlayer1 = new Label("Player1: ");
-        lblPlayer1.setStyle("-fx-padding: 4px 8px;");
         this.add(lblPlayer1, 0, 3, 1, 1);
         Label lblIsBot = new Label("Is Player 2: ");
-        lblIsBot.setStyle("-fx-padding: 4px 8px;");
         this.add(lblIsBot, 0, 4, 1, 1);
         Label lblPlayer2 = new Label("Player2: ");
-        lblPlayer2.setStyle("-fx-padding: 4px 8px;");
         this.add(lblPlayer2, 0, 5, 1, 1);
         Label lblDifficulty = new Label("Difficulty: ");
-        lblDifficulty.setStyle("-fx-padding: 4px 8px;");
         this.add(lblDifficulty, 0, 6, 1, 1);
     }
 
@@ -81,19 +76,19 @@ public class SettingsView extends GridPane {
         tfdPlayer2.setText("Player2");
         this.add(tfdPlayer2, 1, 5, 2, 1);
 
-        chbDifficulty.getItems().addAll("Diet", "First", "Random", "Glutton");
+        chbDifficulty.getItems().addAll("Diet", "First",  "Random", "Glutton");
         chbDifficulty.setValue("Random");
         this.add(chbDifficulty, 1, 6, 2, 1);
 
         ToggleGroup group = new ToggleGroup();
         rdbBot.setToggleGroup(group);
-        rdbBot.setStyle("-fx-font-family: 'Segoe UI', Helvetica, Arial, sans-serif; " +
-                "-fx-font-size: 14px; " +
-                "-fx-text-fill: #333333;");
+        //rdbBot.setStyle("-fx-font-family: 'Segoe UI', Helvetica, Arial, sans-serif; " +
+        //        "-fx-font-size: 14px; " +
+        //        "-fx-text-fill: #333333;");
         rdbHuman.setToggleGroup(group);
-        rdbHuman.setStyle("-fx-font-family: 'Segoe UI', Helvetica, Arial, sans-serif; " +
-                "-fx-font-size: 14px; " +
-                "-fx-text-fill: #333333;");
+        //rdbHuman.setStyle("-fx-font-family: 'Segoe UI', Helvetica, Arial, sans-serif; " +
+        //        "-fx-font-size: 14px; " +
+        //        "-fx-text-fill: #333333;");
         rdbBot.setSelected(true);
         this.add(rdbBot, 1, 4, 1, 1);
         this.add(rdbHuman, 2, 4, 1, 1);
@@ -117,6 +112,8 @@ public class SettingsView extends GridPane {
                         "-fx-border-color: #333333; " +
                         "-fx-padding: 4px 8px;"
                 );
+            } else {
+                node.setStyle("-fx-padding: 4px 8px;");
             }
         }
         this.setStyle("-fx-font-family: 'Segoe UI', Helvetica, Arial, sans-serif; " +
