@@ -2,14 +2,13 @@ package esi.atl.g60552.othello.model;
 
 import esi.atl.g60552.othello.util.Strategy;
 
-import java.util.List;
 import java.util.Map;
 import java.util.Random;
 
 public class RandomStrategy implements Strategy {
     private static final int PERCENT_OF_PASS = 5;
-    private Reversi reversi;
-    public RandomStrategy(Reversi reversi) {
+    private Game reversi;
+    public RandomStrategy(Game reversi) {
         this.reversi = reversi;
     }
 
@@ -23,7 +22,6 @@ public class RandomStrategy implements Strategy {
             for (Map.Entry<Position, Integer> entry : positions.entrySet()) {
                 if (randInt == cpt) {
                     result = entry.getKey();
-                    System.out.println("oui");
                 }
                 cpt++;
             }

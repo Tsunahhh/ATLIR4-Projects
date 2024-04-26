@@ -3,21 +3,20 @@ package esi.atl.g60552.othello.model;
 import esi.atl.g60552.othello.util.Command;
 
 public class PassCommand implements Command {
-    private Reversi reversi;
+    private Game game;
     private Board lastSave;
 
-    PassCommand(Reversi reversi) {
-        this.reversi = reversi;
+    PassCommand(Game game) {
+        this.game = game;
     }
 
     @Override
     public void execute() {
-        lastSave = reversi.getBoard();
-        reversi.pass();
+        lastSave = game.getBoard();
     }
 
     @Override
     public void unexecute() {
-        reversi.setBoard(lastSave);
+        game.setBoard(lastSave);
     }
 }

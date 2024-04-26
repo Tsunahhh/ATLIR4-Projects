@@ -11,7 +11,7 @@ import javafx.scene.paint.Color;
 public class SettingsView extends GridPane {
 
     private AppView appView;
-    private ChoiceBox<Integer> tfdSize = new ChoiceBox();
+    private ChoiceBox<Integer> tfdSize = new ChoiceBox<>();
     private ColorPicker colorPicker = new ColorPicker();
     private TextField tfdPlayer1 = new TextField();
     private TextField tfdPlayer2 = new TextField();

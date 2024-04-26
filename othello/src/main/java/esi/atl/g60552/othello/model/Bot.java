@@ -21,4 +21,9 @@ public class Bot implements Player {
     public DiskColor getColor() {
         return diskColor;
     }
+
+    @Override
+    public boolean isBot() {
+        return true;
+    }
 }

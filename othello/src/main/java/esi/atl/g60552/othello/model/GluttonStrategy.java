@@ -5,15 +5,15 @@ import esi.atl.g60552.othello.util.Strategy;
 import java.util.Map;
 
 public class GluttonStrategy implements Strategy {
-    private Reversi reversi;
-    GluttonStrategy(Reversi reversi) {
-        this.reversi = reversi;
+    private Game game;
+    GluttonStrategy(Game game) {
+        this.game = game;
     }
     @Override
     public void playStrategy() {
         Position result = null;
         int max = 0;
-        Map<Position, Integer> moves = reversi.getListOfValidMoves(reversi.currPlayer());
+        Map<Position, Integer> moves = game.getListOfValidMoves(game.currPlayer());
         for (Map.Entry<Position, Integer> move : moves.entrySet()) {
             Position position = move.getKey();
             int score = move.getValue();
@@ -23,9 +23,9 @@ public class GluttonStrategy implements Strategy {
             }
         }
         if (result == null) {
-            reversi.pass(); // No position found !
+            game.pass(); // No position found !
         } else {
-            reversi.placeDisk(result.getX(), result.getY());
+            game.placeDisk(result.getX(), result.getY());
         }
     }
 }

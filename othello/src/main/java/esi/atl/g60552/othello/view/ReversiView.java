@@ -16,7 +16,7 @@ public class ReversiView extends GridPane {
     private void actions(Reversi reversi, int col, int row, final CaseView caseView) {
         Board board = reversi.getBoard();
         caseView.setOnMouseEntered(e -> {
-            if (board.isEmpty(col, row) && (reversi.getCurrPlayer() instanceof Human)) {
+            if (board.isEmpty(col, row) && (!reversi.currPlayer().isBot())) {
                 if (reversi.isValidPosition(col, row)) {
                     caseView.setColorRectangle(Color.LIME);
                 } else {
@@ -32,7 +32,7 @@ public class ReversiView extends GridPane {
         });
 
         caseView.onMouseClickedProperty().set(e -> {
-            if (reversi.isValidPosition(col, row) && (reversi.getCurrPlayer() instanceof Human)) {
+            if (reversi.isValidPosition(col, row) && (!reversi.currPlayer().isBot())) {
                 reversi.placeDisk(col, row);
             }
         });

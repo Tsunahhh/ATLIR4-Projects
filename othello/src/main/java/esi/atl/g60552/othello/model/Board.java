@@ -72,7 +72,7 @@ public class Board {
         x += direction.getXDirection();
         y += direction.getYDirection();
         int cpt = 0;
-        while (board[y][x].getColor() != player.getColor()) {
+        while (!isEmpty(x, y) && board[y][x].getColor() != player.getColor()) {
             board[y][x].flip();
             cpt++;
             x += direction.getXDirection();
@@ -129,11 +129,17 @@ public class Board {
         return size;
     }
 
-    void replace(Board board) {
+    void setBoard(Board board) {
         for (int i = 0; i < board.getSize(); i++) {
             for (int j = 0; j < board.getSize(); j++) {
                 this.board[i][j] = (board.isEmpty(j, i)) ? null : board.getDiskAt(j, i);
             }
         }
+    }
+
+    Board getCopy() {
+        Board board = new Board(size);
+        board.setBoard(this);
+        return board;
     }
 }

@@ -34,6 +34,11 @@ public class Human implements Player{
         return diskColor;
     }
 
+    @Override
+    public boolean isBot() {
+        return false;
+    }
+
     /**
      * Get the name of the player
      * @return the name of the player

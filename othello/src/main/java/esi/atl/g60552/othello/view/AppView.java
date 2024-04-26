@@ -15,7 +15,6 @@ import javafx.stage.StageStyle;
 public class AppView implements Observer {
     private static final int MARGIN_ = 20;
     private Reversi reversi;
-    private ReversiFront reversiFront;
     private BorderPane root;
     private BorderPane corps;
     private GameInfo gameInfo;
@@ -29,6 +28,7 @@ public class AppView implements Observer {
 
     public AppView(Stage stage) {
         this.stage = stage;
+        this.reversi = new Reversi();
         initViews();
         initGame();
         update();
@@ -73,18 +73,16 @@ public class AppView implements Observer {
     }
 
     private void initGame() {
-        Player p1 = new Human(settingsView.getPlayer1(), DiskColor.BLACK);
-        Player p2;
 
-        if (settingsView.isBot()) {
-            p2 = new Bot(settingsView.getPlayer2(), DiskColor.WHITE);
-        } else {
-            p2 = new Human(settingsView.getPlayer2(), DiskColor.WHITE);
-        }
+        reversi.initGame(
+                settingsView.getSize(),
+                settingsView.getDifficulty(),
+                settingsView.getPlayer1(),
+                settingsView.getPlayer2(),
+                settingsView.isBot()
+        );
 
-        reversi = new Reversi(settingsView.getSize(), settingsView.getDifficulty(), p1, p2);
         reversi.registerObserver(this);
-        //reversi = new ReversiFront(reversi);
     }
 
 
@@ -109,8 +107,6 @@ public class AppView implements Observer {
     
     void reset() {
         initGame();
-        gameInfo.update(reversi.currPlayer(), 0);
-        reversiView.update(reversi);
         update();
     }
 
@@ -150,7 +146,7 @@ public class AppView implements Observer {
             Alert giveUp = new Alert(Alert.AlertType.CONFIRMATION);
             giveUp.setTitle("Give Up");
             giveUp.setHeaderText("Give Up");
-            giveUp.setContentText("Game is over: " + reversi.getCurrPlayer().getName() + " give up !");
+            giveUp.setContentText("Game is over: " + reversi.currPlayer().getName() + " give up !");
             Stage giveUpStage = (Stage) giveUp.getDialogPane().getScene().getWindow();
             giveUpStage.getIcons().add(new Image(getClass().getResource("/icons/icon.png").toString()));
             giveUp.showAndWait();
@@ -191,10 +187,10 @@ public class AppView implements Observer {
     }
 
     void undo() {
-        //reversi.undo();
+        reversi.undo();
     }
     void redo() {
-        //reversi.redo();
+        reversi.redo();
     }
 
     void showSettings() {
