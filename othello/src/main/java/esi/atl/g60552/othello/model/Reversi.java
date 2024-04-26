@@ -56,12 +56,9 @@ public class Reversi implements Observable {
                     throw new RuntimeException(e);
                 }
                 Platform.runLater(() -> {
-                    System.out.println(currPlayer() + "played strat !");
                     game.playStrategy();
-                    System.out.println(currPlayer() + "next player");
                     game.nextPlayer();
                     notifyObservers();
-                    System.out.println(currPlayer() + "turn !");
                 });
             }).start();
         }
@@ -124,5 +121,13 @@ public class Reversi implements Observable {
 
     public boolean isOver() {
         return game.isOver();
+    }
+
+    public boolean isRedoable() {
+        return commandManager.isRedoable();
+    }
+
+    public boolean isUndoable() {
+        return commandManager.isUndoable();
     }
 }

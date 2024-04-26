@@ -5,8 +5,7 @@ import java.util.Stack;
 public class CommandManager {
     Stack<Command> undoStack = new Stack<>();
     Stack<Command> redoStack = new Stack<>();
-    public CommandManager() {
-    }
+    public CommandManager() {}
 
     public void add(Command newCmd) {
         newCmd.execute();
@@ -20,7 +19,7 @@ public class CommandManager {
             command.unexecute();
             redoStack.push(command);
         } else {
-            throw new RuntimeException("Nothing to undo!");
+            //throw new RuntimeException("Nothing to undo!");
         }
     }
 
@@ -30,7 +29,15 @@ public class CommandManager {
             command.execute();
             undoStack.push(command);
         } else {
-            throw new RuntimeException("Nothing to redo!");
+            //throw new RuntimeException("Nothing to redo!");
         }
+    }
+
+    public boolean isRedoable() {
+        return !redoStack.isEmpty();
+    }
+
+    public boolean isUndoable() {
+        return !undoStack.isEmpty();
     }
 }
