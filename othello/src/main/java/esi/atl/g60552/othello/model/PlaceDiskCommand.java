@@ -16,12 +16,18 @@ public class PlaceDiskCommand implements Command {
 
     @Override
     public void execute() {
-        save = game.getBoard();
-        game.placeDisk(x, y);
+        if (save == null) {
+            save = game.getBoard();
+            game.placeDisk(x, y);
+        } else {
+            game.setBoard(save);
+            save = game.getBoard();
+        }
     }
 
     @Override
     public void unexecute() {
         game.setBoard(save);
+        save = game.getBoard();
     }
 }

@@ -41,13 +41,13 @@ public class Reversi implements Observable {
     public void placeDisk(int x, int y) {
         Command command = new PlaceDiskCommand(game, x, y);
         commandManager.add(command);
+        game.nextPlayer();
         notifyObservers();
         nextPlayer();
+        notifyObservers();
     }
 
     public void nextPlayer() {
-        game.nextPlayer();
-
         if (currPlayer().isBot()) {
             new Thread(() -> {
                 try {
@@ -56,9 +56,12 @@ public class Reversi implements Observable {
                     throw new RuntimeException(e);
                 }
                 Platform.runLater(() -> {
+                    System.out.println(currPlayer() + "played strat !");
                     game.playStrategy();
-                    notifyObservers();
+                    System.out.println(currPlayer() + "next player");
                     game.nextPlayer();
+                    notifyObservers();
+                    System.out.println(currPlayer() + "turn !");
                 });
             }).start();
         }

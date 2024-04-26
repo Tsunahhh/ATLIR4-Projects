@@ -22,13 +22,13 @@ public class AppView implements Observer {
     private SettingsView settingsView;
     private ButtonsBox buttonsBox;
     private Stage stage;
-    private Thread timer;
     private final double APP_HEIGHT;
     private final double APP_WIDTH;
 
     public AppView(Stage stage) {
         this.stage = stage;
         this.reversi = new Reversi();
+        reversi.registerObserver(this);
         initViews();
         initGame();
         update();
@@ -82,7 +82,7 @@ public class AppView implements Observer {
                 settingsView.isBot()
         );
 
-        reversi.registerObserver(this);
+
     }
 
 

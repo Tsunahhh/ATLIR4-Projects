@@ -87,7 +87,7 @@ public class Game {
     }
 
     public void pass() {
-        nextPlayer();
+        //nextPlayer();
     }
 
     /**

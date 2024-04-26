@@ -4,7 +4,7 @@ import esi.atl.g60552.othello.util.Command;
 
 public class PassCommand implements Command {
     private Game game;
-    private Board lastSave;
+    private Board save;
 
     PassCommand(Game game) {
         this.game = game;
@@ -12,11 +12,17 @@ public class PassCommand implements Command {
 
     @Override
     public void execute() {
-        lastSave = game.getBoard();
+        if (save == null) {
+            save = game.getBoard();
+            game.pass();
+        } else {
+            game.setBoard(save);
+        }
     }
 
     @Override
     public void unexecute() {
-        game.setBoard(lastSave);
+        save = game.getBoard();
+        game.setBoard(save);
     }
 }
