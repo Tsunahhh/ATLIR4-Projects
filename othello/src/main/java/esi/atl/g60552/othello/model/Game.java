@@ -82,12 +82,13 @@ public class Game {
                     board.flipDirection(x, y, direction, currPlayer);
                 }
             }
+
             board.placeDisk(x, y, currPlayer.getColor());
         }
     }
 
     public void pass() {
-        //nextPlayer();
+        nextPlayer();
     }
 
     /**
