@@ -41,7 +41,6 @@ public class Reversi implements Observable {
     public void placeDisk(int x, int y) {
         Command command = new PlaceDiskCommand(game, x, y);
         commandManager.add(command);
-        game.nextPlayer();
         notifyObservers();
         nextPlayer();
         notifyObservers();
@@ -68,6 +67,7 @@ public class Reversi implements Observable {
     public void pass() {
         Command command = new PassCommand(game);
         commandManager.add(command);
+
         notifyObservers();
     }
 

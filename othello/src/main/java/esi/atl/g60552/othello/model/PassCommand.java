@@ -16,13 +16,16 @@ public class PassCommand implements Command {
             save = game.getBoard();
             game.pass();
         } else {
-            game.setBoard(save);
+            Board tmp = save.getCopy();
+            save = game.getBoard();
+            game.setBoard(tmp);
         }
     }
 
     @Override
     public void unexecute() {
+        Board tmp = save.getCopy();
         save = game.getBoard();
-        game.setBoard(save);
+        game.setBoard(tmp);
     }
 }
