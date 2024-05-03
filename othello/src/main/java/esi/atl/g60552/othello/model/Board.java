@@ -138,8 +138,18 @@ public class Board {
     }
 
     Board getCopy() {
-        Board board = new Board(size);
-        board.setBoard(this);
-        return board;
+        Board newBoard = new Board(size);
+        for (int i = 0; i < board.length; i++) {
+            for (int j = 0; j < board[i].length; j++) {
+                if (board[i][j] != null) {
+                    if (board[i][j].getColor() == DiskColor.WHITE) {
+                        newBoard.board[i][j] = new Disk(DiskColor.WHITE);
+                    } else {
+                        newBoard.board[i][j] = new Disk(DiskColor.BLACK);
+                    }
+                }
+            }
+        }
+        return newBoard;
     }
 }
