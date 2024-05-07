@@ -5,13 +5,25 @@ import esi.atl.g60552.othello.util.Strategy;
 import java.util.Map;
 import java.util.Random;
 
+/**
+ * Random strategy for the game.
+ */
 public class RandomStrategy implements Strategy {
     private static final int PERCENT_OF_PASS = 5;
     private Game reversi;
+
+    /**
+     * Constructor of the random strategy.
+     * @param reversi the game.
+     */
     public RandomStrategy(Game reversi) {
         this.reversi = reversi;
     }
 
+    /**
+     * Get a random position from the list of valid moves.
+     * @return a random position.
+     */
     private Position randomPos() {
         Map<Position, Integer> positions = reversi.getListOfValidMoves(reversi.currPlayer());
         Random random = new Random();
@@ -30,6 +42,9 @@ public class RandomStrategy implements Strategy {
     }
 
 
+    /**
+     * Play the random strategy.
+     */
     @Override
     public void playStrategy() {
         Position position = randomPos();
@@ -37,8 +52,6 @@ public class RandomStrategy implements Strategy {
         // Chance to pass if there is a pos valid
         if (position != null && random.nextInt(1, 101) > PERCENT_OF_PASS) {
             reversi.placeDisk(position.getX(), position.getY());
-        } else {
-            reversi.pass();
         }
     }
 }

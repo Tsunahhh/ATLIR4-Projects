@@ -11,8 +11,11 @@ import javafx.stage.Stage;
 import esi.atl.g60552.othello.util.Observer;
 import javafx.stage.StageStyle;
 
-
+/**
+ * Main view of the application.
+ */
 public class AppView implements Observer {
+
     private static final int MARGIN_ = 20;
     private Reversi reversi;
     private BorderPane root;
@@ -25,6 +28,10 @@ public class AppView implements Observer {
     private final double APP_HEIGHT;
     private final double APP_WIDTH;
 
+    /**
+     * Constructor.
+     * @param stage the stage
+     */
     public AppView(Stage stage) {
         this.stage = stage;
         this.reversi = new Reversi();
@@ -37,6 +44,9 @@ public class AppView implements Observer {
         this.APP_WIDTH = stage.getWidth();
     }
 
+    /**
+     * Initialize the views.
+     */
     private void initViews() {
         root = new BorderPane();
 
@@ -56,7 +66,6 @@ public class AppView implements Observer {
         corps.setCenter(reversiView);
         root.setCenter(corps);
 
-
         buttonsBox = new ButtonsBox(this);
         BorderPane.setMargin(buttonsBox, new Insets(MARGIN_, 0, 0, 0));
         root.setBottom(buttonsBox);
@@ -65,6 +74,9 @@ public class AppView implements Observer {
         stage.setScene(scene);
     }
 
+    /**
+     * Initialize the stage.
+     */
     private void initStage() {
         stage.getIcons().add(new Image(getClass().getResource("/icons/icon.png").toString()));
         stage.setTitle("Reversi");
@@ -72,8 +84,11 @@ public class AppView implements Observer {
         stage.show();
     }
 
-    private void initGame() {
 
+    /**
+     * Initialize the game.
+     */
+    private void initGame() {
         reversi.initGame(
                 settingsView.getSize(),
                 settingsView.getDifficulty(),
@@ -81,8 +96,6 @@ public class AppView implements Observer {
                 settingsView.getPlayer2(),
                 settingsView.isBot()
         );
-
-
     }
 
 
@@ -104,12 +117,18 @@ public class AppView implements Observer {
 
         reversiView.update(reversi);
     }
-    
+
+    /**
+     * Reset the game.
+     */
     void reset() {
         initGame();
         update();
     }
 
+    /**
+     * Start the game.
+     */
     void gameOverPopup(Player winner) {
         Alert gameOver = new Alert(Alert.AlertType.WARNING);
         gameOver.setTitle("Game Over");
@@ -127,6 +146,9 @@ public class AppView implements Observer {
         gameOverStage.showAndWait();
     }
 
+    /**
+     * Pause the game (just a popup).
+     */
     void pause() {
         if (reversi.isPlaying()) {
             Alert pause = new Alert(Alert.AlertType.INFORMATION);
@@ -137,10 +159,16 @@ public class AppView implements Observer {
         }
     }
 
+    /**
+     * Pass the turn.
+     */
     void pass() {
         reversi.pass();
     }
 
+    /**
+     * The player give up the game.
+     */
     void giveUp() {
         if (reversi.isPlaying()) {
             Alert giveUp = new Alert(Alert.AlertType.CONFIRMATION);
@@ -154,21 +182,33 @@ public class AppView implements Observer {
         }
     }
 
+    /**
+     * Quit the game.
+     */
     void quit() {
         System.exit(0);
     }
 
+    /**
+     * Apply the settings.
+     */
     void apply() {
         reversiView.setBgGameColor(settingsView.getBGColor());
         reset();
     }
 
+    /**
+     * Adapt the window.
+     */
     void adaptWindow() {
         stage.setWidth(APP_WIDTH);
         stage.setHeight(APP_HEIGHT);
         stage.centerOnScreen();
     }
 
+    /**
+     * Full screen window.
+     */
     void fullScreenWindow() {
         Stage newStage = new Stage();
         boolean isMaximized = stage.isMaximized();
@@ -186,19 +226,33 @@ public class AppView implements Observer {
         if (isMaximized) adaptWindow();
     }
 
+    /**
+     * Undo the last move.
+     */
     void undo() {
         reversi.undo();
     }
+
+    /**
+     * Redo the last move.
+     */
     void redo() {
         reversi.redo();
     }
 
+    /**
+     * Show the settings menu.
+     */
     void showSettings() {
+        // Show only if not already shown to avoid bugs.
         if (!corps.getChildren().contains(settingsView)) {
             corps.setRight(settingsView);
         }
     }
 
+    /**
+     * Hide the settings menu.
+     */
     void hideSettings() {
         corps.getChildren().remove(settingsView);
     }

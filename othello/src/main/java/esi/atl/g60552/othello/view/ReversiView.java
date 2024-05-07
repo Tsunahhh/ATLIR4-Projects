@@ -4,15 +4,28 @@ import esi.atl.g60552.othello.model.*;
 import javafx.scene.layout.GridPane;
 import javafx.scene.paint.Color;
 
+/**
+ * Represents the view of the reversi game.
+ */
 public class ReversiView extends GridPane {
     private static final int REVERSI_SIZE = 550;
     private Color bgGameColor;
 
+    /**
+     * Constructor.
+     */
     ReversiView() {
         super();
         this.bgGameColor = Color.GREEN;
     }
 
+    /**
+     * Add actions to the caseView.
+     * @param reversi the reversi
+     * @param col the column
+     * @param row   the row
+     * @param caseView the caseView
+     */
     private void actions(Reversi reversi, int col, int row, final CaseView caseView) {
         Board board = reversi.getBoard();
         caseView.setOnMouseEntered(e -> {
@@ -45,6 +58,10 @@ public class ReversiView extends GridPane {
         });
     }
 
+    /**
+     * Update the view.
+     * @param reversi the reversi
+     */
     public void update(Reversi reversi) {
         this.getChildren().clear();
         Board board = reversi.getBoard();
@@ -64,6 +81,10 @@ public class ReversiView extends GridPane {
         }
     }
 
+    /**
+     * Set the background color of the game.
+     * @param bgGameColor the background color
+     */
     void setBgGameColor(Color bgGameColor) {
         this.bgGameColor = bgGameColor;
     }

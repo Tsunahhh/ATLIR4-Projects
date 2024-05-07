@@ -4,11 +4,23 @@ import esi.atl.g60552.othello.util.Strategy;
 
 import java.util.Map;
 
+/**
+ * Glutton strategy.
+ */
 public class GluttonStrategy implements Strategy {
     private Game game;
+
+    /**
+     * Constructor.
+     * @param game the game
+     */
     GluttonStrategy(Game game) {
         this.game = game;
     }
+
+    /**
+     * Play the strategy.
+     */
     @Override
     public void playStrategy() {
         Position result = null;

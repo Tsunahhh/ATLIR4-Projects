@@ -37,6 +37,7 @@ public class Game {
             throw new IllegalArgumentException("size should be even !");
         }
 
+        // Set the strategy
         switch (difficulty){
             case 0 -> strategy = new DietStrategy(this);
             case 1 -> strategy = new FirstStrategy(this);
@@ -49,6 +50,7 @@ public class Game {
         currPlayer = participants.remove(0);
         board = new Board(size);
     }
+
     /**
      * Verify if the game is over.
      * @return true if over or false.
@@ -63,6 +65,7 @@ public class Game {
 
         return getListOfValidMoves(currPlayer).isEmpty();
     }
+
     /**
      * Place the disk.
      * @param x x position
@@ -72,7 +75,6 @@ public class Game {
         if (!isValidPosition(x, y)) {
             throw new IllegalArgumentException("Reversi: you can't place the disk here !");
         }
-
 
         if (isValidPosition(x, y)) { // notify only if the disk is placed
             isPlaying = true;
@@ -125,6 +127,14 @@ public class Game {
         return false;
     }
 
+    /**
+     * Verify if the direction is valid.
+     * @param x x position
+     * @param y y position
+     * @param direction the direction
+     * @param player the player
+     * @return the number of disks that can be flipped
+     */
     int isDirectionValid(int x, int y, Direction direction, Player player) {
         int cptPlaceable = 0;
         if (getBoard().isEmpty(x, y)) {
@@ -160,6 +170,7 @@ public class Game {
 
         return moves;
     }
+
     /**
      * Verify if the position is a placeable case for the current player
      * @param x x-coords
@@ -173,6 +184,7 @@ public class Game {
         }
         return diskCpt;
     }
+
     /**
      * Get the winner of the game.
      * @return the winner
@@ -194,16 +206,32 @@ public class Game {
         return winner;
     }
 
+    /**
+     * Verify if the game is a draw.
+     * @return true if draw or false
+     */
+    public boolean isEquality() {
+        return board.getBlackDisks() == board.getWhiteDisks();
+    }
+
     void nextPlayer() {
         Player tmp = participants.remove(0);
         participants.add(currPlayer);
         currPlayer = tmp;
     }
 
+    /**
+     * Play the current strategy
+     */
     void playStrategy() {
         strategy.playStrategy();
     }
 
+    /**
+     * Get the score of the player.
+     * @param player the player
+     * @return the score
+     */
     public int getScore(Player player) {
         if (player.getColor() == DiskColor.BLACK) {
             return board.getBlackDisks();
@@ -212,14 +240,26 @@ public class Game {
         }
     }
 
+    /**
+     * Verify if the game is playing.
+     * @return true if playing or false
+     */
     public boolean isPlaying() {
         return isPlaying;
     }
 
+    /**
+     * Get a copy of the board.
+     * @return the copy.
+     */
     public Board getBoard() {
         return board.getCopy();
     }
 
+    /**
+     * Set the board from other board.
+     * @param board the board.
+     */
     void setBoard(Board board) {
         this.board.setBoard(board);
     }

@@ -1,12 +1,5 @@
 package esi.atl.g60552.othello.model;
 
-import esi.atl.g60552.othello.util.Observable;
-import esi.atl.g60552.othello.util.Observer;
-
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-
 /**
  * Represents the board of the game with his methods.
  */
@@ -64,21 +57,19 @@ public class Board {
 
     /**
      * Flip disks to a direction until the current player disk
-     * @param x x-coords
-     * @param y y-coords
+     *
+     * @param x         x-coords
+     * @param y         y-coords
      * @param direction the direction
      */
-    int flipDirection(int x, int y, Direction direction, Player player) {
+    void flipDirection(int x, int y, Direction direction, Player player) {
         x += direction.getXDirection();
         y += direction.getYDirection();
-        int cpt = 0;
         while (!isEmpty(x, y) && board[y][x].getColor() != player.getColor()) {
             board[y][x].flip();
-            cpt++;
             x += direction.getXDirection();
             y += direction.getYDirection();
         }
-        return cpt;
     }
 
     /**
@@ -101,6 +92,10 @@ public class Board {
         return board[y][x] == null;
     }
 
+    /**
+     * Get the number of black disks
+     * @return the number of black disks
+     */
     public int getBlackDisks() {
         int count = 0;
         for (int i = 0; i < board.length; i++) {
@@ -113,6 +108,10 @@ public class Board {
         return count;
     }
 
+    /**
+     * Get the number of white disks
+     * @return the number of white disks
+     */
     public int getWhiteDisks() {
         int count = 0;
         for (int i = 0; i < board.length; i++) {
@@ -129,6 +128,10 @@ public class Board {
         return size;
     }
 
+    /**
+     * Set the board from other board
+     * @param board the other board
+     */
     void setBoard(Board board) {
         for (int i = 0; i < board.getSize(); i++) {
             for (int j = 0; j < board.getSize(); j++) {
@@ -137,6 +140,10 @@ public class Board {
         }
     }
 
+    /**
+     * Get a copy of the board
+     * @return the copy
+     */
     Board getCopy() {
         Board newBoard = new Board(size);
         for (int i = 0; i < board.length; i++) {

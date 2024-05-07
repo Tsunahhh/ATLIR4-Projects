@@ -2,17 +2,26 @@ package esi.atl.g60552.othello.util;
 
 import java.util.Stack;
 
+/**
+ * Class that manages the commands.
+ */
 public class CommandManager {
-    Stack<Command> undoStack = new Stack<>();
-    Stack<Command> redoStack = new Stack<>();
-    public CommandManager() {}
+    private Stack<Command> undoStack = new Stack<>();
+    private Stack<Command> redoStack = new Stack<>();
 
+    /**
+     * Add a command to the manager.
+     * @param newCmd the command to add
+     */
     public void add(Command newCmd) {
         newCmd.execute();
         undoStack.push(newCmd);
         redoStack.clear();
     }
 
+    /**
+     * Undo the last command.
+     */
     public void undo() {
         if (!undoStack.empty()) {
             Command command = undoStack.pop();
@@ -23,6 +32,9 @@ public class CommandManager {
         }
     }
 
+    /**
+     * Redo the last command.
+     */
     public void redo() {
         if (!redoStack.empty()) {
             Command command = redoStack.pop();
@@ -33,10 +45,18 @@ public class CommandManager {
         }
     }
 
+    /**
+     * Check if the last command is redoable.
+     * @return true if the last command is redoable
+     */
     public boolean isRedoable() {
         return !redoStack.isEmpty();
     }
 
+    /**
+     * Check if the last command is undoable.
+     * @return true if the last command is undoable
+     */
     public boolean isUndoable() {
         return !undoStack.isEmpty();
     }

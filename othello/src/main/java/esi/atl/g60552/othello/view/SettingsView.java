@@ -8,6 +8,9 @@ import javafx.scene.layout.CornerRadii;
 import javafx.scene.layout.GridPane;
 import javafx.scene.paint.Color;
 
+/**
+ * Represents the settings view.
+ */
 public class SettingsView extends GridPane {
 
     private AppView appView;
@@ -21,6 +24,10 @@ public class SettingsView extends GridPane {
     private Button apply = new Button("Apply");
     private Button fullScreen;
 
+    /**
+     * Constructor.
+     * @param appView the app view
+     */
     SettingsView(AppView appView) {
         super();
         this.appView = appView;
@@ -31,6 +38,9 @@ public class SettingsView extends GridPane {
         initStyle();
     }
 
+    /**
+     * Initialize the settings view.
+     */
     void init() {
         this.setPadding(new Insets(10));
         this.setHgap(15);
@@ -38,6 +48,9 @@ public class SettingsView extends GridPane {
         this.setBackground(new Background(new BackgroundFill(Color.WHITE, CornerRadii.EMPTY, new Insets(5))));
     }
 
+    /**
+     * Initialize the labels.
+     */
     void initLabels() {
         Label lblSettings = new Label("Settings ");
         lblSettings.setStyle("-fx-font-family: 'Segoe UI', Helvetica, Arial, sans-serif; " +
@@ -62,6 +75,9 @@ public class SettingsView extends GridPane {
         this.add(lblDifficulty, 0, 6, 1, 1);
     }
 
+    /**
+     * Initialize the inputs.
+     */
     void initInputs() {
         for (int i = 4; i <= 15; i += 2) {
             tfdSize.getItems().add(i);
@@ -100,6 +116,9 @@ public class SettingsView extends GridPane {
         this.add(fullScreen, 1, 8, 2, 1);
     }
 
+    /**
+     * Initialize the style.
+     */
     private void initStyle() {
         for (var node : this.getChildren()) {
             if (! (node instanceof Label)) {
@@ -126,30 +145,57 @@ public class SettingsView extends GridPane {
                 "-fx-padding: 8px 8px;");
     }
 
+    /**
+     * Get the size.
+     * @return the size
+     */
     public int getSize() {
         return tfdSize.getValue();
     }
 
+    /**
+     * Get the background color.
+     * @return the background color
+     */
     public Color getBGColor() {
         return colorPicker.getValue();
     }
 
+    /**
+     * Get the player 1.
+     * @return the player 1
+     */
     public String getPlayer1() {
         return tfdPlayer1.getText();
     }
 
+    /**
+     * Get the player 2.
+     * @return the player 2
+     */
     public String getPlayer2() {
         return tfdPlayer2.getText();
     }
 
+    /**
+     * Check if the player is a bot.
+     * @return true if the player is a bot, false otherwise
+     */
     public boolean isBot() {
         return rdbBot.isSelected();
     }
 
+    /**
+     * Get the difficulty.
+     * @return the difficulty
+     */
     public int getDifficulty() {
         return chbDifficulty.getSelectionModel().getSelectedIndex();
     }
 
+    /**
+     * Initialize the handlers.
+     */
     public void initHandlers() {
         apply.setOnAction(e -> {
             this.appView.apply();

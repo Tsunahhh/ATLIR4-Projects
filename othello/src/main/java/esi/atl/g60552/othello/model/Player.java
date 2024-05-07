@@ -16,5 +16,10 @@ public interface Player {
      * @return the color of the player
      */
     DiskColor getColor();
+
+    /**
+     * Know if the player is a bot.
+     * @return true if the player is a bot or false.
+     */
     boolean isBot();
 }

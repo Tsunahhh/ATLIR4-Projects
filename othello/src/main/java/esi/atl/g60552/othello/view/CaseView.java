@@ -7,12 +7,20 @@ import javafx.scene.shape.Rectangle;
 
 import java.util.Objects;
 
+/**
+ * Represents a case of the board.
+ */
 public class CaseView extends StackPane {
     private final int size;
     private Circle circle;
     private Rectangle rectangle;
-    private Color backgroundColor;
+    private final Color backgroundColor;
 
+    /**
+     * Constructor.
+     * @param backgroundColor the background color
+     * @param size the size
+     */
     public CaseView(Color backgroundColor, int size) {
         super();
         this.backgroundColor = backgroundColor;
@@ -20,6 +28,9 @@ public class CaseView extends StackPane {
         init();
     }
 
+    /**
+     * Initialize the case.
+     */
     void init() {
         rectangle = new Rectangle(size, size, backgroundColor);
         if (backgroundColor.equals(Color.BLACK)) {
@@ -31,10 +42,18 @@ public class CaseView extends StackPane {
         this.getChildren().addAll(rectangle, circle);
     }
 
+    /**
+     * Set the color of the rectangle.
+     * @param color the color
+     */
     public void setColorRectangle(Color color) {
         rectangle.setFill(color);
     }
 
+    /**
+     * Set the color of the disk.
+     * @param color the color
+     */
     public void setColorDisk(Color color) {
         circle.setFill(color);
         if (Objects.equals(color, Color.BLACK)) {
@@ -44,11 +63,18 @@ public class CaseView extends StackPane {
         }
     }
 
+    /**
+     * Erase the disk.
+     */
     public void eraseDisk() {
         circle.setFill(Color.TRANSPARENT);
         circle.setStroke(Color.TRANSPARENT);
     }
 
+    /**
+     * Get the size.
+     * @return the size
+     */
     public int getSize() {
         return size;
     }

@@ -5,6 +5,7 @@ import esi.atl.g60552.othello.util.Command;
 public class PassCommand implements Command {
     private Game game;
     private Board save;
+    private Player player;
 
     PassCommand(Game game) {
         this.game = game;
@@ -13,12 +14,19 @@ public class PassCommand implements Command {
     @Override
     public void execute() {
         if (save == null) {
+            player = game.currPlayer();
             save = game.getBoard();
-            game.pass();
+            game.nextPlayer();
         } else {
             Board tmp = save.getCopy();
             save = game.getBoard();
             game.setBoard(tmp);
+            if (game.currPlayer().getColor() == player.getColor()) {
+                game.nextPlayer();
+            }
+            if (game.currPlayer().isBot()) {
+                game.nextPlayer();
+            }
         }
     }
 
@@ -27,5 +35,8 @@ public class PassCommand implements Command {
         Board tmp = save.getCopy();
         save = game.getBoard();
         game.setBoard(tmp);
+        while (game.currPlayer() != player) {
+            game.nextPlayer();
+        }
     }
 }

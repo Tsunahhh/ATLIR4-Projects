@@ -34,6 +34,10 @@ public class Human implements Player{
         return diskColor;
     }
 
+    /**
+     * Verify if the player is a bot
+     * @return false
+     */
     @Override
     public boolean isBot() {
         return false;

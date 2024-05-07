@@ -4,17 +4,24 @@ import javafx.geometry.Pos;
 import javafx.scene.control.Button;
 import javafx.scene.layout.HBox;
 
+/**
+ * Box containing the buttons.
+ */
 public class ButtonsBox extends HBox {
 
     private final AppView appView;
+
     private Button pause;
     private Button undo;
     private Button redo;
-
     private Button pass;
     private Button stop;
     private Button quit;
 
+    /**
+     * Constructor.
+     * @param appView the app view
+     */
     ButtonsBox(AppView appView) {
         super(10);
         this.appView = appView;
@@ -32,7 +39,10 @@ public class ButtonsBox extends HBox {
         initStyles();
     }
 
-    void initButtons() {
+    /**
+     * Initialize the buttons.
+     */
+    private void initButtons() {
         pause = new Button("Pause");
         pass = new Button("Pass");
         stop = new Button("Stop");
@@ -42,7 +52,10 @@ public class ButtonsBox extends HBox {
         this.getChildren().addAll(undo, redo, pause, pass, stop, quit);
     }
 
-    void initHandles() {
+    /**
+     * Initialize the handles for buttons.
+     */
+    private void initHandles() {
         quit.setOnMouseClicked(e -> {
             appView.quit();
         });
@@ -64,7 +77,10 @@ public class ButtonsBox extends HBox {
 
     }
 
-    void initStyles() {
+    /**
+     * Initialize the styles for buttons.
+     */
+    private void initStyles() {
         for (var btn : this.getChildren()) {
             btn.setStyle("-fx-font-family: 'Segoe UI', Helvetica, Arial, sans-serif; " +
                     "-fx-font-size: 14px; " +

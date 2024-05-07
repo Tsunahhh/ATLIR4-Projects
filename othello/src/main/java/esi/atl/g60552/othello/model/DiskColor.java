@@ -7,7 +7,10 @@ public enum DiskColor {
     BLACK,
     WHITE;
 
-    DiskColor() {}
+    /**
+     * Get the opposite color of the disk.
+     * @return the opposite color
+     */
     DiskColor getOppositeColor() {
         return (this == BLACK) ? WHITE : BLACK;
     }
