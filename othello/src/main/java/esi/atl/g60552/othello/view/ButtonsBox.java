@@ -58,6 +58,7 @@ public class ButtonsBox extends HBox {
     private void initHandles() {
         quit.setOnMouseClicked(e -> {
             appView.quit();
+
         });
         pause.setOnMouseClicked(e -> {
             appView.pause();
@@ -83,13 +84,42 @@ public class ButtonsBox extends HBox {
     private void initStyles() {
         for (var btn : this.getChildren()) {
             btn.setStyle("-fx-font-family: 'Segoe UI', Helvetica, Arial, sans-serif; " +
-                    "-fx-font-size: 14px; " +
+                    "-fx-font-size: 18px; " +
+                    "-fx-font-weight: bold;" +
                     "-fx-text-fill: #333333; " +
                     "-fx-background-color: #ffffff; " +
                     "-fx-background-radius: 5px; " +
                     "-fx-border-width: 2px; " +
                     "-fx-border-color: #333333; " +
-                    "-fx-padding: 8px 16px;");
+                    "-fx-border-radius: 5px;"+
+                    "-fx-padding: 8px 16px;"
+            );
+            btn.setOnMouseEntered(e -> {
+                btn.setStyle("-fx-font-family: 'Segoe UI', Helvetica, Arial, sans-serif; " +
+                        "-fx-font-size: 18px; " +
+                        "-fx-font-weight: bold;" +
+                        "-fx-text-fill: #333333; " +
+                        "-fx-background-color: #ff3333; " +
+                        "-fx-background-radius: 5px; " +
+                        "-fx-border-width: 2px; " +
+                        "-fx-border-color: #333333; " +
+                        "-fx-border-radius: 5px;"+
+                        "-fx-padding: 8px 16px;"
+                );
+            });
+            btn.setOnMouseExited(e -> {
+                btn.setStyle("-fx-font-family: 'Segoe UI', Helvetica, Arial, sans-serif; " +
+                        "-fx-font-size: 18px; " +
+                        "-fx-font-weight: bold;" +
+                        "-fx-text-fill: #333333; " +
+                        "-fx-background-color: #ffffff; " +
+                        "-fx-background-radius: 5px; " +
+                        "-fx-border-width: 2px; " +
+                        "-fx-border-color: #333333; " +
+                        "-fx-border-radius: 5px;"+
+                        "-fx-padding: 8px 16px;"
+                );
+            });
         }
 
     }

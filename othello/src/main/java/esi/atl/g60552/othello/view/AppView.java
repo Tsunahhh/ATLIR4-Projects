@@ -6,7 +6,7 @@ import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.image.Image;
-import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.*;
 import javafx.stage.Stage;
 import esi.atl.g60552.othello.util.Observer;
 import javafx.stage.StageStyle;
@@ -49,6 +49,7 @@ public class AppView implements Observer {
      */
     private void initViews() {
         root = new BorderPane();
+        initBackground();
 
         gameInfo = new GameInfo();
         BorderPane.setMargin(gameInfo, new Insets(0, 0, MARGIN_, 0));
@@ -72,6 +73,17 @@ public class AppView implements Observer {
 
         Scene scene = new Scene(root);
         stage.setScene(scene);
+    }
+
+    /**
+     * Initialize the background.
+     */
+    private void initBackground() {
+        Image image = new Image(getClass().getResource("/background/background.jpg").toString());
+        BackgroundSize backgroundSize = new BackgroundSize(1920, 1080, false, false, false, false);
+        BackgroundImage backgroundImage = new BackgroundImage(image, BackgroundRepeat.REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.CENTER, backgroundSize);
+        Background background = new Background(backgroundImage);
+        root.setBackground(background);
     }
 
     /**

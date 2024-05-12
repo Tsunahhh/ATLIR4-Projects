@@ -53,13 +53,7 @@ public class SettingsView extends GridPane {
      */
     void initLabels() {
         Label lblSettings = new Label("Settings ");
-        lblSettings.setStyle("-fx-font-family: 'Segoe UI', Helvetica, Arial, sans-serif; " +
-                "-fx-font-size: 24px; " +
-                "-fx-background-radius: 5px; " +
-                "-fx-padding: 8px 8px;" +
-                "-fx-font-weight: bold;" +
-                "-fx-underline: true;"
-        );
+
         this.add(lblSettings, 0, 0, 3, 1);
         Label lblSize = new Label("Size: ");
         this.add(lblSize, 0, 1, 1, 1);
@@ -98,13 +92,7 @@ public class SettingsView extends GridPane {
 
         ToggleGroup group = new ToggleGroup();
         rdbBot.setToggleGroup(group);
-        //rdbBot.setStyle("-fx-font-family: 'Segoe UI', Helvetica, Arial, sans-serif; " +
-        //        "-fx-font-size: 14px; " +
-        //        "-fx-text-fill: #333333;");
         rdbHuman.setToggleGroup(group);
-        //rdbHuman.setStyle("-fx-font-family: 'Segoe UI', Helvetica, Arial, sans-serif; " +
-        //        "-fx-font-size: 14px; " +
-        //        "-fx-text-fill: #333333;");
         rdbBot.setSelected(true);
         this.add(rdbBot, 1, 4, 1, 1);
         this.add(rdbHuman, 2, 4, 1, 1);
@@ -129,10 +117,22 @@ public class SettingsView extends GridPane {
                         "-fx-background-radius: 5px; " +
                         "-fx-border-width: 2px; " +
                         "-fx-border-color: #333333; " +
-                        "-fx-padding: 4px 8px;"
+                        "-fx-padding: 4px 8px;" +
+                        "-fx-border-radius: 5px;"
                 );
             } else {
-                node.setStyle("-fx-padding: 4px 8px;");
+                Label lbl = (Label) node;
+                if (lbl.getText() == "Settings ") {
+                    lbl.setStyle("-fx-font-family: 'Segoe UI', Helvetica, Arial, sans-serif; " +
+                            "-fx-font-size: 30px; " +
+                            "-fx-background-radius: 5px; " +
+                            "-fx-padding: 8px 8px;" +
+                            "-fx-font-weight: bold;" +
+                            "-fx-underline: true;"
+                    );
+                } else {
+                    node.setStyle("-fx-padding: 4px 8px;");
+                }
             }
         }
         this.setStyle("-fx-font-family: 'Segoe UI', Helvetica, Arial, sans-serif; " +
