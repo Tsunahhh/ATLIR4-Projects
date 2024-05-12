@@ -7,10 +7,9 @@ import javafx.scene.layout.HBox;
 /**
  * Box containing the buttons.
  */
-public class ButtonsBox extends HBox {
+class ButtonsBox extends HBox {
 
     private final AppView appView;
-
     private Button pause;
     private Button undo;
     private Button redo;
@@ -58,7 +57,6 @@ public class ButtonsBox extends HBox {
     private void initHandles() {
         quit.setOnMouseClicked(e -> {
             appView.quit();
-
         });
         pause.setOnMouseClicked(e -> {
             appView.pause();
@@ -75,7 +73,6 @@ public class ButtonsBox extends HBox {
         undo.setOnMouseClicked(e -> {
             appView.undo();
         });
-
     }
 
     /**
@@ -121,6 +118,5 @@ public class ButtonsBox extends HBox {
                 );
             });
         }
-
     }
 }

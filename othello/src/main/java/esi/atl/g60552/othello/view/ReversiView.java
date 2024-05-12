@@ -7,7 +7,7 @@ import javafx.scene.paint.Color;
 /**
  * Represents the view of the reversi game.
  */
-public class ReversiView extends GridPane {
+class ReversiView extends GridPane {
     private static final int REVERSI_SIZE = 550;
     private Color bgGameColor;
 
@@ -62,7 +62,7 @@ public class ReversiView extends GridPane {
      * Update the view.
      * @param reversi the reversi
      */
-    public void update(Reversi reversi) {
+    void update(Reversi reversi) {
         this.getChildren().clear();
         Board board = reversi.getBoard();
         for (int row = 0; row < board.getSize(); row++) {

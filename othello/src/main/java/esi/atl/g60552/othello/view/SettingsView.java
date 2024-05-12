@@ -11,8 +11,7 @@ import javafx.scene.paint.Color;
 /**
  * Represents the settings view.
  */
-public class SettingsView extends GridPane {
-
+class SettingsView extends GridPane {
     private AppView appView;
     private ChoiceBox<Integer> tfdSize = new ChoiceBox<>();
     private ColorPicker colorPicker = new ColorPicker();
@@ -41,7 +40,7 @@ public class SettingsView extends GridPane {
     /**
      * Initialize the settings view.
      */
-    void init() {
+    private void init() {
         this.setPadding(new Insets(10));
         this.setHgap(15);
         this.setVgap(6);
@@ -51,7 +50,7 @@ public class SettingsView extends GridPane {
     /**
      * Initialize the labels.
      */
-    void initLabels() {
+    private void initLabels() {
         Label lblSettings = new Label("Settings ");
 
         this.add(lblSettings, 0, 0, 3, 1);
@@ -72,7 +71,7 @@ public class SettingsView extends GridPane {
     /**
      * Initialize the inputs.
      */
-    void initInputs() {
+    private void initInputs() {
         for (int i = 4; i <= 15; i += 2) {
             tfdSize.getItems().add(i);
         }
@@ -149,7 +148,7 @@ public class SettingsView extends GridPane {
      * Get the size.
      * @return the size
      */
-    public int getSize() {
+    int getSize() {
         return tfdSize.getValue();
     }
 
@@ -157,7 +156,7 @@ public class SettingsView extends GridPane {
      * Get the background color.
      * @return the background color
      */
-    public Color getBGColor() {
+    Color getBGColor() {
         return colorPicker.getValue();
     }
 
@@ -165,7 +164,7 @@ public class SettingsView extends GridPane {
      * Get the player 1.
      * @return the player 1
      */
-    public String getPlayer1() {
+    String getPlayer1() {
         return tfdPlayer1.getText();
     }
 
@@ -173,7 +172,7 @@ public class SettingsView extends GridPane {
      * Get the player 2.
      * @return the player 2
      */
-    public String getPlayer2() {
+    String getPlayer2() {
         return tfdPlayer2.getText();
     }
 
@@ -181,7 +180,7 @@ public class SettingsView extends GridPane {
      * Check if the player is a bot.
      * @return true if the player is a bot, false otherwise
      */
-    public boolean isBot() {
+    boolean isBot() {
         return rdbBot.isSelected();
     }
 
@@ -189,14 +188,14 @@ public class SettingsView extends GridPane {
      * Get the difficulty.
      * @return the difficulty
      */
-    public int getDifficulty() {
+    int getDifficulty() {
         return chbDifficulty.getSelectionModel().getSelectedIndex();
     }
 
     /**
      * Initialize the handlers.
      */
-    public void initHandlers() {
+    private void initHandlers() {
         apply.setOnAction(e -> {
             this.appView.apply();
         });

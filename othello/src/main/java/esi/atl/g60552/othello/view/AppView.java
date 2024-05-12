@@ -133,7 +133,7 @@ public class AppView implements Observer {
     /**
      * Reset the game.
      */
-    void reset() {
+    private void reset() {
         initGame();
         update();
     }
@@ -141,7 +141,7 @@ public class AppView implements Observer {
     /**
      * Start the game.
      */
-    void gameOverPopup(Player winner) {
+    private void gameOverPopup(Player winner) {
         Alert gameOver = new Alert(Alert.AlertType.WARNING);
         gameOver.setTitle("Game Over");
 
@@ -198,6 +198,7 @@ public class AppView implements Observer {
      * Quit the game.
      */
     void quit() {
+        stage.close();
         System.exit(0);
     }
 
@@ -212,7 +213,7 @@ public class AppView implements Observer {
     /**
      * Adapt the window.
      */
-    void adaptWindow() {
+    private void adaptWindow() {
         stage.setWidth(APP_WIDTH);
         stage.setHeight(APP_HEIGHT);
         stage.centerOnScreen();
@@ -255,7 +256,7 @@ public class AppView implements Observer {
     /**
      * Show the settings menu.
      */
-    void showSettings() {
+    private void showSettings() {
         // Show only if not already shown to avoid bugs.
         if (!corps.getChildren().contains(settingsView)) {
             corps.setRight(settingsView);
@@ -265,7 +266,7 @@ public class AppView implements Observer {
     /**
      * Hide the settings menu.
      */
-    void hideSettings() {
+    private void hideSettings() {
         corps.getChildren().remove(settingsView);
     }
 }

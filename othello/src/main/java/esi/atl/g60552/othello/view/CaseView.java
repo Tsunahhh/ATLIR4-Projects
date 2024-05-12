@@ -10,7 +10,7 @@ import java.util.Objects;
 /**
  * Represents a case of the board.
  */
-public class CaseView extends StackPane {
+class CaseView extends StackPane {
     private final int size;
     private Circle circle;
     private Rectangle rectangle;
@@ -21,7 +21,7 @@ public class CaseView extends StackPane {
      * @param backgroundColor the background color
      * @param size the size
      */
-    public CaseView(Color backgroundColor, int size) {
+    CaseView(Color backgroundColor, int size) {
         super();
         this.backgroundColor = backgroundColor;
         this.size = size;
@@ -31,7 +31,7 @@ public class CaseView extends StackPane {
     /**
      * Initialize the case.
      */
-    void init() {
+    private void init() {
         rectangle = new Rectangle(size, size, backgroundColor);
         if (backgroundColor.equals(Color.BLACK)) {
             rectangle.setStroke(Color.WHITE);
@@ -46,7 +46,7 @@ public class CaseView extends StackPane {
      * Set the color of the rectangle.
      * @param color the color
      */
-    public void setColorRectangle(Color color) {
+    void setColorRectangle(Color color) {
         rectangle.setFill(color);
     }
 
@@ -54,7 +54,7 @@ public class CaseView extends StackPane {
      * Set the color of the disk.
      * @param color the color
      */
-    public void setColorDisk(Color color) {
+    void setColorDisk(Color color) {
         circle.setFill(color);
         if (Objects.equals(color, Color.BLACK)) {
             circle.setStroke(Color.WHITE);
@@ -75,7 +75,7 @@ public class CaseView extends StackPane {
      * Get the size.
      * @return the size
      */
-    public int getSize() {
+    int getSize() {
         return size;
     }
 }

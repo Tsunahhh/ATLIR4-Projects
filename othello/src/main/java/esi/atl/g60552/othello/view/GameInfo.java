@@ -8,7 +8,7 @@ import javafx.scene.layout.HBox;
  * Class represent the game information.
 
  */
-public class GameInfo extends HBox {
+class GameInfo extends HBox {
 
     /**
      * Construct the game information.
