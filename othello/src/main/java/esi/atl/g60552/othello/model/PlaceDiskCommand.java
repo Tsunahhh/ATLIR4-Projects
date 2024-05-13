@@ -2,40 +2,47 @@ package esi.atl.g60552.othello.model;
 
 import esi.atl.g60552.othello.util.Command;
 
+/**
+ * Command to place a disk.
+ */
 public class PlaceDiskCommand implements Command {
     private Game game;
     private Board save;
     private Player player;
-    private int x;
-    private int y;
 
+    /**
+     * Constructor.
+     * @param game the game
+     * @param x the x position
+     * @param y the y position
+     */
     PlaceDiskCommand(Game game, int x, int y) {
         this.game = game;
-        this.x = x;
-        this.y = y;
+        player = game.currPlayer();
+        save = game.getBoard();
+        game.placeDisk(x, y);
+        game.nextPlayer();
     }
 
+    /**
+     * Execute the command.
+     */
     @Override
     public void execute() {
-        if (save == null) {
-            player = game.currPlayer();
-            save = game.getBoard();
-            game.placeDisk(x, y);
+        Board tmp = save.getCopy();
+        save = game.getBoard();
+        game.setBoard(tmp);
+        if (game.currPlayer().getColor() == player.getColor()) {
             game.nextPlayer();
-        } else {
-            Board tmp = save.getCopy();
-            save = game.getBoard();
-            game.setBoard(tmp);
-            if (game.currPlayer().getColor() == player.getColor()) {
-                game.nextPlayer();
-            }
-            if (game.currPlayer().isBot()) {
-                game.nextPlayer();
-            }
         }
-
+        if (game.currPlayer().isBot()) {
+            game.nextPlayer();
+        }
     }
 
+    /**
+     * Unexecute the command.
+     */
     @Override
     public void unexecute() {
         Board tmp = save.getCopy();

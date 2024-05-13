@@ -14,7 +14,6 @@ public class CommandManager {
      * @param newCmd the command to add
      */
     public void add(Command newCmd) {
-        newCmd.execute();
         undoStack.push(newCmd);
         redoStack.clear();
     }
