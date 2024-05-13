@@ -11,11 +11,8 @@ public class Person implements Observable {
     private double height;
     private int age;
     private boolean isWoman;
-
     private Activity freq;
-
     private List<Observer> observers = new ArrayList<>();
-
     public Person() {}
 
     public Person(boolean isWoman, double height, double weight, int age, String freq) {
