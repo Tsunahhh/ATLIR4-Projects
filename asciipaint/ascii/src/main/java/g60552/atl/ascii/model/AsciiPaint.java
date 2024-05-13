@@ -9,7 +9,7 @@ import java.util.List;
  * Class represent AsciiPaint with commands methods.
  */
 public class AsciiPaint {
-    private Drawing drawing; // TODO: PRIVATE !!
+    private Drawing drawing;
 
     private CommandManager commandManager = new CommandManager();
 

@@ -25,5 +25,9 @@ public interface Shape {
      */
     char getColor();
 
-    //TODO: setColor
+    /**
+     * Set the color of the shape
+     * @param color color
+     */
+    void setColor(char color);
 }

@@ -136,10 +136,10 @@ Drawing {
      */
     void group(List<Integer> idx, int newIndex) { // 2 4 6 // TODO pas ici.
         List<ColorShape> cs = new ArrayList<>();
-        idx.sort(Comparator.reverseOrder()); // 6 4 2
+        idx.sort(Comparator.reverseOrder());
 
         for (int i : idx) {
-            cs.add((ColorShape) shapes.remove(i)); // 6 4 2
+            cs.add((ColorShape) shapes.remove(i));
         }
 
         Group group = new Group(cs);

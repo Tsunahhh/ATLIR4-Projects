@@ -15,7 +15,7 @@ public class Application {
 
     private AsciiPaint paint;
     private InputManager inputManager;
-    AsciiView asciiView; // TODO private !!!
+    private AsciiView asciiView;
 
     /**
      * Constructor of the application.

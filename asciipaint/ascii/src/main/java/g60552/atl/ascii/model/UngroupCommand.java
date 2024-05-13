@@ -19,7 +19,6 @@ public class UngroupCommand implements Command {
     public UngroupCommand(Drawing drawing, int index) {
         this.drawing = drawing;
         this.index = index;
-
     }
 
     /**

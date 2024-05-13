@@ -7,7 +7,6 @@ import g60552.atl.ascii.util.Command;
  */
 public class ColorCommand implements Command {
     private Drawing drawing;
-
     // TODO: Shape shape
     private int index;
     private char color;
