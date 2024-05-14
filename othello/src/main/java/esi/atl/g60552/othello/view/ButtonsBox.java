@@ -16,6 +16,7 @@ class ButtonsBox extends HBox {
     private Button pass;
     private Button stop;
     private Button quit;
+    private Button score;
 
     /**
      * Constructor.
@@ -48,7 +49,9 @@ class ButtonsBox extends HBox {
         quit = new Button("Quit");
         redo = new Button("Redo");
         undo = new Button("Undo");
-        this.getChildren().addAll(undo, redo, pause, pass, stop, quit);
+        score = new Button("Show Score");
+
+        this.getChildren().addAll(undo, redo, pause, pass, stop, quit, score);
     }
 
     /**
@@ -72,6 +75,9 @@ class ButtonsBox extends HBox {
         });
         undo.setOnMouseClicked(e -> {
             appView.undo();
+        });
+        score.setOnMouseClicked(e -> {
+            appView.showScore();
         });
     }
 
